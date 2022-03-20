@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="Styles/home.css">
+   <title>Git Organized</title>
+</head>
+<body>
+   <% if (user !== "(not signed in)") { %>
+
+      <p>You're in!</p>
+      <br>
+      <p>Here's some info:</p>
+      <%= user %>
+      <br>
+      "<%= actions %>""
+      <br>
+      <p class="menu-option signout"><a href="/sign-out">Sign out</a></p>
+      
+   <%} else { %>
+      <%- include("partials/signedOut"); %>
+      <%- include("partials/signIn"); %>
+   <% } %>
+</body>
+<script>
+   function toggleWindow(id) {
+      let thisWindow = document.querySelector(`.window-${id}`);
+      if (thisWindow.style.opacity == "1") {
+         thisWindow.style.opacity = "0";
+         thisWindow.style.pointerEvents = "none";
+         thisWindow.style.zIndex = "-1000";
+      }
+      else {
+         thisWindow.style.opacity = "1";
+         thisWindow.style.pointerEvents = "auto";
+         thisWindow.style.zIndex = "1000";
+      }
+   }
+</script>
+</html>

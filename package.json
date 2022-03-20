@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.7",
+    "uuid": "^8.3.2"
+  },
+  "name": "git-organized",
+  "version": "0.1.0",
+  "description": "A project manager for developers",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Squirrel-314/git-organized.git"
+  },
+  "keywords": [
+    "organize",
+    "developers"
+  ],
+  "author": "Squirrel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Squirrel-314/git-organized/issues"
+  },
+  "homepage": "https://github.com/Squirrel-314/git-organized#readme"
+}
