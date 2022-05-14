@@ -1,0 +1,9 @@
+.projectBlock {
+   margin: 2vh;
+   padding: 2vh;
+   height: 25vh;
+   width: 25vw;
+   display: inline-block;
+   background-color: #f2f2f2;
+   border-radius: .8vh;
+}

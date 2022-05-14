@@ -4,19 +4,23 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="Styles/home.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
    <title>Git Organized</title>
 </head>
 <body>
    <% if (user !== "(not signed in)") { %>
+      <%- include("partials/navbar"); %>
 
-      <p>You're in!</p>
-      <br>
-      <p>Here's some info:</p>
-      <%= user %>
-      <br>
-      "<%= actions %>""
-      <br>
-      <p class="menu-option signout"><a href="/sign-out">Sign out</a></p>
+      <div class="locbar">
+         <p>Home</p>
+      </div>
+      <div class="content">
+         <p>You're in!</p>
+         <br>
+         <p>Here's some project info:</p>
+         <%= projects %>
+      </div>
+
       
    <%} else { %>
       <%- include("partials/signedOut"); %>

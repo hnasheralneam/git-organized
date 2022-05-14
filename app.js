@@ -20,7 +20,7 @@ app.set("view engine", "ejs");
 
 // Mongoose things
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect("mongodb+srv://Squirrel:nCCJ0sQuQQ5qhGsn@test-user-data.daqv1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true });
 
 // System things
 connection.on("error", console.error.bind(console, "Connection error: "));
@@ -125,7 +125,10 @@ const ActionData = mongoose.model("ActionData", actionSchema);
 //    }
 // );
 
-
+// ProjectData.findByIdAndDelete("62378fef65ad7e3382672737", function (err, docs) {
+//    if (err) { console.log(err); }
+//    else { console.log("Deleted : ", docs); }
+// });
 
 
 // const newUser = new ProjectData({
@@ -161,14 +164,20 @@ function getNewpageData() {
          else { 
             ActionData.find((err, actions) => {
                if (err) { console.error(err); }
-               else { 
-                  let returnData = {
-                     user: signedInUser,
-                     users: users,
-                     actions: actions
-                  }
-                  resolve(returnData);
-                  return returnData;
+               else {
+                  ProjectData.find((err, projects) => {
+                     if (err) { console.error(err); }
+                     else { 
+                        let returnData = {
+                           user: signedInUser,
+                           users: users,
+                           actions: actions,
+                           projects: projects
+                        }
+                        resolve(returnData);
+                        return returnData;
+                     }
+                  });
                }
             });
          }
@@ -182,18 +191,17 @@ function getNewpageData() {
 
 // Public user pages
 
-app.get("/", (req, res) => {
-   letsGo();
-   async function letsGo() {
-      let returnedData = await getNewpageData();
-      res.render("home", returnedData);
-   }
-});
+app.get("/", (req, res) => { goSomewhere(res, "home"); });
+app.get("/projects", (req, res) => { goSomewhere(res, "projectsPage"); });
+app.get("/account", (req, res) => { goSomewhere(res, "account"); });
 
-app.get("/vegetable-dash", (req, res) => {
-   if (signedInUser !== "not signed in") { res.render("index", getNewpageData()); }
-   else { res.redirect("/"); }
-});
+// app.get("/users/:username", (req, res) => {
+//    UserData.findOne({ name: req.params.username }, (err, user) => {
+//       if (err) { console.error(err); }
+//       else if (user == null) { res.render("no-such-user"); }
+//       else { res.render("user-profile", { user: user, name: user.name }); }
+//    });
+// });
 
 // Temporary landings
 app.get("/sign-out", (req, res) => {
@@ -202,6 +210,14 @@ app.get("/sign-out", (req, res) => {
    signedInUser = "(not signed in)";
    res.redirect("/");
 });
+
+function goSomewhere(res, where) {
+   letsGo();
+   async function letsGo() {
+      let returnedData = await getNewpageData();
+      res.render(where, returnedData);
+   }
+}
 
 /* =============
 // Account

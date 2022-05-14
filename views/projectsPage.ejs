@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="Styles/home.css">
+   <link rel="stylesheet" href="Styles/projects.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+   <title>Your Account | Git Organized</title>
+</head>
+<body>
+   <% if (user !== "(not signed in)") { %>
+      <%- include("partials/navbar"); %>
+
+      <div class="locbar">
+        <p>Home>Projects</p>
+      </div>
+      <div class="content">
+         <%= projects %>
+         <br>
+         <% projects.forEach(function(project) { %>
+            <div class="projectBlock">
+               <a href="<%= project %>"><%= project.name %></a><br>
+            </div>
+         <% }); %>
+      </div>
+      
+   <%} else { %>
+      <%- include("partials/signedOut"); %>
+      <%- include("partials/signIn"); %>
+   <% } %>
+</body>
+</html>
