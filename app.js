@@ -125,7 +125,7 @@ const ActionData = mongoose.model("ActionData", actionSchema);
 //    }
 // );
 
-// ProjectData.findByIdAndDelete("62378fef65ad7e3382672737", function (err, docs) {
+// ProjectData.findByIdAndDelete("62378fef65ad7e3382672738", function (err, docs) {
 //    if (err) { console.log(err); }
 //    else { console.log("Deleted : ", docs); }
 // });
@@ -192,16 +192,24 @@ function getNewpageData() {
 // Public user pages
 
 app.get("/", (req, res) => { goSomewhere(res, "home"); });
-app.get("/projects", (req, res) => { goSomewhere(res, "projectsPage"); });
+app.get("/your-projects", (req, res) => { goSomewhere(res, "projectsPage"); });
+app.get("/pop-projects", (req, res) => { goSomewhere(res, "popProjects"); });
 app.get("/account", (req, res) => { goSomewhere(res, "account"); });
 
-// app.get("/users/:username", (req, res) => {
-//    UserData.findOne({ name: req.params.username }, (err, user) => {
-//       if (err) { console.error(err); }
-//       else if (user == null) { res.render("no-such-user"); }
-//       else { res.render("user-profile", { user: user, name: user.name }); }
-//    });
-// });
+app.get("/project/:projectname", (req, res) => {
+   ProjectData.findOne({ name: req.params.projectname }, (err, project) => {
+      if (err) { console.error(err); }
+      else if (project == null) { res.render("no-such-project"); }
+      else {
+         letsGo();
+         async function letsGo() {
+            let returnedData = await getNewpageData();
+            returnedData.thisProject = project;
+            res.render("project-overview", returnedData);
+         }
+      }
+   });
+});
 
 // Temporary landings
 app.get("/sign-out", (req, res) => {

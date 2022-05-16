@@ -15,10 +15,27 @@
          <p>Home</p>
       </div>
       <div class="content">
-         <p>You're in!</p>
+         <p>Continue where you left off:</p>
+         <% for (let i = 0; i < 5; i++) { %>
+            <% if (projects[i]) { %>
+               <% if (projects[i].contributors.includes(user.userCall)) { %>
+                  <div class="projectBlock">
+                     <a href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
+                  </div>
+               <% } %>
+            <% } %>
+         <% } %>
          <br>
-         <p>Here's some project info:</p>
-         <%= projects %>
+         <p>Check out what others are doing:</p>
+         <% for (let i = 0; i < 5; i++) { %>
+            <% if (projects[i]) { %>
+               <% if (!projects[i].contributors.includes(user.userCall)) { %>
+                  <div class="projectBlock">
+                     <a href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
+                  </div>
+               <% } %>
+            <% } %>
+         <% } %>
       </div>
 
       
