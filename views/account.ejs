@@ -11,21 +11,25 @@
    <% if (user !== "(not signed in)") { %>
       <%- include("partials/navbar"); %>
 
-      <div class="locbar">
-        <p>Home>Account</p>
-      </div>
-      <div class="content">
-         <%= user.username %>
-         <br>
-         <%= user.email %>
-         <br>
-         <%= user.bio %>
-         <br>
-         <% user.links.forEach(function(link) { %>
-            <a href="<%= link %>"><%= link %></a><br>
-         <% }); %>
-         <br>
-         <%= user.dateAccountStarted %>
+      <div class="page">
+         <div class="locbar">
+            <p>Home>Account</p>
+          </div>
+          <div class="content">
+             <%= user.username %>
+             <br>
+             <%= user.email %>
+             <br>
+             <%= user.bio %>
+             <br>
+             <% user.links.forEach(function(link) { %>
+                <a href="<%= link %>"><%= link %></a><br>
+             <% }); %>
+             <br>
+             <%= user.dateAccountStarted %>
+             <br><br>
+             <%= user %>
+          </div>
       </div>
       
    <%} else { %>

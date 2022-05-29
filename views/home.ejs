@@ -11,31 +11,36 @@
    <% if (user !== "(not signed in)") { %>
       <%- include("partials/navbar"); %>
 
-      <div class="locbar">
-         <p>Home</p>
-      </div>
-      <div class="content">
-         <p>Continue where you left off:</p>
-         <% for (let i = 0; i < 5; i++) { %>
-            <% if (projects[i]) { %>
-               <% if (projects[i].contributors.includes(user.userCall)) { %>
-                  <div class="projectBlock">
-                     <a href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
-                  </div>
+      <div class="page">
+         <div class="locbar">
+            <p>Home</p>
+         </div>
+         <div class="content">
+            <p>Note: should create pages to view old actions, probably should make them undoable to.</p>
+            <br><br><br><br><br>
+            <p>Continue where you left off:</p>
+            <% for (let i = 0; i < 5; i++) { %>
+               <% if (projects[i]) { %>
+                  <% if (projects[i].contributors.includes(user.userCall)) { %>
+                     <div class="projectBlock">
+                        <a href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
+                     </div>
+                  <% } %>
                <% } %>
             <% } %>
-         <% } %>
-         <br>
-         <p>Check out what others are doing:</p>
-         <% for (let i = 0; i < 5; i++) { %>
-            <% if (projects[i]) { %>
-               <% if (!projects[i].contributors.includes(user.userCall)) { %>
-                  <div class="projectBlock">
-                     <a href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
-                  </div>
+            <br>
+            <p>Check out what others are doing:</p>
+            <% for (let i = 0; i < 5; i++) { %>
+               <% if (projects[i]) { %>
+                  <% if (!projects[i].contributors.includes(user.userCall)) { %>
+                     <div class="projectBlock">
+                        <a href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
+                     </div>
+                  <% } %>
                <% } %>
             <% } %>
-         <% } %>
+            <p>ane aouehdfirbskah wbdoiakhyfb kh wadofkhobr kajhbef lkhb alkehjbf ooo uba wekfhb klhjblkbgejhfb khsb fkhb ekhbg rkhb iyg keujhv bi iwuoh duwn irubh wbd owuh</p>
+         </div>
       </div>
 
       

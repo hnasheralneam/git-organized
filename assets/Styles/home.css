@@ -5,34 +5,42 @@
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 body {
+  height: 100vh;
   display: grid;
-  grid-template-areas: 
-  "a b b"
-  "a c c"
-  "a c c";
+  grid-template-columns: auto auto;
+  /* background: linear-gradient(#FF5A5A, #FF9C5A, #FFF45A, #B2FF5A, #5AFFF3, #5AC7FF, #5A85FF, #B05AFF); */
+  background-color: #F7F9FA;
+  /* #5AFF9C */
+  overflow: hidden;
+}
+
+.page {
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 8% 92%;
+  grid-gap: .2vh;
+  padding: 1.5vh;
 }
 
 .sidebar {
   position: relative;
-  grid-area: a;
-  margin: .6vh 0 .6vh .6vh;
+  margin: 0;
   width: 6vw;
-  height: 98.8vh;
-  border-radius: .5vh;
-  background: #fbfbfb;
+  height: 100vh;
+  background-color: #FEFEFE;
 }
 
 .locbar {
-  grid-area: b;
-  margin: .6vh .6vh .6vh 0;
   padding: 1vh 2.5vh;
   height: 6vh;
   border-radius: .5vh;
-  background: #fbfbfb;
-  box-sizing: border-box;
+  background-color: #FEFEFE;
+  box-shadow: 0 0 .5vh #eee;
 }
 
 .locbar p {
@@ -41,17 +49,20 @@ body {
 }
 
 .content {
-  grid-area: c;
-  margin: 0 .6vh .6vh 0;
   padding: 2.5vh;
-  height: 92.2vh;
-  width: 92.6vw;
+  height: 100%;
+  width: 100%;
   border-radius: .5vh;
-  background: #fbfbfb;
-  box-sizing: border-box;
+  background-color: #FEFEFE;
+  box-shadow: 0 0 .2vh #eee;
 }
 
 .navbar-icon {
+  background: linear-gradient(to bottom right, #FFF45A, #FF9C5A);
+  /* background: linear-gradient(to bottom right, #5AFFF3, #5AC7FF); */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color:transparent;
+  background-clip: text;
   margin: .5vh 1vw;
   font-size: 4vw !important;
 }

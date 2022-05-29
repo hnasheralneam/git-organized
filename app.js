@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 const connection = mongoose.connection;
 
 let signedInUser = "(not signed in)";
@@ -195,6 +195,7 @@ app.get("/", (req, res) => { goSomewhere(res, "home"); });
 app.get("/your-projects", (req, res) => { goSomewhere(res, "projectsPage"); });
 app.get("/pop-projects", (req, res) => { goSomewhere(res, "popProjects"); });
 app.get("/account", (req, res) => { goSomewhere(res, "account"); });
+app.get("/new-project", (req, res) => { goSomewhere(res, "createNewProject"); });
 
 app.get("/project/:projectname", (req, res) => {
    ProjectData.findOne({ name: req.params.projectname }, (err, project) => {
