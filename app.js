@@ -45,7 +45,7 @@ const projectSchema = new mongoose.Schema({
    id: String,
    name: String,
    dateCreated: Date,
-   activity: [],
+   actions: [],
    comments: [], // laaaaaaaaaater
    data: [] // arr of cards
 });
@@ -58,6 +58,7 @@ const actionSchema = new mongoose.Schema({
    time: Date,
    id: String
 });
+
 
 let cardTemplate = {
    status: String,
@@ -88,63 +89,6 @@ all action will be saved straight to the database, and will only be referenced b
 const DevData = mongoose.model("DevData", userSchema);
 const ProjectData = mongoose.model("ProjectData", projectSchema);
 const ActionData = mongoose.model("ActionData", actionSchema);
-
-// let summat = uuidv4();
-// const newaUser = new ProjectData({
-//    userCall: "squirrel", // userCall of action do-er
-//    location: "home>projects",
-//    type: `create>${summat}`,
-//    text: "Created a project called Test Project",
-//    time: Date.now(),
-//    id: uuidv4()
-// });
-// newaUser.save(function (err, newUser) { if (err) return console.error(err); });
-// ActionData.find((err, actions) => {
-//    if (err) { console.error(err); }
-//    else { actions.forEach(element => console.log(element)) }
-// });
-// DevData.find((err, actions) => {
-//    if (err) { console.error(err); }
-//    else { actions.forEach(element => console.log(element)) }
-// });
-// ProjectData.find((err, actions) => {
-//    if (err) { console.error(err); }
-//    else { actions.forEach(element => console.log(element)) }
-// });
-
-
-// DevData.findOneAndUpdate(
-//    { _id: "62378bfb529354830979f954" }, 
-//    { $push: { actions: summat } },
-//    function (error, success) {
-//       if (error) {
-//          console.log(error);
-//       } else {
-//          console.log(success);
-//       }
-//    }
-// );
-
-// ProjectData.findByIdAndDelete("62378fef65ad7e3382672738", function (err, docs) {
-//    if (err) { console.log(err); }
-//    else { console.log("Deleted : ", docs); }
-// });
-
-
-// const newUser = new ProjectData({
-//    creater: "squirrel", // userCall of creator (userCall is used as userID)
-//    contributors: ["squirrel"],
-//    description: "The very firstest test project, created directly through app.js with mongoose. Sigh. Well, here goes.",
-//    id: summat,
-//    name: "Test Project",
-//    dateCreated: Date.now(),
-//    activity: [],
-//    comments: [], // laaaaaaaaaater
-//    data: [] // arr of cards
-// });
-// newUser.save(function (err, newUser) { if (err) return console.error(err); });
-
-
 
 /* =============
 // Processing
@@ -196,6 +140,7 @@ app.get("/your-projects", (req, res) => { goSomewhere(res, "projectsPage"); });
 app.get("/pop-projects", (req, res) => { goSomewhere(res, "popProjects"); });
 app.get("/account", (req, res) => { goSomewhere(res, "account"); });
 app.get("/new-project", (req, res) => { goSomewhere(res, "createNewProject"); });
+app.get("/actions-history", (req, res) => { goSomewhere(res, "globalActions"); });
 
 app.get("/project/:projectname", (req, res) => {
    ProjectData.findOne({ name: req.params.projectname }, (err, project) => {

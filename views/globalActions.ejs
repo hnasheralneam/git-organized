@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="Styles/home.css">
+   <link rel="stylesheet" href="Styles/actions.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <title>Global Actions | Git Organized</title>
+</head>
+<body>
+   <% if (user !== "(not signed in)") { %>
+      <%- include("partials/navbar"); %>
+
+      <div class="page">
+         <div class="locbar">
+            <p>Home>Global Actions</p>
+         </div>
+         <div class="content">
+            <div class="actionContainer">
+               <% actions.forEach(function(action) { %>
+                  <div class="action-box">
+                     <h3><%= action.text %></h3>
+                     <i>User: <%= action.userCall %></i>
+                     <p>Date: <%= action.time %></p>
+                     <p>Location: <%= action.location %></p>
+                     <br>
+                     <b>Dev Data</b>
+                     <p>MONGO ID: <%= action._id %></p>
+                     <p>TYPE DATA: <%= action.type %></p>
+                     <p>ID: <%= action.id %></p>
+                  </div>
+               <% }); %>
+            </div>
+         </div>
+      </div>
+   <%} else { %>
+      <%- include("partials/signedOut"); %>
+      <%- include("partials/signIn"); %>
+   <% } %>
+</body>
+</html>
