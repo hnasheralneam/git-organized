@@ -8,14 +8,15 @@ const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 const connection = mongoose.connection;
 
 let signedInUser = "(not signed in)";
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/assets"));
+app.use(express.static(__dirname + "/assets/"));
+app.use("/css", express.static(__dirname + "/css/"));
 app.set("view engine", "ejs");
 
 // Mongoose things
@@ -137,7 +138,6 @@ function getNewpageData() {
 
 app.get("/", (req, res) => { goSomewhere(res, "home"); });
 app.get("/your-projects", (req, res) => { goSomewhere(res, "projectsPage"); });
-app.get("/pop-projects", (req, res) => { goSomewhere(res, "popProjects"); });
 app.get("/account", (req, res) => { goSomewhere(res, "account"); });
 app.get("/new-project", (req, res) => { goSomewhere(res, "createNewProject"); });
 app.get("/actions-history", (req, res) => { goSomewhere(res, "globalActions"); });
@@ -187,7 +187,7 @@ app.post("/signin", (req, res) => {
          res.redirect("/");
       }
    });
-});         
+});
 
 // Get all lost requests
 app.get("*", (req, res) => {
@@ -195,3 +195,11 @@ app.get("*", (req, res) => {
 });
 
 app.listen(port);
+
+
+
+
+
+
+
+DevData.findOne({ name: "Squirrel", passcode: "0825" }, (err, user) => { signIn(user); });

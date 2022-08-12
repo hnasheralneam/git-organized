@@ -1,9 +1,0 @@
-.content {
-   display: grid;
-   grid-template-columns: 70% 30%;
-}
-
-.quick {
-   padding: 5vh;
-   background-color: #F2F2F2;
-}

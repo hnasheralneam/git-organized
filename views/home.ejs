@@ -3,8 +3,6 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="Styles/home.css">
-   <link rel="preconnect" href="https://fonts.googleapis.com">
    <title>Git Organized</title>
 </head>
 <body>
@@ -16,30 +14,50 @@
             <p>Home</p>
          </div>
          <div class="content">
-            <p>Note: should create pages to view old actions, probably should make them undoable too.</p>
-            <br><br><br><br><br>
-            <p>Continue where you left off:</p>
-            <% for (let i = 0; i < 5; i++) { %>
-               <% if (projects[i]) { %>
-                  <% if (projects[i].contributors.includes(user.userCall)) { %>
-                     <div class="projectBlock">
-                        <a href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
-                     </div>
+
+            <!-- <div class="h-80 w-96 fixed left-100 top-25 backdrop-blur bg-white/30 p-16 rounded-xl border-8 border-slate-200">
+               hi
+            </div> -->
+            <!-- <div class="h-80 w-96 fixed left-100 top-25 backdrop-blur bg-white/30 p-16 rounded-2xl">
+               hi
+            </div> -->
+      
+
+            <p class="margin-24 bg-indigo-500 text-white p-8 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-indigo-600">This is a simple web application that allows you to keep track of your repositories.</p>
+            <p class="margin-24 bg-red-500 text-white p-8 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-red-600">Note: should create pages to view old actions, probably should make them undoable too.</p>
+
+            <div class="py-4 px-2">
+               <p class="bg-lime-300 py-2 px-3 rounded-full inline">hello there</p>
+               <p class="bg-orange-300 py-2 px-3 rounded-full inline">#tailwindcss</p>
+            </div>
+
+            <div class="p-4 m-2 rounded-md bg-gray-50">
+               <p>Continue where you left off:</p>
+               <% for (let i = 0; i < 5; i++) { %>
+                  <% if (projects[i]) { %>
+                     <% if (projects[i].contributors.includes(user.userCall)) { %>
+                        <div class="py-4 px-6 mt-4 font-nuntio rounded-md bg-white border-l-8 border-orange-300">
+                           <a class="text-4xl" href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
+                           <p class="text-gray-600 font-nunito font-medium text-xl"><%= projects[i].description %></p>
+                        </div>
+                     <% } %>
                   <% } %>
                <% } %>
-            <% } %>
-            <br>
-            <p>Check out what others are doing:</p>
-            <% for (let i = 0; i < 5; i++) { %>
-               <% if (projects[i]) { %>
-                  <% if (!projects[i].contributors.includes(user.userCall)) { %>
-                     <div class="projectBlock">
-                        <a href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
-                     </div>
+            </div>
+
+            <div class="p-4 m-2 rounded-md bg-gray-50">
+               <p>Check out what others are doing:</p>
+               <% for (let i = 0; i < 5; i++) { %>
+                  <% if (projects[i]) { %>
+                     <% if (!projects[i].contributors.includes(user.userCall)) { %>
+                        <div class="">
+                           <a href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
+                        </div>
+                     <% } %>
                   <% } %>
                <% } %>
-            <% } %>
-            <p>ane aouehdfirbskah wbdoiakhyfb kh wadofkhobr kajhbef lkhb alkehjbf ooo uba wekfhb klhjblkbgejhfb khsb fkhb ekhbg rkhb iyg keujhv bi iwuoh duwn irubh wbd owuh</p>
+            <p>
+            </div>
          </div>
       </div>
 

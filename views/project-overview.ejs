@@ -3,9 +3,6 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="/Styles/home.css">
-   <link rel="stylesheet" href="/Styles/projects.css">
-   <link rel="stylesheet" href="/Styles/project-overview.css">
    <title><%= thisProject.name %> | Git Organized</title>
 </head>
 <body>
@@ -16,7 +13,7 @@
          <div class="locbar">
             <p>Home>Projects><%= thisProject.name %></p>
           </div>
-          <div class="content">
+          <div class="content grid" style="grid-template-columns: 70% 30%">
              <div class="main">
                <% if (thisProject.contributors.includes(user.userCall)) { %>
                   <p>You are in this project!</p>
@@ -28,7 +25,7 @@
                <p>Data: <%= thisProject.data %></p>
                <p>wjkhsfveksrhvb klhbs fkhvb kshebf klahevfkehvf lkahevfkhasve glkshevhsevg kshevg klsheg kehv quegfvijgv efsjhgv kjgv</p>
              </div>
-             <div class="quick">
+             <div class="p-6 bg-gray-50 rounded-xl">
                <p>Name: <%= thisProject.name %></p>
                <p>Creator: <%= thisProject.creater %></p>
                <p>Contributors: <%= thisProject.contributors %></p>

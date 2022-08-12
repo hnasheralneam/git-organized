@@ -3,8 +3,6 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="Styles/home.css">
-   <link rel="stylesheet" href="Styles/projects.css">
    <title>Your Projects | Git Organized</title>
 </head>
 <body>
@@ -19,13 +17,18 @@
              <button><a href="/new-project">Make a new project</a></button>
              <%= projects %>
              <br>
-             <% projects.forEach(function(project) { %>
-                <% if (project.contributors.includes(user.userCall)) { %>
-                   <div class="projectBlock">
-                      <a href="/project/<%= project.name %>"><%= project.name %></a><br>
-                   </div>
-                <% } %>
-             <% }); %>
+             <div class="p-4 m-2 rounded-md bg-gray-50">
+               <p class="text-lg m-4">Projects you are in</p>
+               <% projects.forEach(function(project) { %>
+                  <% if (project.contributors.includes(user.userCall)) { %>
+                     <div class="py-4 px-6 m-2 rounded-md bg-white border-l-8 border-sky-400 ">
+                       <a class="text-4xl" href="/project/<%= project.name %>"><%= project.name %></a><br>
+                       <p class="text-gray-600 font-nunito font-medium text-xl"><%= project.description %></p>
+                    </div>
+                  <% } %>
+               <% }); %>
+             </div>
+             
           </div>
       </div>
       

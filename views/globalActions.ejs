@@ -3,12 +3,28 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="Styles/home.css">
-   <link rel="stylesheet" href="Styles/actions.css">
-   <link rel="preconnect" href="https://fonts.googleapis.com">
    <title>Global Actions | Git Organized</title>
 </head>
 <body>
+   <style>
+      .action-box {
+         background-color: #fefefe;
+         border-radius: 4px;
+         margin-bottom: 10px;
+         padding: 20px;
+         font-family: "Nunito", sans-serif;
+         color: #222;
+      }
+
+      .action-box a {
+         color: #222;
+         text-decoration: none;
+      }
+
+      .action-box:nth-child(odd) {
+         background-color: #f9f9f9;
+      }
+   </style>
    <% if (user !== "(not signed in)") { %>
       <%- include("partials/navbar"); %>
 
@@ -17,7 +33,7 @@
             <p>Home>Global Actions</p>
          </div>
          <div class="content">
-            <div class="actionContainer">
+            <div class="p-4 border-2 border-gray-50 rounded-lg">
                <% actions.forEach(function(action) { %>
                   <div class="action-box">
                      <h3><%= action.text %></h3>

@@ -1,10 +1,11 @@
 {
   "dependencies": {
+    "autoprefixer": "^10.4.8",
     "body-parser": "^1.19.2",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
     "mongoose": "^6.2.7",
-    "nodemon": "^2.0.16",
+    "postcss": "^8.4.16",
     "uuid": "^8.3.2"
   },
   "name": "git-organized",
@@ -12,6 +13,7 @@
   "description": "A project manager for developers",
   "main": "app.js",
   "scripts": {
+    "watch-css": "npx tailwindcss -i main.css -o css/main.css --watch",
     "test": "test"
   },
   "repository": {
@@ -27,5 +29,9 @@
   "bugs": {
     "url": "https://github.com/Squirrel-314/git-organized/issues"
   },
-  "homepage": "https://github.com/Squirrel-314/git-organized#readme"
+  "homepage": "https://github.com/Squirrel-314/git-organized#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "tailwindcss": "^3.1.8"
+  }
 }
