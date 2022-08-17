@@ -14,24 +14,37 @@
 </div>
 
 <script>
-document.querySelector("#signin-from-homepage").addEventListener("submit", (event) => {
-   let form = event.target;
+$("#signin-from-homepage").submit(function(event) {
    event.preventDefault();
-
-   $.ajax({
-      type: "POST",
-      url: "/enter-account",
-      data: {
-         name: form.name.value,
-         pscd: form.pscd.value
-      },
-      dataType: "html",
-      encode: true,
-   }).done(function(data){
+   $.post("/enter-account", {
+      name: this.name.value,
+      pscd: this.pscd.value,
+   }).done(function(data) {
       document.querySelector(".signin-text").textContent = data;
       if (data == "Successful signin!") { location.reload(); }
-   }).fail(function(data, status, err) {
-      console.log("Error:", err);
    });
 });
+
+// document.querySelector("#signin-from-homepage").addEventListener("submit", (event) => {
+//    let form = event.target;
+//    event.preventDefault();
+
+   
+
+//    $.ajax({
+//       type: "POST",
+//       url: "/enter-account",
+//       data: {
+//          name: form.name.value,
+//          pscd: form.pscd.value
+//       },
+//       dataType: "html",
+//       encode: true,
+//    }).done(function(data){
+//       document.querySelector(".signin-text").textContent = data;
+//       if (data == "Successful signin!") { location.reload(); }
+//    }).fail(function(data, status, err) {
+//       console.log("Error:", err);
+//    });
+// });
 </script>

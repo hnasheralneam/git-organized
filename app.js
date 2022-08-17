@@ -179,19 +179,36 @@ function goSomewhere(res, where) {
 
 // Sign in
 app.post("/enter-account", (req, res) => {
-   console.log(req.body);
-   DevData.findOne({ name: req.body.name, passcode: req.body.pscd }, (err, user) => {
-      if (err) { return console.error(err); }
-      if (!user) { console.log("No such user", ); res.send("The data dosen't line up. Try again!"); }
+   DevData.findOne({ username: req.body.name }, (err, user) => {
+      if (err) return console.error(err);
+      if (!user) { res.send("There is no account with this name!"); }
       else if (user) {
-         console.log(user.username)
-         console.log("yay");
-         signIn(user);
-         res.send("good");
-         res.redirect("/");
+         DevData.findOne({ username: req.body.name, password: req.body.pscd }, (err, user) => {
+            if (err) return console.error(err);
+            if (!user) { res.send("Wrong password!"); }
+            else if (user) {
+               signIn(user);
+               res.send("Successful signin!");
+            }
+         });
       }
    });
 });
+
+// app.post("/enter-account", (req, res) => {
+//    console.log(req.body);
+//    DevData.findOne({ name: req.body.name, passcode: req.body.pscd }, (err, user) => {
+//       if (err) { return console.error(err); }
+//       if (!user) { console.log("No such user", ); res.send("The data dosen't line up. Try again!"); }
+//       else if (user) {
+//          console.log(user.username)
+//          console.log("yay");
+//          signIn(user);
+//          res.send("good");
+//          res.redirect("/");
+//       }
+//    });
+// });
 
 // Get all lost requests
 app.get("*", (req, res) => {
