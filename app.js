@@ -1,7 +1,7 @@
 /* =============
 // Data
 ============= */
-// System variables (These are basically JS libraries)
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -178,12 +178,16 @@ function goSomewhere(res, where) {
 ============= */
 
 // Sign in
-app.post("/signin", (req, res) => {
+app.post("/enter-account", (req, res) => {
+   console.log(req.body);
    DevData.findOne({ name: req.body.name, passcode: req.body.pscd }, (err, user) => {
-      if (err) return console.error(err);
-      if (!user) { res.send("The data dosen't line up. Try again!"); }
+      if (err) { return console.error(err); }
+      if (!user) { console.log("No such user", ); res.send("The data dosen't line up. Try again!"); }
       else if (user) {
+         console.log(user.username)
+         console.log("yay");
          signIn(user);
+         res.send("good");
          res.redirect("/");
       }
    });
@@ -202,4 +206,9 @@ app.listen(port);
 
 
 
-DevData.findOne({ name: "Squirrel", passcode: "0825" }, (err, user) => { signIn(user); });
+
+
+
+
+
+// DevData.findOne({ name: "Squirrel", passcode: "0825" }, (err, user) => { signIn(user); });

@@ -14,7 +14,6 @@
             <p>Home>Your Projects</p>
           </div>
           <div class="content">
-             <button><a href="/new-project">Make a new project</a></button>
              <%= projects %>
              <br>
              <div class="p-4 m-2 rounded-md bg-gray-50">
@@ -27,8 +26,10 @@
                     </div>
                   <% } %>
                <% }); %>
+               <div class="m-2 rounded-md bg-white hover:bg-gray-400 hover:text-white duration-200 border-dashed border-4 border-gray-200 hover:border-gray-400">
+                  <button class="py-6 px-8 text-3xl font-nunito"><a href="/new-project">Make a new project</a></button>
+               </div>
              </div>
-             
           </div>
       </div>
       

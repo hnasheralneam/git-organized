@@ -15,7 +15,7 @@ body {
 }
 
 .page {
-  padding: 1.5vh;
+  padding: 7.5vh 1.5vh;
   height: 100vh;
   min-width: 94vw;
   width: 100%;
@@ -38,11 +38,12 @@ body {
 .locbar {
   padding: 1vh 2.5vh;
   height: 6vh;
-  border-radius: .5vh;
-  background-color: #FEFEFE;
-  box-shadow: 0 0 .5vh #f5f5f5;
-  position: sticky;
+  background-color: #fefefe;
+  border-bottom: solid .5vh #f9f9f9;
+  position: fixed;
   top: 0;
+  right: 0vw;
+  width: calc(100% - 6vw - .4vh);
 }
 
 .locbar p {
