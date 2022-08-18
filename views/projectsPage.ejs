@@ -14,20 +14,20 @@
             <p>Home>Your Projects</p>
           </div>
           <div class="content">
-             <%= projects %>
-             <br>
-             <div class="p-4 m-2 rounded-md bg-gray-50">
-               <p class="text-lg m-4">Projects you are in</p>
-               <% projects.forEach(function(project) { %>
-                  <% if (project.contributors.includes(user.userCall)) { %>
-                     <div class="py-4 px-6 m-2 rounded-md bg-white border-l-8 border-sky-400 ">
-                       <a class="text-4xl" href="/project/<%= project.name %>"><%= project.name %></a><br>
-                       <p class="text-gray-600 font-nunito font-medium text-xl"><%= project.description %></p>
-                    </div>
-                  <% } %>
-               <% }); %>
-               <div class="m-2 rounded-md bg-white hover:bg-gray-400 hover:text-white duration-200 border-dashed border-4 border-gray-200 hover:border-gray-400">
-                  <button class="py-6 px-8 text-3xl font-nunito"><a href="/new-project">Make a new project</a></button>
+             <div class="p-1 relative">
+               <p class="text-4xl m-4 mb-6 uppercase text-amber-400 font-bold" style="text-shadow: 2px 2px #ff9800;">Projects you are in</p>
+               <div class="p-2 bg-gray-50 rounded-xl">
+                  <% projects.forEach(function(project) { %>
+                     <% if (project.contributors.includes(user.userCall)) { %>
+                        <div class="py-4 px-6 m-2 rounded-md bg-white border-l-8 border-l-sky-400 ">
+                          <a class="text-4xl" href="/project/<%= project.name %>"><%= project.name %></a><br>
+                          <p class="text-gray-600 font-nunito font-medium text-xl"><%= project.description %></p>
+                       </div>
+                     <% } %>
+                  <% }); %>
+               </div>
+               <div class="flex justify-center">
+                  <button class="absolute top-3 right-3 bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl"><a href="/new-project">Make a new project</a></button>
                </div>
              </div>
           </div>

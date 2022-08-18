@@ -4,6 +4,7 @@
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
    <title>New Project | Git Organized</title>
 </head>
 <body>
@@ -13,16 +14,35 @@
          <p>Home>New Project</p>
       </div>
       <div class="content">
-         <form method="POST" action="/newproject" id="create-new-project" class="bg-gray-50/25 p-8 rounded-3xl relative pb-16">
+         <p class="create-project-text mt-4 ml-12 text-2xl">Let's make a project, together! 😊</p>
+         <form action="/newproject" method="POST" id="create-new-project" class="bg-gray-50/25 p-8 rounded-3xl relative pb-16">
             <textarea class="bg-gray-100 px-4 py-2 m-0.5 text-xl rounded-3xl block" style="width: 100%; max-width: 100%; resize: none;" type="text" name="name" placeholder="Your new project's name" required></textarea>
             <textarea class="bg-gray-100 px-4 py-2 m-0.5 text-xl rounded-3xl block" style="width: 100%; max-width: 100%; height: 200px; resize: none;" type="text" name="about" placeholder="A little bit about what you'll be using it for" required></textarea><br>
             <input class="bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl absolute bottom-4 right-4" type="submit" value="Leeeeeeeet's GO!">
          </form>
-         <div class="bg-slate-50 rounded-3xl p-4 my-4 w-full">
+         <div class="bg-slate-50 rounded-3xl p-4 my-4 w-full text-xl text-center">
             <h2>Sorry! This place is still under construction.</h2>
-            <p><span class="material-symbols-rounded">construction</span> Remember, this site is not finished.</p>
+            <p>🏗️ Remember, I'm not done making Git-Organized! ⚒️</p>
+            <p>💖 Squirrel</p>
          </div>
       </div>
    </div>
+   <form id="letsGo" class="hidden"></form>
 </body>
 </html>
+<script>
+$("#create-new-project").submit(function(event) {
+   let projectName =this.name.value;
+   event.preventDefault();
+   $.post("/newproject", {
+      name: projectName,
+      about: this.about.value,
+   }).done(function(data) {
+      document.querySelector(".create-project-text").textContent = data;
+      if (data == "Successful creation!") {
+         document.querySelector("#letsGo").action = "/project/" + projectName;
+         document.querySelector("#letsGo").submit();
+      }
+   });
+});
+</script>

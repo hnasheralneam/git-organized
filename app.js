@@ -78,9 +78,6 @@ let cardTemplate = {
    creator: String
 }
 
-
-
-
 /*
 so here's what we'll do
 all action will be saved straight to the database, and will only be referenced by their uuid in the appropriate locations
@@ -195,20 +192,52 @@ app.post("/enter-account", (req, res) => {
    });
 });
 
-// app.post("/enter-account", (req, res) => {
-//    console.log(req.body);
-//    DevData.findOne({ name: req.body.name, passcode: req.body.pscd }, (err, user) => {
-//       if (err) { return console.error(err); }
-//       if (!user) { console.log("No such user", ); res.send("The data dosen't line up. Try again!"); }
-//       else if (user) {
-//          console.log(user.username)
-//          console.log("yay");
-//          signIn(user);
-//          res.send("good");
-//          res.redirect("/");
-//       }
-//    });
-// });
+/* =============
+// New Project
+============= */
+
+function newAction(user, loc, type, text, time, id) {
+   let newAction = new ActionData({
+      userCall: user,
+      location: loc,
+      type: type,
+      text: text,
+      time: time,
+      id: id
+   });
+   newAction.save();
+}
+
+app.post("/newproject", (req, res) => {
+   asyncCreation();
+   async function asyncCreation() {
+      let isAlreadyUsedName = await ProjectData.findOne({ name: req.body.name });
+      if (isAlreadyUsedName) { res.send("Oh, no! Someome already used this project name 😔. Try a different one!"); }
+      else {
+         let projectId = uuidv4();
+         let actionId = uuidv4();
+         newAction(signedInUser.userCall, "home>create-project", `create>project|#${projectId}`, `Created a project called ${req.body.name}`, new Date(), actionId);
+         const newProject = new ProjectData({
+            creater: signedInUser.userCall,
+            contributors: [signedInUser.userCall],
+            description: req.body.about,
+            id: projectId,
+            name: req.body.name,
+            dateCreated: new Date(),
+            actions: [actionId], // created
+         });
+         newProject.save(function (err, newUser) {
+            if (err) return console.error(err);
+            else { res.send("Successful creation!"); }
+         });
+      }
+   }
+});
+
+
+/* =============
+// Important stuff
+============= */
 
 // Get all lost requests
 app.get("*", (req, res) => {
@@ -221,11 +250,4 @@ app.listen(port);
 
 
 
-
-
-
-
-
-
-
-// DevData.findOne({ name: "Squirrel", passcode: "0825" }, (err, user) => { signIn(user); });
+DevData.findOne({ name: "Squirrel", passcode: "0825" }, (err, user) => { signIn(user); });
