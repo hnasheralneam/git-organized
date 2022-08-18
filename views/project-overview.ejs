@@ -33,13 +33,15 @@
                <p>Data: <%= thisProject.data %></p>
              </div>
              <div class="p-6 bg-gray-50 rounded-xl">
-               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">badge</span> Name: <%= thisProject.name %></p>
-               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">person_filled</span> Creator: <%= thisProject.creater %></p>
+               <div class="p-4 mb-2 bg-gray-100 rounded-xl">
+                  <p class="flex items-center mb-3 text-2xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">badge</span><%= thisProject.name %></p>
+                  <p class="m-1 mb-3 text-1xl"><%= thisProject.description %></p>   
+               </div>
+               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">person_filled</span> Made by <%= thisProject.creater %></p>
                <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">group</span> Contributors: <%= thisProject.contributors %></p>
-               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">description</span> About: <%= thisProject.description %></p>
-               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">calendar_today</span> Date Created: <%= thisProject.dateCreated %></p>
-               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">draft</span> UUID: <%= thisProject.id %></p>
-               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">data_object</span> _id: <%= thisProject._id %></p>
+               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">calendar_today</span> Created: <%= thisProject.dateCreated %></p>
+               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">draft</span><span class="p-4 py-3 bg-slate-100 rounded-lg font-nunito">UUID: <%= thisProject.id %></span></p>
+               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">data_object</span><span class="p-4 py-3 bg-slate-100 rounded-lg font-nunito">_id: <%= thisProject._id %></span></p>
             </div>
           </div>
       </div>
