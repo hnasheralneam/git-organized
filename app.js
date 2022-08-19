@@ -142,7 +142,7 @@ app.get("/actions-history", (req, res) => { goSomewhere(res, "globalActions"); }
 app.get("/project/:projectname", (req, res) => {
    ProjectData.findOne({ name: req.params.projectname }, (err, project) => {
       if (err) { console.error(err); }
-      else if (project == null) { res.render("no-such-project"); }
+      else if (project == null) { res.render("page-not-found"); }
       else {
          letsGo();
          async function letsGo() {
@@ -153,6 +153,22 @@ app.get("/project/:projectname", (req, res) => {
       }
    });
 });
+
+app.get("/edit-project/:projectname", (req, res) => {
+   ProjectData.findOne({ name: req.params.projectname }, (err, project) => {
+      if (err) { console.error(err); }
+      else if (project == null) { res.render("page-not-found"); }
+      else {
+         letsGo();
+         async function letsGo() {
+            let returnedData = await getNewpageData();
+            returnedData.thisProject = project;
+            res.render("edit-project", returnedData);
+         }
+      }
+   });
+});
+
 
 // Temporary landings
 app.get("/sign-out", (req, res) => {
@@ -224,7 +240,7 @@ app.post("/newproject", (req, res) => {
             id: projectId,
             name: req.body.name,
             dateCreated: new Date(),
-            actions: [actionId], // created
+            actions: [actionId]
          });
          newProject.save(function (err, newUser) {
             if (err) return console.error(err);
@@ -234,6 +250,35 @@ app.post("/newproject", (req, res) => {
    }
 });
 
+/* =============
+// New Card
+============= */
+
+app.post("/newcard", (req, res) => {
+   ProjectData.findOneAndUpdate(
+      { name: req.body.projectName }, 
+      { $push: { data: {
+         status: "to-do",
+         subcards: [],
+         actions: [],
+         contributors: [signedInUser.userCall],
+         name: req.body.name,
+         about: req.body.about,
+         tags: req.body.tags,
+         priority: req.body.priority,
+         difficulty: req.body.difficulty,
+         assignees: req.body.assignees,
+         estTime: req.body.estTime,
+         dueDate: req.body.dueDate,
+         dateCreated: new Date(),
+         creator: signedInUser.userCall,
+         } } },
+         function (err, yay) {
+            if (err) { console.log(err); }
+            else { console.log("Result:", yay); }
+         }
+   );
+});
 
 /* =============
 // Important stuff

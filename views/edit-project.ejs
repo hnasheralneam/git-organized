@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Editing <%= thisProject.name %> | Git Organized</title>
+</head>
+<body>
+   <% if (user !== "(not signed in)") { %>
+      <%- include("partials/navbar"); %>
+      
+      <div class="page">
+         <div class="locbar">
+            <p>Home>Edit Projects><%= thisProject.name %></p>
+         </div>
+
+         <% if (thisProject.contributors.includes(user.userCall)) { %>
+
+
+            <button onclick="display('createCard')" class="absolute top-18 right-3 bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl">Make a new card</button>
+
+
+
+            <div class="createCard fixed top-0 left-0 backdrop-blur-sm overflow-auto hidden" style="height: 100vh; width: 100vw;">
+               <div class="p-8 m-12 bg-white rounded-xl shadow-sm shadow-gray-200">
+                  <p class="create-card-text mb-6 text-2xl text-center">Let's make a card, together! 😊</p>
+                  <form action="/newcard" method="POST" id="create-new-project" class="relative pb-16">
+
+                     <p>Card name (Required)</p>
+                     <input type="text" name="name" placeholder=" The name of your new card" required>
+                     <br>
+                     <p>About card</p>
+                     <textarea type="text" name="about" placeholder="A little bit about the topic"></textarea>
+                     <br>
+                     <p>Due date</p>
+                     <input type="date" name="dueDate">
+                     <br>
+                     <p>Estimated time</p>
+                     <input type="text" name="estTime" placeholder="How long you think it'll take to finish this card">
+                     <br>
+                     <p>Tags</p>
+                     <input type="text" name="tags" placeholder="Separate values by spaces">
+                     <br>
+                     <p>Assignees</p>
+                     <input type="text" name="assignees" placeholder="Separate values by spaces">
+                     <br>
+                     <p>Priority</p>
+                     <input type="text" name="assignees" placeholder="Number, 1-9">
+                     <br>
+                     <p>Difficulty</p>
+                     <input type="text" name="assignees" placeholder="Number, 1-9">
+
+                     <input type="hidden" name="projectName" value="<%= thisProject.name %>">
+
+                     <input onclick="undisplay('createCard')" class="bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl absolute bottom-4 right-4" type="submit" value="Leeeeeeeet's GO!">
+                  </form>
+                  <div class="bg-gray-50/50 rounded-3xl p-4 mt-4 w-full text-xl text-center">
+                     <h2>⏰ Please be patient! This area is still under construction.</h2>
+                     <p>🏗️ Remember, I'm not done making Git-Organized! ⚒️</p>
+                     <p>💖 Squirrel</p>
+                  </div>
+               </div>
+            </div>
+
+            <% thisProject.data.forEach(function(card) { %>
+               <p><%= JSON.stringify(card) %></p>
+            <% }); %>
+
+            <form id="letsGo" class="hidden"></form>
+
+
+         <% } else { %>
+            <div class="flex justify-center items-center" style="height: 80vh">
+               <div class="p-6 bg-gray-100 rounded-lg text-center font-nunito">
+                  <p class="m-3 text-gray-800 text-2xl">Oh, no! You aren't in this project 😭</p>
+                  <p class="m-3 text-gray-800 text-2xl">Maybe ask to join it? I'm crossing my fingers for you!🤞</p>
+               </div>
+            </div>
+         <% } %>
+
+      </div>
+      
+   <%} else { %>
+      <%- include("partials/signedOut"); %>
+      <%- include("partials/signIn"); %>
+   <% } %>
+</body>
+</html>
+<script>
+function display(input) {
+   document.querySelector("." + input).style.display = "block";
+}
+function undisplay(input) {
+   document.querySelector("." + input).style.display = "none";
+}
+
+$("#newcard").submit(function(event) {
+   event.preventDefault();
+   let tagsArray = this.tags.value.split(" ");
+   let assigneesArray = this.assignees.value.split(" ");
+
+   $.post("/newcard", {
+      name: this.name.value,
+      about: this.about.value,
+      dueDate: this.dueDate.value,
+      estTime: this.estTime.value,
+      tags: tagsArray,
+      assignees: assigneesArray,
+      priority: this.priority.value,
+      difficulty: this.difficulty.value,
+      projectName: this.projectName.value
+   }).done(function(data) {
+      document.querySelector(".create-card-text").textContent = data;
+      if (data == "Successful creation!") {
+         document.querySelector("#letsGo").action = "/edit-project/" + this.projectName.value;
+         document.querySelector("#letsGo").submit();
+      }
+   });
+});
+</script>
+
