@@ -15,7 +15,7 @@
   "description": "A project manager for developers",
   "main": "app.js",
   "scripts": {
-    "watch-css": "npx tailwindcss -i main.css -o css/m*ain.css --watch",
+    "watch-css": "npx tailwindcss -i main.css -o css/main.css --watch",
     "test": "test"
   },
   "repository": {
