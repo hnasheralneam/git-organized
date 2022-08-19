@@ -1,4 +1,4 @@
-# Git Organized
+# 🗃️ Git Organized
 ## The project planning tool for me
 And anyone else who wants to use it too, I guess.
 
