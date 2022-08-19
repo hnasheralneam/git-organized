@@ -25,13 +25,15 @@
                                  <p class="text-2xl text-gray-700"><%= card.about %></p>   
                               </div>
                               <div class="p-3 my-2 bg-gray-50 rounded-2xl">
-                                 <p><span class="material-symbols-rounded">pending</span>Status: <%= card.status %></p>
-                                 <p><span class="material-symbols-rounded">view_agenda</span>Subcards: <%= card.subcards %></p>
-                                 <p><span class="material-symbols-rounded">person</span>Creator: <%= card.creator %></p>
-                                 <p><span class="material-symbols-rounded">group</span>Contributors: <%= card.contributors %></p>
-                                 <p><span class="material-symbols-rounded">schedule</span>Estimated time: <%= card.estTime %></p>
-                                 <p><span class="material-symbols-rounded">calendar_month</span>Due date: <%= card.dueDate %></p>
-                                 <p><span class="material-symbols-rounded">edit</span>Created: <%= card.dateCreated %> <%= Date.now() - card.dateCreated.getMilliseconds() %></p>   
+                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">person</span>Creator: <%= card.creator %></p>
+                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">group</span>Contributors: <%= card.contributors %></p>
+
+                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">schedule</span>Estimated time: <%= card.estTime %></p>
+                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">calendar_month</span>Due date: <%= card.dueDate %></p>
+                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">edit</span>Created: <%= card.dateCreated %></p>   
+
+                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">pending</span>Status: <%= card.status %></p>
+                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">view_agenda</span>Subcards: <%= card.subcards %></p>
                               </div>
                            </div>
    
@@ -60,7 +62,7 @@
 
             </div>
             <div class="locbar">
-               <p>Home>Edit Projects><%= thisProject.name %></p>
+               <p>Home>Edit Projects><%= thisProject.name %><a class="p-0.5 px-3 float-right text-stone-700 bg-stone-50 rounded-lg" href="/project/<%= thisProject.name %>">&#8592; Back to overview</a></p>
             </div>
    
             <!-- Create tag modal -->
@@ -70,29 +72,38 @@
                   <p class="create-card-text mb-6 text-2xl text-center">Let's make a card, together! 😊</p>
                   <form action="/newcard" method="POST" id="create-new-card" class="relative pb-16">
 
-                     <p>Card name (Required)</p>
-                     <input type="text" name="name" placeholder=" The name of your new card" required>
-                     <br>
-                     <p>About card</p>
-                     <textarea type="text" name="about" placeholder="A little bit about the topic"></textarea>
-                     <br>
-                     <p>Due date</p>
-                     <input type="date" name="dueDate">
-                     <br>
-                     <p>Estimated time</p>
-                     <input type="text" name="estTime" placeholder="How long you think it'll take to finish this card">
-                     <br>
-                     <p>Tags</p>
-                     <input type="text" name="tags" placeholder="Separate values by spaces">
-                     <br>
-                     <p>Assignees</p>
-                     <input type="text" name="assignees" placeholder="Separate values by spaces">
-                     <br>
-                     <p>Priority</p>
-                     <input type="text" name="priority" placeholder="Number, 1-9">
-                     <br>
-                     <p>Difficulty</p>
-                     <input type="text" name="difficulty" placeholder="Number, 1-9">
+                     <div class="grid grid-cols-2">
+
+                        <div class="pl-4 mb-4 border-l-4 border-l-emerald-400 rounded-md">
+                           <p class="m-2 mt-4 text-xl">Card name (Required)</p>
+                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="name" placeholder=" The name of your new card" required>
+                           <br>
+                           <p class="m-2 mt-4 text-xl">About card</p>
+                           <textarea class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="about" placeholder="A little bit about the topic"></textarea>   
+                        </div>
+                        <div class="pl-4 mb-4 border-l-4 border-l-pink-500 rounded-md">
+                           <p class="m-2 mt-4 text-xl">Due date</p>
+                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="date" name="dueDate">
+                           <br>
+                           <p class="m-2 mt-4 text-xl">Estimated time</p>
+                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="estTime" placeholder="How long you think it'll take to finish this card">   
+                        </div>
+                        <div class="pl-4 border-l-4 border-l-indigo-500 rounded-md">
+                           <p class="m-2 mt-4 text-xl">Priority</p>
+                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="priority" placeholder="Number, 1-9">
+                           <br>
+                           <p class="m-2 mt-4 text-xl">Difficulty</p>
+                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="difficulty" placeholder="Number, 1-9">   
+                        </div>
+                        <div class="pl-4 border-l-4 border-l-yellow-700 rounded-md">
+                           <p class="m-2 mt-4 text-xl">Tags</p>
+                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="tags" placeholder="Separate values by spaces">
+                           <br>
+                           <p class="m-2 mt-4 text-xl">Assignees</p>
+                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="assignees" placeholder="Separate values by spaces">   
+                        </div>
+
+                     </div>
 
                      <input type="hidden" name="projectName" value="<%= thisProject.name %>">
 
