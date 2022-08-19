@@ -272,6 +272,7 @@ app.post("/newcard", (req, res) => {
          dueDate: req.body.dueDate,
          dateCreated: new Date(),
          creator: signedInUser.userCall,
+         id: uuidv4()
          } } },
          function (err, yay) {
             if (err) { console.log(err); }

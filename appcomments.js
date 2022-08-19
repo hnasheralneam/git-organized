@@ -56,7 +56,6 @@
 
 
 
-
 // ProjectData.findByIdAndDelete("62378fef65ad7e3382672738", function (err, docs) {
 //    if (err) { console.log(err); }
 //    else { console.log("Deleted : ", docs); }
@@ -74,3 +73,14 @@
 //    data: [] // arr of cards
 // });
 // newUser.save(function (err, newUser) { if (err) return console.error(err); });
+
+
+
+// ProjectData.findOneAndUpdate(
+//    { name: "Anotherother test" }, 
+//    { data: [] },
+//    function (error, success) {
+//       if (error) { console.log(error); }
+//       else { console.log(success + "yayproject"); }
+//    }
+// );

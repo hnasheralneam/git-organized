@@ -10,21 +10,65 @@
       <%- include("partials/navbar"); %>
       
       <div class="page">
-         <div class="locbar">
-            <p>Home>Edit Projects><%= thisProject.name %></p>
-         </div>
 
          <% if (thisProject.contributors.includes(user.userCall)) { %>
+            <div class="content">
+
+               <div class="p-1 bg-gray-50 rounded-lg">
+                  <% thisProject.data.forEach(function(card) { %>
+                     <div class="py-2 px-4 m-4 bg-white border-l-8 border-l-amber-300 rounded-lg relative">
+                        <div class="grid grid-cols-2">
+
+                           <div>
+                              <div class="px-4 border-l-4 border-l-emerald-400 rounded-sm">
+                                 <p class="text-3xl"><%= card.name %></p>
+                                 <p class="text-2xl text-gray-700"><%= card.about %></p>   
+                              </div>
+                              <div class="p-3 my-2 bg-gray-50 rounded-2xl">
+                                 <p><span class="material-symbols-rounded">pending</span>Status: <%= card.status %></p>
+                                 <p><span class="material-symbols-rounded">view_agenda</span>Subcards: <%= card.subcards %></p>
+                                 <p><span class="material-symbols-rounded">person</span>Creator: <%= card.creator %></p>
+                                 <p><span class="material-symbols-rounded">group</span>Contributors: <%= card.contributors %></p>
+                                 <p><span class="material-symbols-rounded">schedule</span>Estimated time: <%= card.estTime %></p>
+                                 <p><span class="material-symbols-rounded">calendar_month</span>Due date: <%= card.dueDate %></p>
+                                 <p><span class="material-symbols-rounded">edit</span>Created: <%= card.dateCreated %> <%= Date.now() - card.dateCreated.getMilliseconds() %></p>   
+                              </div>
+                           </div>
+   
+                           <div dir="rtl">
+                              <div class="p-3 mb-2 w-24 bg-gray-50 rounded-2xl">
+                                 <p class="py-1 text-center">Priority</p>
+                                 <div class="text-white text-4xl flex justify-center bg-red-500 relative rounded-2xl font-notosansmono" style="padding: 5px; width: calc(100% - 10px); height: 0; padding-bottom: calc(100% - 10px); box-sizing: content-box;"><%= card.priority %></div>
+                                 <p class="py-1 text-center">Difficulty</p>
+                                 <div class="text-white text-4xl flex justify-center bg-sky-500 relative rounded-2xl font-notosansmono" style="padding: 5px; width: calc(100% - 10px); height: 0; padding-bottom: calc(100% - 10px); box-sizing: content-box;"><%= card.difficulty %></div>
+                              </div>
+                           </div>
+
+                        </div>
 
 
+                        <div class="p-3 bg-gray-50 rounded-2xl">
+                           <% card.tags.forEach(function(tag) { %>
+                              <span class="py-1 px-3 bg-rose-400 rounded-full inline-block"><%= tag %></span>
+                           <% }); %>
+                        </div>
+                     </div>
+                  <% }); %>
+               </div>
+            
+
+
+            </div>
+            <div class="locbar">
+               <p>Home>Edit Projects><%= thisProject.name %></p>
+            </div>
+   
+            <!-- Create tag modal -->
             <button onclick="display('createCard')" class="absolute top-18 right-3 bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl">Make a new card</button>
-
-
-
             <div class="createCard fixed top-0 left-0 backdrop-blur-sm overflow-auto hidden" style="height: 100vh; width: 100vw;">
                <div class="p-8 m-12 bg-white rounded-xl shadow-sm shadow-gray-200">
                   <p class="create-card-text mb-6 text-2xl text-center">Let's make a card, together! 😊</p>
-                  <form action="/newcard" method="POST" id="create-new-project" class="relative pb-16">
+                  <form action="/newcard" method="POST" id="create-new-card" class="relative pb-16">
 
                      <p>Card name (Required)</p>
                      <input type="text" name="name" placeholder=" The name of your new card" required>
@@ -45,10 +89,10 @@
                      <input type="text" name="assignees" placeholder="Separate values by spaces">
                      <br>
                      <p>Priority</p>
-                     <input type="text" name="assignees" placeholder="Number, 1-9">
+                     <input type="text" name="priority" placeholder="Number, 1-9">
                      <br>
                      <p>Difficulty</p>
-                     <input type="text" name="assignees" placeholder="Number, 1-9">
+                     <input type="text" name="difficulty" placeholder="Number, 1-9">
 
                      <input type="hidden" name="projectName" value="<%= thisProject.name %>">
 
@@ -62,12 +106,6 @@
                </div>
             </div>
 
-            <% thisProject.data.forEach(function(card) { %>
-               <p><%= JSON.stringify(card) %></p>
-            <% }); %>
-
-            <form id="letsGo" class="hidden"></form>
-
 
          <% } else { %>
             <div class="flex justify-center items-center" style="height: 80vh">
@@ -77,6 +115,7 @@
                </div>
             </div>
          <% } %>
+
 
       </div>
       
@@ -94,10 +133,11 @@ function undisplay(input) {
    document.querySelector("." + input).style.display = "none";
 }
 
-$("#newcard").submit(function(event) {
+$("#create-new-card").submit(function(event) {
    event.preventDefault();
    let tagsArray = this.tags.value.split(" ");
    let assigneesArray = this.assignees.value.split(" ");
+   console.log(this.tags.value, tagsArray);
 
    $.post("/newcard", {
       name: this.name.value,
@@ -111,10 +151,7 @@ $("#newcard").submit(function(event) {
       projectName: this.projectName.value
    }).done(function(data) {
       document.querySelector(".create-card-text").textContent = data;
-      if (data == "Successful creation!") {
-         document.querySelector("#letsGo").action = "/edit-project/" + this.projectName.value;
-         document.querySelector("#letsGo").submit();
-      }
+      // if (data == "Successful creation!") { location.reload(); }
    });
 });
 </script>
