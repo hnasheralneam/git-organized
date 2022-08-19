@@ -14,9 +14,10 @@
          <% if (thisProject.contributors.includes(user.userCall)) { %>
             <div class="content">
 
+
                <div class="p-1 bg-gray-50 rounded-lg">
                   <% thisProject.data.forEach(function(card) { %>
-                     <div class="py-2 px-4 m-4 bg-white border-l-8 border-l-amber-300 rounded-lg relative">
+                     <div class="card py-2 px-4 m-4 bg-white border-l-8 border-l-amber-300 rounded-lg relative" id="<%= card.id %>">
                         <div class="grid grid-cols-2">
 
                            <div>
@@ -33,16 +34,24 @@
                                  <p class="flex items-center"><span class="material-symbols-rounded mr-1">edit</span>Created: <%= card.dateCreated %></p>   
 
                                  <p class="flex items-center"><span class="material-symbols-rounded mr-1">pending</span>Status: <%= card.status %></p>
-                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">view_agenda</span>Subcards: <%= card.subcards %></p>
+                                 <!-- <p class="flex items-center"><span class="material-symbols-rounded mr-1">view_agenda</span>Subcards: <%= card.subcards %></p> -->
                               </div>
                            </div>
    
                            <div dir="rtl">
-                              <div class="p-3 mb-2 w-24 bg-gray-50 rounded-2xl">
+                              <div class="p-3 mb-2 w-24 bg-gray-50 rounded-2xl inline-block">
                                  <p class="py-1 text-center">Priority</p>
                                  <div class="text-white text-4xl flex justify-center bg-red-500 relative rounded-2xl font-notosansmono" style="padding: 5px; width: calc(100% - 10px); height: 0; padding-bottom: calc(100% - 10px); box-sizing: content-box;"><%= card.priority %></div>
                                  <p class="py-1 text-center">Difficulty</p>
                                  <div class="text-white text-4xl flex justify-center bg-sky-500 relative rounded-2xl font-notosansmono" style="padding: 5px; width: calc(100% - 10px); height: 0; padding-bottom: calc(100% - 10px); box-sizing: content-box;"><%= card.difficulty %></div>
+                              </div>
+                              <div class="mr-2 top-0 inline-block">
+                                 <form class="archive" action="/archive-card" method="POST">
+                                    <input style="display: none;" type="text" name="cardId" value="<%= card.id %>"><br>
+                                    <button class="archive-btn p-4 bg-gray-100 rounded-2xl" type="text">
+                                       <span class="material-symbols-rounded text-4xl">inventory_2</span>
+                                    </button>
+                                 </form>
                               </div>
                            </div>
 
@@ -144,6 +153,22 @@ function undisplay(input) {
    document.querySelector("." + input).style.display = "none";
 }
 
+
+
+
+(() => {
+   document.querySelectorAll(".card").forEach((obj, i, arr) => {
+      document.querySelectorAll(".archive")[i].onsubmit = function(event) {
+         event.preventDefault();
+         $.post("/archive-card", {
+            projectId: "<%= thisProject.id %>",
+            cardId: this.cardId.value
+         }).done(function() { obj.remove(); });
+      }
+   });
+})();
+
+
 $("#create-new-card").submit(function(event) {
    event.preventDefault();
    let tagsArray = this.tags.value.split(" ");
@@ -166,4 +191,3 @@ $("#create-new-card").submit(function(event) {
    });
 });
 </script>
-

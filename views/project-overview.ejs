@@ -19,7 +19,7 @@
       
       <div class="page">
          <div class="locbar">
-            <p>Home>Projects><%= thisProject.name %><a class="p-0.5 px-3 float-right text-stone-700 bg-stone-50 rounded-lg" href="/edit-project/<%= thisProject.name %>">Edit project &#8594;</a></p>
+            <p>Home>Projects><%= thisProject.name %><a class="p-0.5 px-3 float-right text-stone-700 bg-stone-50 rounded-lg" href="/edit-project/<%= thisProject.name %>">Edit project &#8594;</a><a class="p-0.5 px-3 mr-2 float-right text-stone-700 bg-stone-50 rounded-lg" href="/your-projects">&#8592; Your projects</a></p>
           </div>
           <div class="content grid" style="grid-template-columns: 70% 30%">
              <div class="main">
@@ -50,7 +50,11 @@
                                  <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">schedule</span>Estimated time: <%= card.estTime %></p>
                                  <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">calendar_month</span>Due date: <%= card.dueDate %></p>
 
-                                 <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span>Status: <%= card.status %></p>
+                                 <% if (card.status == "to-do") { %>
+                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-emerald-200 py-1 px-2 rounded-xl">Status: <%= card.status %></p>
+                                 <% } else { %>
+                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-gray-200 py-1 px-2 rounded-xl">Status: <%= card.status %></span></p>
+                                 <% } %>
                               </div>
       
                               <div dir="rtl">
