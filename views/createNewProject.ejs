@@ -10,9 +10,7 @@
 <body>
    <%- include("partials/navbar"); %>
    <div class="page">
-      <div class="locbar">
-         <p>Home>New Project</p>
-      </div>
+      <%- include("partials/locbar", { text: "Home>New Project" }); %>
       <div class="content">
          <p class="create-project-text mt-4 ml-12 text-2xl">Let's make a project, together! 😊</p>
          <form action="/newproject" method="POST" id="create-new-project" class="bg-gray-50/25 p-8 rounded-3xl relative pb-16">

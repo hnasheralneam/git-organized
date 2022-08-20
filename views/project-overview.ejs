@@ -18,9 +18,7 @@
       <%- include("partials/navbar"); %>
       
       <div class="page">
-         <div class="locbar">
-            <p>Home>Projects><%= thisProject.name %><a class="p-0.5 px-3 float-right text-stone-700 bg-stone-50 rounded-lg" href="/edit-project/<%= thisProject.name %>">Edit project &#8594;</a><a class="p-0.5 px-3 mr-2 float-right text-stone-700 bg-stone-50 rounded-lg" href="/your-projects">&#8592; Your projects</a></p>
-          </div>
+
           <div class="content grid" style="grid-template-columns: 70% 30%">
              <div class="main">
                <% if (thisProject.contributors.includes(user.userCall)) { %>
@@ -29,50 +27,62 @@
 
                   <div class="p-1 mr-3 bg-gray-50 rounded-lg">
                      <% thisProject.data.forEach(function(card) { %>
-                        <div class="py-2 px-4 m-4 bg-white border-l-8 border-l-amber-300 rounded-lg relative">
-                           <div class="grid grid-cols-9">
+                        <% if (card.status != "archived") { %>
+                           <div class="py-2 px-4 m-4 bg-white border-l-8 border-l-amber-300 rounded-lg relative">
+                              <div class="grid grid-cols-9">
+      
+                                 <div class="col-span-5">
+                                    <div class="px-4 border-l-4 border-l-emerald-400 rounded-sm">
+                                       <p class="text-2xl"><%= card.name %></p>
+                                    <p class="text-xl text-gray-700"><%= card.about %></p>
+                                    </div>
+
+
+                                    <div class="m-1">
+                                       <% card.assignees.forEach(function(person) { %>
+                                          <span class="py-1 px-3 inline-block">@<%= person %></span>
+                                       <% }); %>
+                                    </div>
+                                    <div class="m-1">
+                                       <% card.tags.forEach(function(tag) { %>
+                                          <span class="py-1 px-3 bg-rose-400 rounded-full inline-block"><%= tag %></span>
+                                       <% }); %>
+                                    </div>
+                                 </div>
+                                 <div class="p-3 my-2 bg-gray-50 rounded-2xl col-span-3">
+                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">group</span>Contributors: <%= card.contributors %></p>
    
-                              <div class="col-span-5">
-                                 <div class="px-4 border-l-4 border-l-emerald-400 rounded-sm">
-                                    <p class="text-2xl"><%= card.name %></p>
-                                 <p class="text-xl text-gray-700"><%= card.about %></p>
+                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">schedule</span>Estimated time: <%= card.estTime %></p>
+                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">calendar_month</span>Due date: <%= card.dueDate %></p>
+   
+                                    <% if (card.status == "to-do") { %>
+                                       <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-emerald-200 py-1 px-2 rounded-xl">Status: <%= card.status %></p>
+                                    <% } else { %>
+                                       <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-gray-200 py-1 px-2 rounded-xl">Status: <%= card.status %></span></p>
+                                    <% } %>
                                  </div>
-
-                                 <div class="m-1">
-                                    <% card.tags.forEach(function(tag) { %>
-                                       <span class="py-1 px-3 bg-rose-400 rounded-full inline-block"><%= tag %></span>
-                                    <% }); %>
+         
+                                 <div dir="rtl">
+                                    <div class="p-2 mb-2 w-[67px] bg-gray-50 rounded-2xl">
+                                       <div title="Priority" class="text-white text-4xl bg-red-500 rounded-2xl font-notosansmono mb-2" style="height: 50px; width: 50px; display: flex; justify-content: center; align-items: center;"><%= card.priority %></div>
+                                       <div title="Difficulty" class="text-white text-4xl bg-sky-500 rounded-2xl font-notosansmono" style="height: 50px; width: 50px; display: flex; justify-content: center; align-items: center;"><%= card.difficulty %></div>
+                                    </div>
                                  </div>
-                              </div>
-                              <div class="p-3 my-2 bg-gray-50 rounded-2xl col-span-3">
-                                 <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">group</span>Contributors: <%= card.contributors %></p>
-
-                                 <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">schedule</span>Estimated time: <%= card.estTime %></p>
-                                 <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">calendar_month</span>Due date: <%= card.dueDate %></p>
-
-                                 <% if (card.status == "to-do") { %>
-                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-emerald-200 py-1 px-2 rounded-xl">Status: <%= card.status %></p>
-                                 <% } else { %>
-                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-gray-200 py-1 px-2 rounded-xl">Status: <%= card.status %></span></p>
-                                 <% } %>
+      
                               </div>
       
-                              <div dir="rtl">
-                                 <div class="p-2 mb-2 w-[67px] bg-gray-50 rounded-2xl">
-                                    <div title="Priority" class="text-white text-4xl bg-red-500 rounded-2xl font-notosansmono mb-2" style="height: 50px; width: 50px; display: flex; justify-content: center; align-items: center;"><%= card.priority %></div>
-                                    <div title="Difficulty" class="text-white text-4xl bg-sky-500 rounded-2xl font-notosansmono" style="height: 50px; width: 50px; display: flex; justify-content: center; align-items: center;"><%= card.difficulty %></div>
-                                 </div>
-                              </div>
    
                            </div>
-   
-
-                        </div>
+                        <% } %>
                      <% }); %>
                   </div>
 
+                  
 
-
+                  <div class="locbar right-0 top-0 fixed bg-white/75 dark:bg-gray-800/75 border-b-2 border-gray-50/75 dark:border-gray-700/75 backdrop-blur-sm" style="width: calc(100% - 6vw - .3vh); padding: 1vh 2.5vh; height: 6vh;">
+                     <p>Home>Projects><%= thisProject.name %><a class="p-0.5 px-3 float-right text-stone-700 bg-stone-50 rounded-lg" href="/edit-project/<%= thisProject.name %>">Edit project &#8594;</a><a class="p-0.5 px-3 mr-2 float-right text-stone-700 bg-stone-50 rounded-lg" href="/your-projects">&#8592; Your projects</a></p>
+                   </div>
+         
 
                <% } else { %>
                   <p class="center text-2xl font-nunito">You are not in this project!</p>
@@ -85,9 +95,7 @@
                </div>
                <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">person_filled</span> Made by <%= thisProject.creater %></p>
                <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">group</span> Contributors: <%= thisProject.contributors %></p>
-               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">calendar_today</span> Created: <%= thisProject.dateCreated %></p>
-               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">draft</span><span class="p-4 py-3 bg-slate-100 rounded-lg font-nunito">UUID: <%= thisProject.id %></span></p>
-               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">data_object</span><span class="p-4 py-3 bg-slate-100 rounded-lg font-nunito">_id: <%= thisProject._id %></span></p>
+               <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">calendar_today</span> Created: <%= thisProject.dateCreated.toLocaleString() %></p>
             </div>
           </div>
       </div>

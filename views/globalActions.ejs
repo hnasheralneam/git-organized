@@ -29,9 +29,7 @@
       <%- include("partials/navbar"); %>
 
       <div class="page">
-         <div class="locbar">
-            <p>Home>Global Actions</p>
-         </div>
+         <%- include("partials/locbar", { text: "Home>Global Actions" }); %>
          <div class="content">
             <div>
                <% actions.forEach(function(action) { %>

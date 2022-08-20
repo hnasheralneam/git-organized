@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 1999;
 const connection = mongoose.connection;
 
 let signedInUser = "(not signed in)";
@@ -59,29 +59,6 @@ const actionSchema = new mongoose.Schema({
    time: Date,
    id: String
 });
-
-
-let cardTemplate = {
-   status: String,
-   subcards: [],
-   actions: [],
-   contributors: [],
-   name: String,
-   description: String,
-   tags: [],
-   priority: String,
-   difficulty: String,
-   assignees: [],
-   estTime: String,
-   dueDate: Date,
-   dateCreated: Date,
-   creator: String
-}
-
-/*
-so here's what we'll do
-all action will be saved straight to the database, and will only be referenced by their uuid in the appropriate locations
-*/
 
 // Set the schemas
 const DevData = mongoose.model("DevData", userSchema);
@@ -155,7 +132,7 @@ app.get("/project/:projectname", (req, res) => {
 });
 
 app.get("/edit-project/:projectname", (req, res) => {
-   ProjectData.findOne({ name: req.params.projectname }, (err, project) => {
+   ProjectData.findOne({ name: decodeURI(req.params.projectname) }, (err, project) => {
       if (err) { console.error(err); }
       else if (project == null) { res.render("page-not-found"); }
       else {
@@ -294,7 +271,6 @@ app.post("/archive-card", (req, res) => {
          });
       }
    });
-
 
    // Chat.deleteOne( { _id: req.body.msgId }, (err) => { if (err) return console.error(err); } );
    // Chat.findOne({ name: signedInUser.name }, (err, doc) => {
