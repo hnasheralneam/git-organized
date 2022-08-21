@@ -21,6 +21,7 @@
 
 .tooltip span {
    background: linear-gradient(to bottom right, #FFF45A, #FF9C5A);
+   background-clip: text;
    -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;
 }

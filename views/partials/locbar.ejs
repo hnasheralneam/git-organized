@@ -1,3 +1,9 @@
-<div class="locbar right-0 top-0 fixed bg-white dark:bg-gray-800 border-b-2 border-gray-50 dark:border-gray-700 backdrop-blur-sm" style="width: calc(100% - 6vw - .28vh); padding: 1vh 2.5vh; height: 6vh;">
-   <p class="text-bold font-nunito"><%= text %></p>
+<div class="locbar right-0 top-0 fixed text-gray-900 dark:text-gray-50 bg-white/[.8] dark:bg-gray-800/[.8] border-b-2 border-gray-50/[.8] dark:border-gray-700/[.8] backdrop-blur-sm" style="width: calc(100% - 6vw - .28vh); padding: 1vh 2.5vh; height: 6vh;">
+   <% if (text == "site:projectoverview") { %>
+      <p>Home>Projects><%= thisProject.name %><a class="p-0.5 px-3 float-right text-stone-700 bg-stone-50 rounded-lg" href="/edit-project/<%= thisProject.name %>">Edit project &#8594;</a><a class="p-0.5 px-3 mr-2 float-right text-stone-700 bg-stone-50 rounded-lg" href="/your-projects">&#8592; Your projects</a></p>
+   <% } else if (text == "site:editproject") { %>
+      <p>Home>Edit Projects><%= thisProject.name %><a class="p-0.5 px-3 float-right text-stone-700 bg-stone-50 rounded-lg" href="/project/<%= thisProject.name %>">&#8592; Back to overview</a></p>
+   <% } else { %>
+      <p class="text-bold font-nunito"><%= text %></p>
+   <% } %>
 </div>

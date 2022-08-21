@@ -78,9 +78,7 @@
 
 
             </div>
-            <div class="locbar">
-               <p>Home>Edit Projects><%= thisProject.name %><a class="p-0.5 px-3 float-right text-stone-700 bg-stone-50 rounded-lg" href="/project/<%= thisProject.name %>">&#8592; Back to overview</a></p>
-            </div>
+
    
             <!-- Create tag modal -->
             <button onclick="display('createCard')" class="absolute top-18 right-3 bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl">Make a new card</button>
@@ -134,7 +132,7 @@
                </div>
             </div>
 
-
+            <%- include("partials/locbar", { text: "site:editproject" }); %>
          <% } else { %>
             <div class="flex justify-center items-center" style="height: 80vh">
                <div class="p-6 bg-gray-100 rounded-lg text-center font-nunito">

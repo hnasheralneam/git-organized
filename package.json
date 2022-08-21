@@ -7,25 +7,19 @@
     "express": "^4.17.3",
     "mongoose": "^6.2.7",
     "postcss": "^8.4.16",
-    "requirejs": "^2.3.6",
     "uuid": "^8.3.2"
   },
   "name": "git-organized",
-  "version": "0.1.0",
-  "description": "A project manager for developers",
+  "version": "0.0.1",
+  "description": "A project management tool for developers",
   "main": "app.js",
   "scripts": {
-    "watch-css": "npx tailwindcss -i main.css -o css/main.css --watch",
-    "test": "test"
+    "watch-css": "npx tailwindcss -i main.css -o css/main.css --watch"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Squirrel-314/git-organized.git"
   },
-  "keywords": [
-    "organize",
-    "developers"
-  ],
   "author": "Squirrel",
   "license": "MIT",
   "bugs": {

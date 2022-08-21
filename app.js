@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const { v4: uuidv4 } = require("uuid");
 
 const app = express();
-const port = process.env.PORT || 1999;
+const port = process.env.PORT || 3000;
 const connection = mongoose.connection;
 
 let signedInUser = "(not signed in)";

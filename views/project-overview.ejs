@@ -3,6 +3,11 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script> -->
+   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+   <script src="/Scripts/require.js"></script>
+
    <title><%= thisProject.name %> | Git Organized</title>
 </head>
 <style>
@@ -23,6 +28,42 @@
              <div class="main">
                <% if (thisProject.contributors.includes(user.userCall)) { %>
                   <p class="m-2 mb-4 text-2xl text-center font-nunito">You are in this project!</p>
+
+
+                  <div id="mydiv"></div>
+                  <div id="root"></div>
+
+                  <script type="text/babel">
+                  // "use strict";
+
+                  requirejs.config({
+                     paths: {
+                        react: 'https://unpkg.com/react@17/umd/react.production.min',
+                        'react-dom': 'https://unpkg.com/react-dom@17/umd/react-dom.production.min',
+                     },
+                  });
+
+                  requirejs(['react', 'react-dom'], function (React, ReactDOM) {
+                     ReactDOM.render(
+                        React.createElement('p', {}, 'Hello, AMD!'),
+                        document.getElementById('root')
+                     );
+
+
+
+                     function Hello() {
+                        return <h1>Hello World!</h1>;
+                     }
+                 
+                     ReactDOM.render(<Hello />, document.getElementById("mydiv"));
+
+                  });
+
+
+
+                  
+
+                  </script>
 
 
                   <div class="p-1 mr-3 bg-gray-50 rounded-lg">
@@ -77,13 +118,9 @@
                      <% }); %>
                   </div>
 
-                  
 
-                  <div class="locbar right-0 top-0 fixed bg-white/75 dark:bg-gray-800/75 border-b-2 border-gray-50/75 dark:border-gray-700/75 backdrop-blur-sm" style="width: calc(100% - 6vw - .3vh); padding: 1vh 2.5vh; height: 6vh;">
-                     <p>Home>Projects><%= thisProject.name %><a class="p-0.5 px-3 float-right text-stone-700 bg-stone-50 rounded-lg" href="/edit-project/<%= thisProject.name %>">Edit project &#8594;</a><a class="p-0.5 px-3 mr-2 float-right text-stone-700 bg-stone-50 rounded-lg" href="/your-projects">&#8592; Your projects</a></p>
-                   </div>
-         
 
+                  <%- include("partials/locbar", { text: "site:projectoverview" }); %>
                <% } else { %>
                   <p class="center text-2xl font-nunito">You are not in this project!</p>
                <% } %>
