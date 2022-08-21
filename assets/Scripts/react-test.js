@@ -12,7 +12,7 @@ function NameList(props) {
    return (
    <ul>
       {props.names.map((name) => (
-         <li className="bg-slate-100 m-3 rounded-xl p-4" key={name + Date.now()}>{name}</li>
+         <li className="bg-slate-100 dark:bg-slate-700 m-3 rounded-xl p-4" key={name + Date.now()}>{name}</li>
       ))}
    </ul>
    );
@@ -31,7 +31,7 @@ function HomePage() {
    }
 
    return (
-   <div className="bg-sky-50/25 m-4 p-4 rounded-3xl">
+   <div className="bg-gray-50 dark:bg-gray-800 m-4 p-4 rounded-3xl">
       <Header title="🧭" />
       <NameList names={names} />
       <button onClick={handleClick} className="bg-violet-400 text-white font-nunito text-2xl m-3 rounded-xl p-4 underline">👍 Like ({likes})</button>

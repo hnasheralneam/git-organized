@@ -1,54 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-   <title>Git Organized</title>
-</head>
+<%- include("partials/head", { pageTitle: "Home" }); %>
 <body>
    <% if (user !== "(not signed in)") { %>
       <%- include("partials/navbar"); %>
-
-      <div class="page">
-         <%- include("partials/locbar", { text: "Home" }); %>
+      <div class="page dark:bg-gray-900 dark:text-gray-100 border-l-gray-50 dark:border-l-gray-700 border-transparent" style="border-width: .3vh">
          <div class="content">
-            <p class="text-center text-4xl font-nunito font-medium m-8">Welcome to Git Organized, <span class="bg-gradient-to-br from-yellow-400 to-orange-400 text-white px-4 py-1 rounded-full"><%= user.username %></span>!</p>
 
+
+            <p class="text-center text-4xl font-nunito font-medium m-8">Welcome to Git Organized, <span class="bg-gradient-to-br from-yellow-400 to-orange-400 text-white px-4 py-1 rounded-full"><%= user.username %></span>!</p>
             <p class="margin-24 bg-indigo-500 text-white p-8 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-indigo-600">This is a web application that allows you to keep track of your repositories.</p>
             <p class="margin-24 bg-emerald-500 text-white p-8 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-emerald-600">Note: should create pages to view old actions, probably should make them undoable too.</p>
-
             <div class="py-4 px-2">
                <p class="bg-lime-300 py-2 px-3 rounded-full inline">hello there</p>
                <p class="bg-orange-300 py-2 px-3 rounded-full inline">#tailwindcss</p>
             </div>
+            <br>
 
-            <div class="p-4 m-2 rounded-md bg-gray-50">
-               <p>Continue where you left off:</p>
+            <div class="p-2 my-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+               <p class="m-4">Continue where you left off:</p>
                <% for (let i = 0; i < 5; i++) { %>
                   <% if (projects[i]) { %>
                      <% if (projects[i].contributors.includes(user.userCall)) { %>
-                        <div class="py-4 px-6 mt-4 font-nuntio rounded-md bg-white border-l-8 border-sky-400">
-                           <a class="text-4xl" href="/project/<%= encodeURI(projects[i].name) %>"><%= projects[i].name %></a><br>
+                        <div class="py-4 px-6 m-2 mb-3 font-nuntio rounded-md bg-white dark:bg-gray-900 border-l-8 border-sky-400">
+                           <a class="text-4xl" href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
                            <p class="text-gray-600 font-nunito font-medium text-xl"><%= projects[i].description %></p>
-                        </div>
-                     <% } %>
+                         </div>
+                      <% } %>
                   <% } %>
                <% } %>
             </div>
 
-            <div class="p-4 m-2 rounded-md bg-gray-50">
-               <p>Check out what others are doing:</p>
+            <div class="p-2 my-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+               <p class="m-4">Check out what others are doing:</p>
                   <% for (let i = 0; i < 5; i++) { %>
                      <% if (projects[i]) { %>
                         <% if (!projects[i].contributors.includes(user.userCall)) { %>
-                           <div class="py-4 px-6 mt-4 font-nuntio rounded-md bg-white border-l-8 border-orange-300">
+                           <div class="py-4 px-6 m-2 mb-3 font-nuntio rounded-md bg-white dark:bg-gray-900 border-l-8 border-orange-300">
                               <a class="text-4xl" href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
                               <p class="text-gray-600 font-nunito font-medium text-xl"><%= projects[i].description %></p>
-                           </div>
-                        <% } %>
+                            </div>
+                           <% } %>
                      <% } %>
                   <% } %>
                <p>
@@ -56,23 +48,16 @@
 
             <div id="appppe"></div>
 
-
+            <%- include("partials/locbar", { text: "Home" }); %>
          </div>
       </div>
-
-      
    <%} else { %>
       <%- include("partials/signedOut"); %>
       <%- include("partials/signIn"); %>
    <% } %>
-
-
-
-   <!-- Load our React component. -->
-   <script type="text/jsx" src="Scripts/react-test.js"></script>
-
-
 </body>
+
+<script type="text/jsx" src="Scripts/react-test.js"></script>
 <script>
    function toggleWindow(id) {
       let thisWindow = document.querySelector(`.window-${id}`);
@@ -88,4 +73,5 @@
       }
    }
 </script>
+
 </html>

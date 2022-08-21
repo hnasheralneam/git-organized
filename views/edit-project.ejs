@@ -1,49 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Editing <%= thisProject.name %> | Git Organized</title>
-</head>
+<%- include("partials/head", { pageTitle: "Editing Project" }); %>
 <body>
    <% if (user !== "(not signed in)") { %>
       <%- include("partials/navbar"); %>
-      
-      <div class="page">
-
+      <div class="page dark:bg-gray-900 dark:text-gray-100 border-l-gray-50 dark:border-l-gray-700 border-transparent" style="border-width: .3vh">
          <% if (thisProject.contributors.includes(user.userCall)) { %>
             <div class="content">
 
 
-               <div class="p-1 bg-gray-50 rounded-lg">
+               <div class="p-1 bg-gray-50 dark:bg-gray-800 rounded-lg">
                   <% thisProject.data.forEach(function(card) { %>
-                     <div class="card py-2 px-4 m-4 bg-white border-l-8 border-l-amber-300 rounded-lg relative" id="<%= card.id %>">
+                     <div class="py-2 px-4 m-4 bg-white dark:bg-gray-900 border-l-8 border-l-amber-300 dark:border-l-amber-500 rounded-lg relative">
                         <div class="grid grid-cols-2">
 
                            <div>
                               <div class="px-4 border-l-4 border-l-emerald-400 rounded-sm">
                                  <p class="text-3xl"><%= card.name %></p>
-                                 <p class="text-2xl text-gray-700"><%= card.about %></p>   
+                                 <p class="text-2xl text-gray-700 dark:text-gray-600"><%= card.about %></p>   
                               </div>
-                              <div class="p-3 my-2 bg-gray-50 rounded-2xl">
+                              <div class="p-3 my-2 bg-gray-50 dark:bg-gray-800 leading-loose rounded-2xl">
                                  <p class="flex items-center"><span class="material-symbols-rounded mr-1">person</span>Creator: <%= card.creator %></p>
                                  <p class="flex items-center"><span class="material-symbols-rounded mr-1">group</span>Contributors: <%= card.contributors %></p>
 
                                  <p class="flex items-center"><span class="material-symbols-rounded mr-1">schedule</span>Estimated time: <%= card.estTime %></p>
                                  <p class="flex items-center"><span class="material-symbols-rounded mr-1">calendar_month</span>Due date: <%= card.dueDate %></p>
                                  <p class="flex items-center"><span class="material-symbols-rounded mr-1">edit</span>Created: <%= card.dateCreated.toLocaleString() %></p>   
-
                                  <% if (card.status == "to-do") { %>
-                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-emerald-200 py-1 px-2 rounded-xl">Status: <%= card.status %></p>
+                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-emerald-200 dark:bg-emerald-500 py-1 px-2 rounded-xl">Status: <%= card.status %></p>
                                  <% } else { %>
-                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-gray-200 py-1 px-2 rounded-xl">Status: <%= card.status %></span></p>
+                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-gray-200 dark:bg-gray-500 py-1 px-2 rounded-xl">Status: <%= card.status %></span></p>
                                  <% } %>
                                  <!-- <p class="flex items-center"><span class="material-symbols-rounded mr-1">view_agenda</span>Subcards: <%= card.subcards %></p> -->
                               </div>
                            </div>
    
                            <div dir="rtl">
-                              <div class="p-3 mb-2 w-24 bg-gray-50 rounded-2xl inline-block">
+                              <div class="p-3 mb-2 w-24 bg-gray-50 dark:bg-gray-800 rounded-2xl inline-block">
                                  <p class="py-1 text-center">Priority</p>
                                  <div class="text-white text-4xl flex justify-center bg-red-500 relative rounded-2xl font-notosansmono" style="padding: 5px; width: calc(100% - 10px); height: 0; padding-bottom: calc(100% - 10px); box-sizing: content-box;"><%= card.priority %></div>
                                  <p class="py-1 text-center">Difficulty</p>
@@ -52,7 +45,7 @@
                               <div class="mr-2 top-0 inline-block">
                                  <form class="archive" action="/archive-card" method="POST">
                                     <input style="display: none;" type="text" name="cardId" value="<%= card.id %>"><br>
-                                    <button class="archive-btn p-4 bg-gray-100 rounded-2xl" type="text">
+                                    <button class="archive-btn p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl" type="text">
                                        <span class="material-symbols-rounded text-4xl">inventory_2</span>
                                     </button>
                                  </form>
@@ -61,70 +54,75 @@
 
                         </div>
 
-                        <div class="p-3 mb-2 bg-gray-50 rounded-2xl">
-                           <% card.assignees.forEach(function(person) { %>
-                              <span class="py-1 px-2 inline-block">@<%= person %></span>
-                           <% }); %>
-                        </div>
-                        <div class="p-3 bg-gray-50 rounded-2xl">
-                           <% card.tags.forEach(function(tag) { %>
-                              <span class="py-1 px-3 bg-rose-400 rounded-full inline-block"><%= tag %></span>
-                           <% }); %>
-                        </div>
+                        <% if (card.assignees.length > 0) { %>
+                           <div class="p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+                              <% card.assignees.forEach(function(person) { %>
+                                 <span class="py-1 px-2 inline-block">@<%= person %></span>
+                              <% }); %>
+                           </div>
+                        <% } %>
+                        <% if (card.tags.length > 0) { %>
+                           <div class="p-3 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+                              <% card.tags.forEach(function(tag) { %>
+                                 <span class="py-1 px-3 bg-rose-400 rounded-full inline-block"><%= tag %></span>
+                              <% }); %>
+                           </div>
+                        <% } %>
                      </div>
                   <% }); %>
                </div>
-            
 
 
             </div>
+            <%- include("partials/locbar", { text: "site:editproject" }); %>
 
-   
-            <!-- Create tag modal -->
+            <!-- Create Card Modal -->
             <button onclick="display('createCard')" class="absolute top-18 right-3 bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl">Make a new card</button>
             <div class="createCard fixed top-0 left-0 backdrop-blur-sm overflow-auto hidden" style="height: 100vh; width: 100vw;">
-               <div class="p-8 m-12 bg-white rounded-xl shadow-sm shadow-gray-200">
+               <div class="p-8 m-12 bg-white dark:bg-gray-900 rounded-xl shadow-sm shadow-gray-200 dark:shadow-gray-800">
                   <p class="create-card-text mb-6 text-2xl text-center">Let's make a card, together! 😊</p>
                   <form action="/newcard" method="POST" id="create-new-card" class="relative pb-16">
 
                      <div class="grid grid-cols-2">
-
-                        <div class="pl-4 mb-4 border-l-4 border-l-emerald-400 rounded-md">
-                           <p class="m-2 mt-4 text-xl">Card name (Required)</p>
-                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="name" placeholder=" The name of your new card" required>
-                           <br>
-                           <p class="m-2 mt-4 text-xl">About card</p>
-                           <textarea class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="about" placeholder="A little bit about the topic"></textarea>   
+                        <div>
+                           <div class="pl-4 mb-4 border-l-4 border-l-emerald-400 rounded-md">
+                              <p class="m-2 mt-4 text-xl">Card name (Required)</p>
+                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="name" placeholder=" The name of your new card" required>
+                              <br>
+                              <p class="m-2 mt-4 text-xl">About card</p>
+                              <textarea class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="about" placeholder="A little bit about the topic"></textarea>   
+                           </div>
+                           <div class="pl-4 border-l-4 border-l-indigo-500 rounded-md">
+                              <p class="m-2 mt-4 text-xl">Priority</p>
+                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="priority" placeholder="Number, 1-9">
+                              <br>
+                              <p class="m-2 mt-4 text-xl">Difficulty</p>
+                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="difficulty" placeholder="Number, 1-9">   
+                           </div>
                         </div>
-                        <div class="pl-4 mb-4 border-l-4 border-l-pink-500 rounded-md">
-                           <p class="m-2 mt-4 text-xl">Due date</p>
-                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="date" name="dueDate">
-                           <br>
-                           <p class="m-2 mt-4 text-xl">Estimated time</p>
-                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="estTime" placeholder="How long you think it'll take to finish this card">   
+                        <div>
+                           <div class="pl-4 mb-4 border-l-4 border-l-pink-500 rounded-md">
+                              <p class="m-2 mt-4 text-xl">Due date</p>
+                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="date" name="dueDate">
+                              <br>
+                              <p class="m-2 mt-4 text-xl">Estimated time</p>
+                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="estTime" placeholder="How long you think it'll take to finish this card">   
+                           </div>   
+                           <div class="pl-4 border-l-4 border-l-yellow-700 rounded-md">
+                              <p class="m-2 mt-4 text-xl">Tags</p>
+                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="tags" placeholder="Separate values by spaces">
+                              <br>
+                              <p class="m-2 mt-4 text-xl">Assignees</p>
+                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="assignees" placeholder="Separate values by spaces">   
+                           </div>
                         </div>
-                        <div class="pl-4 border-l-4 border-l-indigo-500 rounded-md">
-                           <p class="m-2 mt-4 text-xl">Priority</p>
-                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="priority" placeholder="Number, 1-9">
-                           <br>
-                           <p class="m-2 mt-4 text-xl">Difficulty</p>
-                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="difficulty" placeholder="Number, 1-9">   
-                        </div>
-                        <div class="pl-4 border-l-4 border-l-yellow-700 rounded-md">
-                           <p class="m-2 mt-4 text-xl">Tags</p>
-                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="tags" placeholder="Separate values by spaces">
-                           <br>
-                           <p class="m-2 mt-4 text-xl">Assignees</p>
-                           <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="assignees" placeholder="Separate values by spaces">   
-                        </div>
-
                      </div>
 
                      <input type="hidden" name="projectName" value="<%= thisProject.name %>">
 
                      <input onclick="undisplay('createCard')" class="bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl absolute bottom-4 right-4" type="submit" value="Leeeeeeeet's GO!">
                   </form>
-                  <div class="bg-gray-50/50 rounded-3xl p-4 mt-4 w-full text-xl text-center">
+                  <div class="text-slate-800 dark:text-slate-50 bg-slate-50 dark:bg-slate-800 rounded-3xl p-4 my-4 w-full text-xl text-center"">
                      <h2>⏰ Please be patient! This area is still under construction.</h2>
                      <p>🏗️ Remember, I'm not done making Git-Organized! ⚒️</p>
                      <p>💖 Squirrel</p>
@@ -132,68 +130,18 @@
                </div>
             </div>
 
-            <%- include("partials/locbar", { text: "site:editproject" }); %>
          <% } else { %>
             <div class="flex justify-center items-center" style="height: 80vh">
-               <div class="p-6 bg-gray-100 rounded-lg text-center font-nunito">
-                  <p class="m-3 text-gray-800 text-2xl">Oh, no! You aren't in this project 😭</p>
-                  <p class="m-3 text-gray-800 text-2xl">Maybe ask to join it? I'm crossing my fingers for you!🤞</p>
+               <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg text-center font-nunito">
+                  <p class="m-3 text-gray-800 dark:text-gray-100 text-2xl">Oh, no! You aren't in this project 😭</p>
+                  <p class="m-3 text-gray-800 dark:text-gray-100 text-2xl">Maybe ask to join it? I'm crossing my fingers for you!🤞</p>
                </div>
             </div>
          <% } %>
-
-
       </div>
-      
    <%} else { %>
       <%- include("partials/signedOut"); %>
       <%- include("partials/signIn"); %>
    <% } %>
 </body>
 </html>
-<script>
-function display(input) {
-   document.querySelector("." + input).style.display = "block";
-}
-function undisplay(input) {
-   document.querySelector("." + input).style.display = "none";
-}
-
-
-
-
-(() => {
-   document.querySelectorAll(".card").forEach((obj, i, arr) => {
-      document.querySelectorAll(".archive")[i].onsubmit = function(event) {
-         event.preventDefault();
-         $.post("/archive-card", {
-            projectId: "<%= thisProject.id %>",
-            cardId: this.cardId.value
-         }).done(function() { obj.remove(); });
-      }
-   });
-})();
-
-
-$("#create-new-card").submit(function(event) {
-   event.preventDefault();
-   let tagsArray = this.tags.value.split(" ");
-   let assigneesArray = this.assignees.value.split(" ");
-   console.log(this.tags.value, tagsArray);
-
-   $.post("/newcard", {
-      name: this.name.value,
-      about: this.about.value,
-      dueDate: this.dueDate.value,
-      estTime: this.estTime.value,
-      tags: tagsArray,
-      assignees: assigneesArray,
-      priority: this.priority.value,
-      difficulty: this.difficulty.value,
-      projectName: this.projectName.value
-   }).done(function(data) {
-      document.querySelector(".create-card-text").textContent = data;
-      // if (data == "Successful creation!") { location.reload(); }
-   });
-});
-</script>

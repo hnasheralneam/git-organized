@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Oh no! Somthing's wrong! | Git Organized</title>
-</head>
+<%- include("partials/head", { pageTitle: "Oh no! Somthing's wrong!" }); %>
 <body>
    <%- include("partials/navbar"); %>
-   <div class="page place-content-center flex items-center">
+   <div class="page place-content-center flex items-center dark:bg-gray-900 dark:text-gray-100 border-l-gray-50 dark:border-l-gray-700 border-transparent" style="border-width: .3vh">
+
       <div class="bg-gradient-to-br from-yellow-300 to-orange-400 font-nunito text-white p-6 rounded-xl text-xl">
          <h2 class="text-center text-3xl">Sorry!</h2>
          <p class="text-center">This page doesn't exist.</p><br>
@@ -16,7 +12,24 @@
          <p>Go to GitHub: <a class="text-gray-100 font-bold underline decoration-2" href="https://github.com">Alright then!</a></p>
          <p>Go to Kansas: <a class="text-gray-100 font-bold underline decoration-2" href="https://www.travelks.com/">Wait what?</a></p>
       </div>
+
    </div>
 </body>
 </html>
+
+
+<!--
+   Copilot suggestion:
+   <div class="content">
+   <div class="p-4 flex items-center">
+      <span class="material-symbols-rounded text-5xl mr-2">error</span><p class="text-2xl font-nunito mt-0.5">Oh no! Something's wrong!</p>
+   </div>
+   <p class="ml-6 mb-4 -mt-2 text-xl text-gray-500 dark:text-white">Something went wrong. We're sorry!</p>
+   <hr class="m-4 my-6 height-24 bg-sky-200 dark:border-gray-700 border-sky-200 border-[2px] rounded-full">
+   <div class="p-6 pt-0">
+      <p class="text-gray-600 font-nunito font-medium text-xl">Please try again later.</p>
+      <p class="text-gray-600 font-nunito font-medium text-xl">If the problem persists, please contact us.</p>
+   </div>
+</div>
+-->
 <!-- bg-gradient-to-br from-rose-500 to-rose-800 -->

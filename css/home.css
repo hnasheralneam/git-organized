@@ -2,7 +2,6 @@ body {
   height: 100vh;
   display: grid;
   grid-template-columns: auto auto;
-  background-color: #F7F9FA;
   overflow: hidden;
 }
 
@@ -10,11 +9,8 @@ body {
   padding: 7.5vh 1.5vh;
   height: 100vh;
   min-width: 94vw;
-  width: 100%;
   display: grid;
   grid-template-rows: 8% 92%;
-  grid-gap: 0;
-  background-color: #FEFEFE;
   overflow: scroll;
 }
 

@@ -1,46 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-   <title>New Project | Git Organized</title>
-</head>
+<%- include("partials/head", { pageTitle: "New Project" }); %>
 <body>
-   <%- include("partials/navbar"); %>
-   <div class="page">
-      <%- include("partials/locbar", { text: "Home>New Project" }); %>
-      <div class="content">
-         <p class="create-project-text mt-4 ml-12 text-2xl">Let's make a project, together! 😊</p>
-         <form action="/newproject" method="POST" id="create-new-project" class="bg-gray-50/25 p-8 rounded-3xl relative pb-16">
-            <textarea class="bg-gray-100 px-4 py-2 m-0.5 text-xl rounded-3xl block" style="width: 100%; max-width: 100%; resize: none;" type="text" name="name" placeholder="Your new project's name" required></textarea>
-            <textarea class="bg-gray-100 px-4 py-2 m-0.5 text-xl rounded-3xl block" style="width: 100%; max-width: 100%; height: 200px; resize: none;" type="text" name="about" placeholder="A little bit about what you'll be using it for" required></textarea><br>
-            <input class="bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl absolute bottom-4 right-4" type="submit" value="Leeeeeeeet's GO!">
-         </form>
-         <div class="bg-slate-50 rounded-3xl p-4 my-4 w-full text-xl text-center">
-            <h2>Sorry! This place is still under construction.</h2>
-            <p>🏗️ Remember, I'm not done making Git-Organized! ⚒️</p>
-            <p>💖 Squirrel</p>
+   <% if (user !== "(not signed in)") { %>
+      <%- include("partials/navbar"); %>
+      <div class="page dark:bg-gray-900 dark:text-gray-100 border-l-gray-50 dark:border-l-gray-700 border-transparent" style="border-width: .3vh">
+         <div class="content">
+
+
+
+            <p class="create-project-text text-gray-800 dark:text-gray-50 mt-4 mb-8 text-2xl font-nunito text-center">Let's make a project, together! 😊</p>
+            <form action="/newproject" method="POST" id="create-new-project" class="bg-gray-50 dark:bg-gray-800 p-8 rounded-3xl relative pb-16">
+               <textarea class="bg-gray-100 dark:bg-gray-700 px-4 py-2 mb-2 text-xl rounded-2xl block" style="width: 100%; max-width: 100%; resize: none;" type="text" name="name" placeholder="Your new project's name" required></textarea>
+               <textarea class="bg-gray-100 dark:bg-gray-700 px-4 py-2 mb-2 text-xl rounded-2xl block" style="width: 100%; max-width: 100%; height: 200px; resize: none;" type="text" name="about" placeholder="A little bit about what you'll be using it for" required></textarea><br>
+               <input class="bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl absolute bottom-4 right-4" type="submit" value="Leeeeeeeet's GO!">
+            </form>
+            <div class="text-slate-800 dark:text-slate-50 bg-slate-50 dark:bg-slate-800 rounded-3xl p-4 my-4 w-full text-xl text-center">
+               <h2>Sorry! This place is still under construction.</h2>
+               <p>🏗️ Remember, I'm not done making Git-Organized! ⚒️</p>
+               <p>💖 Squirrel</p>
+            </div>
+            <form id="letsGo" class="hidden"></form>
+
+
+
+         <%- include("partials/locbar", { text: "Home>New Project" }); %>
          </div>
       </div>
-   </div>
-   <form id="letsGo" class="hidden"></form>
+   <%} else { %>
+      <%- include("partials/signedOut"); %>
+      <%- include("partials/signIn"); %>
+   <% } %>
 </body>
 </html>
-<script>
-$("#create-new-project").submit(function(event) {
-   let projectName =this.name.value;
-   event.preventDefault();
-   $.post("/newproject", {
-      name: projectName,
-      about: this.about.value,
-   }).done(function(data) {
-      document.querySelector(".create-project-text").textContent = data;
-      if (data == "Successful creation!") {
-         document.querySelector("#letsGo").action = "/project/" + projectName;
-         document.querySelector("#letsGo").submit();
-      }
-   });
-});
-</script>
+<script src="Scripts/newproject.js"></script>
