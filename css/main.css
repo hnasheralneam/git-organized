@@ -591,6 +591,10 @@ video {
   right: 0px;
 }
 
+.bottom-0 {
+  bottom: 0px;
+}
+
 .col-span-5 {
   grid-column: span 5 / span 5;
 }
@@ -625,6 +629,10 @@ video {
 
 .m-1 {
   margin: 0.25rem;
+}
+
+.m-0 {
+  margin: 0px;
 }
 
 .my-6 {
@@ -741,6 +749,14 @@ video {
 
 .w-\[70px\] {
   width: 70px;
+}
+
+.w-\[100vh\] {
+  width: 100vh;
+}
+
+.w-\[100vw\] {
+  width: 100vw;
 }
 
 .resize {
@@ -1274,8 +1290,29 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-md {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .shadow-gray-200 {
   --tw-shadow-color: #e5e7eb;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-gray-700\/50 {
+  --tw-shadow-color: rgb(55 65 81 / 0.5);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-gray-900\/50 {
+  --tw-shadow-color: rgb(17 24 39 / 0.5);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-gray-800\/50 {
+  --tw-shadow-color: rgb(31 41 55 / 0.5);
   --tw-shadow: var(--tw-shadow-colored);
 }
 
