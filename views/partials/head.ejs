@@ -10,7 +10,6 @@
 
    <link rel="stylesheet" href="/css/main.css">
    <link rel="stylesheet" href="/css/home.css">
-   <link rel="stylesheet" href="/css/navbar.css">
 
    <% if (pageTitle == "Home") { %>
       <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -28,3 +27,38 @@
       <title><%= pageTitle %> | Git Organized</title>
    <% } %>
 </head>
+<style>
+body {
+   display: grid;
+   grid-template-columns: auto auto;
+   overflow: hidden;
+}
+
+.page {
+   padding: 7.5vh 1.5vh;
+   height: 100vh;
+   min-width: 94vw;
+   display: grid;
+   grid-template-rows: 8% 92%;
+   overflow: scroll;
+}
+
+.sidebar {
+   position: relative;
+   margin: 0;
+   height: 100vh;
+}
+
+::-webkit-scrollbar {
+   display: none;
+}
+
+.sidebar a {
+   color: #222;
+}
+
+.lower-sidebar {
+   position: absolute;
+   bottom: 0;
+}
+</style>
