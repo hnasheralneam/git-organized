@@ -24,16 +24,6 @@ body {
   display: none;
 }
 
-.navbar-icon {
-  background: linear-gradient(to bottom right, #FFF45A, #FF9C5A);
-  /* background: linear-gradient(to bottom right, #5AFFF3, #5AC7FF); */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color:transparent;
-  background-clip: text;
-  margin: .5vh 1vw;
-  font-size: 4vw !important;
-}
-
 .sidebar a {
   color: #222;
 }

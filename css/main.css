@@ -739,6 +739,10 @@ video {
   width: 20rem;
 }
 
+.w-\[70px\] {
+  width: 70px;
+}
+
 .resize {
   resize: both;
 }
@@ -801,6 +805,10 @@ video {
 
 .border-\[2px\] {
   border-width: 2px;
+}
+
+.border-\[1px\] {
+  border-width: 1px;
 }
 
 .border-l-8 {
