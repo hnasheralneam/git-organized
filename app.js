@@ -253,7 +253,7 @@ app.post("/newcard", (req, res) => {
          } } },
          function (err, yay) {
             if (err) { console.log(err); }
-            else { console.log("Result:", yay); }
+            else { res.send("Successful creation!"); }
          }
    );
 });

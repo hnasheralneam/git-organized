@@ -21,7 +21,7 @@ $("#create-new-card").submit(function(event) {
    event.preventDefault();
    let tagsArray = this.tags.value.split(" ");
    let assigneesArray = this.assignees.value.split(" ");
-   console.log(this.tags.value, tagsArray);
+   console.log(this.tags.value, tagsArray, typeof tagsArray);
 
    $.post("/newcard", {
       name: this.name.value,
@@ -35,6 +35,6 @@ $("#create-new-card").submit(function(event) {
       projectName: this.projectName.value
    }).done(function(data) {
       document.querySelector(".create-card-text").textContent = data;
-      // if (data == "Successful creation!") { location.reload(); }
+      if (data == "Successful creation!") { location.reload(); }
    });
 });

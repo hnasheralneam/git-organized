@@ -42,14 +42,16 @@
                                  <p class="py-1 text-center">Difficulty</p>
                                  <div class="text-white text-4xl flex justify-center bg-sky-500 relative rounded-2xl font-notosansmono" style="padding: 5px; width: calc(100% - 10px); height: 0; padding-bottom: calc(100% - 10px); box-sizing: content-box;"><%= card.difficulty %></div>
                               </div>
-                              <div class="mr-2 top-0 inline-block">
-                                 <form class="archive" action="/archive-card" method="POST">
-                                    <input style="display: none;" type="text" name="cardId" value="<%= card.id %>"><br>
-                                    <button class="archive-btn p-4 bg-gray-50 dark:bg-gray-800 rounded-2xl" type="text">
-                                       <span class="material-symbols-rounded text-4xl">inventory_2</span>
-                                    </button>
-                                 </form>
-                              </div>
+                              <% if (card.status !== "archived") { %>
+                                 <div class="mr-2 top-0 inline-block">
+                                    <form class="archive" action="/archive-card" method="POST">
+                                       <input style="display: none;" type="text" name="cardId" value="<%= card.id %>"><br>
+                                       <button class="archive-btn p-4 py-3.5 pb-2 bg-gray-50 dark:bg-gray-800 rounded-full" type="text">
+                                          <span class="material-symbols-rounded text-4xl">inventory_2</span>
+                                       </button>
+                                    </form>
+                                 </div>
+                              <% } %>
                            </div>
 
                         </div>
@@ -87,33 +89,33 @@
                         <div>
                            <div class="pl-4 mb-4 border-l-4 border-l-emerald-400 rounded-md">
                               <p class="m-2 mt-4 text-xl">Card name (Required)</p>
-                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="name" placeholder=" The name of your new card" required>
+                              <input class="py-2 px-3 bg-slate-50 dark:bg-slate-800 rounded-xl w-80" type="text" name="name" placeholder=" The name of your new card" required>
                               <br>
                               <p class="m-2 mt-4 text-xl">About card</p>
-                              <textarea class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="about" placeholder="A little bit about the topic"></textarea>   
+                              <textarea class="py-2 px-3 bg-slate-50 dark:bg-slate-800 rounded-xl w-80" type="text" name="about" placeholder="A little bit about the topic"></textarea>   
                            </div>
                            <div class="pl-4 border-l-4 border-l-indigo-500 rounded-md">
                               <p class="m-2 mt-4 text-xl">Priority</p>
-                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="priority" placeholder="Number, 1-9">
+                              <input class="py-2 px-3 bg-slate-50 dark:bg-slate-800 rounded-xl w-80" type="text" name="priority" placeholder="Number, 1-9">
                               <br>
                               <p class="m-2 mt-4 text-xl">Difficulty</p>
-                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="difficulty" placeholder="Number, 1-9">   
+                              <input class="py-2 px-3 bg-slate-50 dark:bg-slate-800 rounded-xl w-80" type="text" name="difficulty" placeholder="Number, 1-9">   
                            </div>
                         </div>
                         <div>
                            <div class="pl-4 mb-4 border-l-4 border-l-pink-500 rounded-md">
                               <p class="m-2 mt-4 text-xl">Due date</p>
-                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="date" name="dueDate">
+                              <input class="py-2 px-3 bg-slate-50 dark:bg-slate-800 rounded-xl w-80" type="date" name="dueDate">
                               <br>
                               <p class="m-2 mt-4 text-xl">Estimated time</p>
-                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="estTime" placeholder="How long you think it'll take to finish this card">   
+                              <input class="py-2 px-3 bg-slate-50 dark:bg-slate-800 rounded-xl w-80" type="text" name="estTime" placeholder="How long you think it'll take to finish this card">   
                            </div>   
                            <div class="pl-4 border-l-4 border-l-yellow-700 rounded-md">
                               <p class="m-2 mt-4 text-xl">Tags</p>
-                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="tags" placeholder="Separate values by spaces">
+                              <input class="py-2 px-3 bg-slate-50 dark:bg-slate-800 rounded-xl w-80" type="text" name="tags" placeholder="Separate values by spaces">
                               <br>
                               <p class="m-2 mt-4 text-xl">Assignees</p>
-                              <input class="py-2 px-3 bg-slate-50 rounded-xl w-80" type="text" name="assignees" placeholder="Separate values by spaces">   
+                              <input class="py-2 px-3 bg-slate-50 dark:bg-slate-800 rounded-xl w-80" type="text" name="assignees" placeholder="Separate values by spaces">   
                            </div>
                         </div>
                      </div>
