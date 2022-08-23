@@ -11,7 +11,7 @@ function undisplay(input) {
          event.preventDefault();
          $.post("/archive-card", {
             projectId: "<%= thisProject.id %>",
-            cardId: this.cardId.value
+            cardId: this.cardId.id
          }).done(function() { obj.remove(); });
       }
    });

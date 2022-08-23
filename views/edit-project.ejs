@@ -7,72 +7,37 @@
       <div class="page dark:bg-gray-900 dark:text-gray-100 border-l-gray-50 dark:border-l-gray-700 border-transparent" style="border-width: .3vh">
          <% if (thisProject.contributors.includes(user.userCall)) { %>
             <div class="content">
-
-
-               <div class="p-1 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                  <% thisProject.data.forEach(function(card) { %>
-                     <div class="py-2 px-4 m-4 bg-white dark:bg-gray-900 border-l-8 border-l-amber-300 dark:border-l-amber-500 rounded-lg relative">
-                        <div class="grid grid-cols-2">
-
-                           <div>
-                              <div class="px-4 border-l-4 border-l-emerald-400 rounded-sm">
-                                 <p class="text-3xl"><%= card.name %></p>
-                                 <p class="text-2xl text-gray-700 dark:text-gray-600"><%= card.about %></p>   
-                              </div>
-                              <div class="p-3 my-2 bg-gray-50 dark:bg-gray-800 leading-loose rounded-2xl">
-                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">person</span>Creator: <%= card.creator %></p>
-                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">group</span>Contributors: <%= card.contributors %></p>
-
-                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">schedule</span>Estimated time: <%= card.estTime %></p>
-                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">calendar_month</span>Due date: <%= card.dueDate %></p>
-                                 <p class="flex items-center"><span class="material-symbols-rounded mr-1">edit</span>Created: <%= card.dateCreated.toLocaleString() %></p>   
-                                 <% if (card.status == "to-do") { %>
-                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-emerald-200 dark:bg-emerald-500 py-1 px-2 rounded-xl">Status: <%= card.status %></p>
-                                 <% } else { %>
-                                    <p class="flex items-center mb-1"><span class="material-symbols-rounded mr-1">pending</span><span class="bg-gray-200 dark:bg-gray-500 py-1 px-2 rounded-xl">Status: <%= card.status %></span></p>
-                                 <% } %>
-                                 <!-- <p class="flex items-center"><span class="material-symbols-rounded mr-1">view_agenda</span>Subcards: <%= card.subcards %></p> -->
-                              </div>
-                           </div>
    
-                           <div dir="rtl">
-                              <div class="p-3 mb-2 w-24 bg-gray-50 dark:bg-gray-800 rounded-2xl inline-block">
-                                 <p class="py-1 text-center">Priority</p>
-                                 <div class="text-white text-4xl flex justify-center bg-red-500 relative rounded-2xl font-notosansmono" style="padding: 5px; width: calc(100% - 10px); height: 0; padding-bottom: calc(100% - 10px); box-sizing: content-box;"><%= card.priority %></div>
-                                 <p class="py-1 text-center">Difficulty</p>
-                                 <div class="text-white text-4xl flex justify-center bg-sky-500 relative rounded-2xl font-notosansmono" style="padding: 5px; width: calc(100% - 10px); height: 0; padding-bottom: calc(100% - 10px); box-sizing: content-box;"><%= card.difficulty %></div>
-                              </div>
-                              <% if (card.status !== "archived") { %>
-                                 <div class="mr-2 top-0 inline-block">
-                                    <form class="archive" action="/archive-card" method="POST">
-                                       <input style="display: none;" type="text" name="cardId" value="<%= card.id %>"><br>
-                                       <button class="archive-btn p-4 py-3.5 pb-2 bg-gray-50 dark:bg-gray-800 rounded-full" type="text">
-                                          <span class="material-symbols-rounded text-4xl">inventory_2</span>
-                                       </button>
-                                    </form>
-                                 </div>
-                              <% } %>
-                           </div>
+               <% if (thisProject.contributors.includes(user.userCall)) { %>
+                  <style>
+                     .pridif { padding: 5px; width: calc(100% - 10px); height: 0; padding-bottom: calc(100% - 10px); box-sizing: content-box; }
+                  </style>
 
-                        </div>
+                  <script>let cardArray = <%- JSON.stringify(thisProject.data) %></script>
 
-                        <% if (card.assignees.length > 0) { %>
-                           <div class="p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl">
-                              <% card.assignees.forEach(function(person) { %>
-                                 <span class="py-1 px-2 inline-block">@<%= person %></span>
-                              <% }); %>
-                           </div>
-                        <% } %>
-                        <% if (card.tags.length > 0) { %>
-                           <div class="p-3 bg-gray-50 dark:bg-gray-800 rounded-2xl">
-                              <% card.tags.forEach(function(tag) { %>
-                                 <span class="py-1 px-3 bg-rose-400 rounded-full inline-block"><%= tag %></span>
-                              <% }); %>
-                           </div>
-                        <% } %>
+                  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+                  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+                  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+                  <script type="text/babel" src="/Scripts/edit-project.js"></script>
+
+                  <div id="cardDiv"></div>
+
+                  <details class="p-4 bg-white dark:bg-neutral-900 border-2 border-neutral-100 dark:border-neutral-800 w-[20rem] absolute bottom-2 right-2 rounded-lg">
+                     <summary class="text-center text-xl uppercase font-bold text-gray-300 dark:text-gray-700">Filter Cards</summary>
+                     <div>
+                        <form class="p-2 px-4 m-3 ml-0 border-4 border-violet-700 rounded-md relative">
+                           <p>Filter by status</p>
+                           <select name="filter-status" id="filter-cards-by-status" class="p-1 px-2 rounded-lg dark:bg-violet-700">
+                              <option value="to-do">to-do</option>
+                              <option value="archived">archived</option>
+                           </select>
+                           <button class="py-2 px-4 bg-violet-600 dark:bg-violet-500 text-white text-semibold rounded-xl absolute right-2 bottom-2" onclick="event.preventDefault(); filterCards(document.querySelector('#filter-cards-by-status').value)">Filter</button>
+                        </form>
                      </div>
-                  <% }); %>
-               </div>
+                  </details>
+               <% } %>
+
 
 
             </div>

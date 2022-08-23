@@ -13,7 +13,7 @@
             <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
             <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-            <script type="text/babel" src="/Scripts/create-project-overview-cards.js"></script>
+            <script type="text/babel" src="/Scripts/project-overview.js"></script>
 
             <div class="main">
                <% if (thisProject.contributors.includes(user.userCall)) { %>
@@ -30,24 +30,20 @@
 
             <div>
                <div>
-                  <p class="text-center text-xl uppercase font-bold text-gray-300 dark:text-gray-700">Filter Cards</p>
-                  <!--<details>
-                     <summary>So we'll use</summary>
-                     <p>This to hide the filter settings on the edit page</p>
-                  </details>-->
-                  <form class="p-2 px-4 m-3 ml-0 border-4 border-violet-700 rounded-md relative">
-                     <p>Filter by status</p>
-                     <select name="filter-status" id="filter-cards-by-status" class="p-1 px-2 rounded-lg dark:bg-violet-700">
-                        <option value="to-do">to-do</option>
-                        <option value="archived">archived</option>
-                     </select>
-                     <button class="py-2 px-4 bg-violet-600 dark:bg-violet-500 text-white text-semibold rounded-xl absolute right-2 bottom-2" onclick="event.preventDefault(); filterCards(document.querySelector('#filter-cards-by-status').value)">Filter</button>
-                  </form>
-               </div>
-               <div class="p-6 h-[90vh] text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 rounded-xl">
                   <% if (thisProject.contributors.includes(user.userCall)) { %>
+                     <p class="text-center text-xl uppercase font-bold text-gray-300 dark:text-gray-700">Filter Cards</p>
+                     <form class="p-2 px-4 m-3 ml-0 border-4 border-violet-700 rounded-md relative">
+                        <p>Filter by status</p>
+                        <select name="filter-status" id="filter-cards-by-status" class="p-1 px-2 rounded-lg dark:bg-violet-700">
+                           <option value="to-do">to-do</option>
+                           <option value="archived">archived</option>
+                        </select>
+                        <button class="py-2 px-4 bg-violet-600 dark:bg-violet-500 text-white text-semibold rounded-xl absolute right-2 bottom-2" onclick="event.preventDefault(); filterCards(document.querySelector('#filter-cards-by-status').value)">Filter</button>
+                     </form>
                      <p class="py-2 mb-4 text-2xl bg-emerald-100 dark:bg-emerald-700 rounded-md text-center font-nunito">You are in this project!</p>
                   <% } %>
+               </div>
+               <div class="p-6 h-[90vh] text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 rounded-xl">
                   <div class="p-4 mb-2 bg-gray-100 dark:bg-gray-700 rounded-xl">
                      <p class="flex items-center mb-3 text-2xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">badge</span><%= thisProject.name %></p>
                      <p class="m-1 mb-3 text-1xl"><%= thisProject.description %></p>   

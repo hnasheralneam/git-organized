@@ -49,7 +49,7 @@ function Card({ card }) {
          <div className="grid grid-cols-9 gap-2">
             <div className="col-span-5">
                <MainInfo name={card.name} about={card.about} />
-               <AssigneesTags assignees={card.assignees} tags={card.tags} name={card.name} />
+               <AssigneesTags assignees={card.assignees} tags={card.tags} />
             </div>
             <MoreInfo card={card} />
             <PriDif card={card} />
