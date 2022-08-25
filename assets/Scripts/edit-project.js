@@ -1,60 +1,123 @@
-let filteredByStatus = "noned";
+let filters = {
+   status: "none",
+   priority: "none",
+   difficulty: "none",
+   date: "none"
+}
+
 let filteredData = cardArray;
 
-function filterCards(status) {
-   filteredByStatus = status;
-   filteredData = cardArray.filter(card => card.status == status);
+function filterCardsByStatus(status) {
+   filters.status = status;
+   filter();
+}
+
+function filterCards(type, val) {
+   filters.priority = "none";
+   filters.difficulty = "none";
+   filters.date = "none";
+   filters[type] = val;
+   filter();
+}
+
+function filter() {
+   filteredData = cardArray;
+   if (filters.status != "none") { filteredData = filteredData.filter(card => card.status == filters.status); }
+   if (filters.priority != "none") {
+      switch (filters.priority) {
+         case "asc":
+            filteredData = filteredData.sort((a, b) => { return parseInt(b.priority) - parseInt(a.priority); });
+            break;
+         case "desc": 
+            filteredData = filteredData.sort((a, b) => { return parseInt(b.priority) - parseInt(a.priority); });
+            filteredData.reverse();
+            break;
+         }
+   }
+   if (filters.difficulty != "none") {
+      switch (filters.difficulty) {
+         case "asc":
+            filteredData = filteredData.sort((a, b) => { return parseInt(b.difficulty) - parseInt(a.difficulty); });
+            break;
+         case "desc": 
+            filteredData = filteredData.sort((a, b) => { return parseInt(b.difficulty) - parseInt(a.difficulty); });
+            filteredData.reverse();
+            break;
+         }
+   }
+   if (filters.date != "none") {
+      filteredData.forEach((item, index, arr)=> { item.dueDate.length == 0 ? arr.splice(index, 1) : null; });
+      filteredData.forEach((item, index, arr)=> { item.dueDate.length == 0 ? arr.splice(index, 1) : null; });
+
+      function getDate(enter) {
+         let ourThing = enter.replace("-"," ");
+         ourThing = new Date(ourThing);
+         return ourThing;
+      }
+
+      switch (filters.date) {
+         case "asc":
+            filteredData = filteredData.sort((item1, item2) => getDate(item1.dueDate) - getDate(item2.dueDate));
+            break;
+         case "desc": 
+            filteredData = filteredData.sort((item1, item2) => getDate(item1.dueDate) - getDate(item2.dueDate));
+            filteredData.reverse();
+            break;
+         }
+   }
    App();
 }
 
-const MainInfo = ({ name, about }) => (
-   <div>
-      <div className="px-4 border-l-4 border-l-emerald-400 rounded-sm">
-         <p className="text-3xl">{name}</p>
-         <p className="text-2xl text-gray-700 dark:text-gray-600">{about}</p>   
-      </div>
+function resetFilters() {
+   filters.status = "none";
+   filters.priority = "none";
+   filters.difficulty = "none";
+   filters.date = "none";
+   filteredData = cardArray;
+   App();
+}
+
+const MainInfo = ({ name, about, creator, created }) => (
+   <div className="px-4 pb-6 border-l-4 border-l-emerald-400 rounded-sm">
+      <p className="text-3xl">{name}</p>
+      <p className="text-2xl text-gray-700 dark:text-gray-600">{about}</p>   
+      <p className="text-gray-600 dark:text-gray-700 float-right">Created on {created} by {creator}</p>
    </div>
 );
-
 const AssigneesTags = ({ assignees, tags }) => (
    <div>
-      <div className="p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl">
-         {assignees.map((assignee, i) => ( <span key={i} className="py-1 px-2 inline-block">@{assignee}</span> ))}
-      </div>
-      <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-2xl">
-         {tags.map((tag, i) => ( <span key={i} className="py-1 px-3 bg-rose-400 dark:bg-rose-600 rounded-full inline-block">{tag}</span> ))}
-      </div>
+      {(() => {
+         if (assignees[0] == "" && tags[0] == "") { return; }
+         else {
+            return(
+               <div className="p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+                  {assignees[0] != "" ? assignees.map((assignee, i) => ( <span key={i} className="py-1 px-2 inline-block">@{assignee}</span> )) : null}
+                  {(() => {
+                     if (tags[0] !== "") {
+                        return(
+                           <div>
+                              <hr className="m-4 border-none h-[2px] dark:bg-gray-700 rounded-full" />
+                              {tags.map((tag, i) => ( <span key={i} className="py-1 px-3 mr-1 mb-1 bg-rose-400 dark:bg-rose-600 rounded-full inline-block">{tag}</span> ))}      
+                           </div>
+                        );
+                     }
+                  })()}
+               </div>
+            );
+         }
+      })()}
    </div>
 );
-
-const MoreInfo = ({ card }) => (
-   <div className="p-3 my-2 bg-gray-50 dark:bg-gray-800 leading-loose rounded-2xl">
-      <p className="flex items-center"><span className="material-symbols-rounded mr-1">person</span>Creator: {card.creator}</p>
-      <p className="flex items-center"><span className="material-symbols-rounded mr-1">group</span>Contributors: {card.contributors}</p>
-
-      <p className="flex items-center"><span className="material-symbols-rounded mr-1">schedule</span>Estimated time: {card.estTime}</p>
-      <p className="flex items-center"><span className="material-symbols-rounded mr-1">calendar_month</span>Due date: {card.dueDate}</p>
-      <p className="flex items-center"><span className="material-symbols-rounded mr-1">edit</span>Created: {card.dateCreated.toLocaleString()}</p>   
-      <p className="flex items-center mb-1"><span className="material-symbols-rounded mr-1">pending</span><span className={`${card.status == "archived" ? "bg-gray-200 dark:bg-gray-500" : "bg-emerald-200 dark:bg-emerald-500"} py-1 px-2 rounded-xl`}>Status: {card.status}</span></p>
-   </div>
-);
-
-const PriDifAct = ({ card }) => (
+const Arch = ({ card }) => (
    <div dir="rtl">
-      <div className="p-3 mb-2 w-24 bg-gray-50 dark:bg-gray-800 rounded-2xl inline-block">
-         <p className="py-1 text-center">Priority</p>
-         <div className="pridif text-white text-4xl flex justify-center bg-red-500 relative rounded-2xl font-notosansmono">{card.priority}</div>
-         <p className="py-1 text-center">Difficulty</p>
-         <div className="pridif text-white text-4xl flex justify-center bg-sky-500 relative rounded-2xl font-notosansmono">{card.difficulty}</div>
-      </div>
       {(() => {
          if (card.status !== "archived") {
             return(
                <div className="mr-2 top-0 inline-block">
                   <form className="archive" action="/archive-card" method="POST">
                      <input className="hidden" type="text" name="cardId" id={ `${card.id}` } /><br />
-                     <button className="archive-btn p-4 py-3.5 pb-2 bg-gray-50 dark:bg-gray-800 rounded-full" type="text">
-                        <span className="material-symbols-rounded text-4xl">inventory_2</span>
+                     <button className="archive-btn p-2 pb-1 bg-yellow-50 dark:bg-yellow-900 rounded-md absolute bottom-2 right-2" type="text">
+                        <span className="material-symbols-rounded text-3xl">inventory_2</span>
                      </button>
                   </form>
                </div>
@@ -63,34 +126,70 @@ const PriDifAct = ({ card }) => (
       })()}
    </div>
 );
+const Status = ({ status }) => (
+   <div>
+      {(() => {
+         if (status == "to-do") { return(
+            <p className="p-4 mb-1 flex items-center bg-emerald-100 dark:bg-emerald-600 rounded-xl">
+               <span className="material-symbols-rounded mr-1">pending</span>
+               <span className="bg-emerald-200 dark:bg-emerald-500 py-1 px-2 rounded-xl">Status: {status}</span>
+            </p>
+         ); }
+         else { return(
+            <p className="p-4 mb-1 flex items-center bg-gray-100 dark:bg-gray-600 rounded-xl">
+               <span className="material-symbols-rounded mr-1">pending</span>
+               <span className="bg-gray-200 dark:bg-gray-500 py-1 px-2 rounded-xl">Status: {status}</span>
+            </p>
+         ); }
+      })()}
+   </div>
+);
 
 function Card({ card }) {
    return(
-      <div className="py-2 px-4 m-4 bg-white dark:bg-gray-900 border-l-8 border-l-amber-300 dark:border-l-amber-500 rounded-lg relative">
-         <div className="grid grid-cols-2">
-            <div>
-               <MainInfo name={card.name} about={card.about} />
-               <MoreInfo card={card} />
+      <div className="card py-2 px-4 m-2 bg-white dark:bg-gray-900 border-l-8 border-l-amber-300 dark:border-l-amber-500 rounded-lg relative">
+         <div className="grid grid-cols-3">
+            <div className="col-span-2">
+               <MainInfo name={card.name} about={card.about} creator={card.creator} created={card.dateCreated} />
                <AssigneesTags assignees={card.assignees} tags={card.tags} />
             </div>
-            <div>
-               <PriDifAct card={card} />
+            <div className="pl-2">
+               <Status status={card.status} />
+               <div className="mb-1 grid grid-cols-2 rounded-xl overflow-hidden">
+                  <p className="text-center text-2xl bg-red-500 dark:bg-red-700 text-white font-notosansmono"><span className="text-sm">Priority:</span><br /> {card.priority}</p>
+                  <p className="text-center text-2xl bg-sky-500 dark:bg-sky-500 text-white font-notosansmono"><span className="text-sm">Difficulty:</span><br /> {card.difficulty}</p>
+               </div>
+               <div className="py-2 px-4 mb-1 text-center bg-gray-50 dark:bg-gray-800 rounded-xl relative">
+                  <p><span className="absolute top-2 left-2 material-symbols-rounded mr-1">schedule</span>Estimated time:<br /> {card.estTime}</p>
+               </div>
+               <div className="py-2 px-4 mb-1 text-center bg-gray-50 dark:bg-gray-800 rounded-xl relative">
+                  <p><span className="absolute top-2 left-2 material-symbols-rounded mr-1">calendar_month</span>Due date:<br /> {card.dueDate instanceof Date ? card.dueDate.toLocaleString() : card.dueDate}</p>
+               </div>
+
+               <Arch card={card} />
             </div>
          </div>
       </div>
    );
 }
 
+const Filter = ({ props }) => (
+   <div>
+      <p className="p-2 px-4 mt-2 ml-2 text-indigo-900 dark:text-indigo-100 text-xl bg-indigo-200 dark:bg-indigo-800 inline-block rounded-2xl">{filteredData.length} Cards</p>
+      {(() => { if (filters.status !== "none") { return( <p className="p-2 px-4 mt-2 ml-2 text-white text-xl bg-indigo-500 inline-block rounded-2xl">Status: {filters.status}</p> ); } })()}
+      {(() => { if (filters.priority !== "none") { return( <p className="p-2 px-4 mt-2 ml-2 text-white text-xl bg-yellow-500 inline-block rounded-2xl">Priority ({filters.priority})</p> ); } })()}
+      {(() => { if (filters.difficulty !== "none") { return( <p className="p-2 px-4 mt-2 ml-2 text-white text-xl bg-lime-500 inline-block rounded-2xl">Difficulty ({filters.difficulty})</p> ); } })()}
+      {(() => { if (filters.date !== "none") { return(<p className="p-2 px-4 mt-2 ml-2 text-white text-xl bg-pink-500 inline-block rounded-2xl">Due Date ({filters.date})</p>); } })()}
+   </div>
+);
+
 function App() {
    const cardsObj = (
      <div className="p-1 bg-gray-50 dark:bg-gray-800 rounded-lg">
-         {(() => {
-            if (filteredByStatus !== "noned") { return(
-                  <p className="p-2 px-4 mt-2 ml-4 text-white text-xl bg-indigo-500 inline-block rounded-2xl">Status Filter: {filteredByStatus}</p>
-               ); }
-         })()}
-         <p className="p-2 px-4 mt-2 mx-4 text-indigo-900 dark:text-indigo-100 text-xl bg-indigo-200 dark:bg-indigo-800 inline-block rounded-2xl">{filteredData.length} Cards</p>
-         {filteredData.map((cardData, i) => ( <Card card={cardData} key={i} /> ))}
+         <Filter />
+         <div className="cardObject">
+            {filteredData.map((cardData, i) => ( <Card card={cardData} key={i} /> ))}
+         </div>
       </div>
    );
    ReactDOM.render(cardsObj, document.getElementById("cardDiv"))

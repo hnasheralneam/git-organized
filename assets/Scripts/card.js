@@ -10,7 +10,7 @@ function undisplay(input) {
       document.querySelectorAll(".archive")[i].onsubmit = function(event) {
          event.preventDefault();
          $.post("/archive-card", {
-            projectId: "<%= thisProject.id %>",
+            projectId: projectData.id,
             cardId: this.cardId.id
          }).done(function() { obj.remove(); });
       }

@@ -259,6 +259,9 @@ app.post("/newcard", (req, res) => {
 });
 
 app.post("/archive-card", (req, res) => {
+   console.log(req.projectId);
+
+
    ProjectData.findOne({ id: req.body.projectId }, function (err, docs) {
       if (err) { console.log(err); }
       else {

@@ -9,11 +9,10 @@
             <div class="content">
    
                <% if (thisProject.contributors.includes(user.userCall)) { %>
-                  <style>
-                     .pridif { padding: 5px; width: calc(100% - 10px); height: 0; padding-bottom: calc(100% - 10px); box-sizing: content-box; }
-                  </style>
-
-                  <script>let cardArray = <%- JSON.stringify(thisProject.data) %></script>
+                  <script>
+                     let cardArray = <%- JSON.stringify(thisProject.data) %>
+                     let projectData = <%- JSON.stringify(thisProject) %>
+                  </script>
 
                   <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
                   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
@@ -23,8 +22,8 @@
 
                   <div id="cardDiv"></div>
 
-                  <details class="p-4 bg-white dark:bg-neutral-900 border-2 border-neutral-100 dark:border-neutral-800 w-[20rem] absolute bottom-2 right-2 rounded-lg">
-                     <summary class="text-center text-xl uppercase font-bold text-gray-300 dark:text-gray-700">Filter Cards</summary>
+                  <details class="p-4 bg-white dark:bg-zinc-800 border-2 border-neutral-100 dark:border-zinc-800 w-[20rem] absolute bottom-2 right-2 rounded-lg">
+                     <summary class="text-center text-xl uppercase font-bold text-gray-300 dark:text-zinc-600">Filter Cards</summary>
                      <div>
                         <form class="p-2 px-4 m-3 ml-0 border-4 border-violet-700 rounded-md relative">
                            <p>Filter by status</p>
@@ -32,8 +31,19 @@
                               <option value="to-do">to-do</option>
                               <option value="archived">archived</option>
                            </select>
-                           <button class="py-2 px-4 bg-violet-600 dark:bg-violet-500 text-white text-semibold rounded-xl absolute right-2 bottom-2" onclick="event.preventDefault(); filterCards(document.querySelector('#filter-cards-by-status').value)">Filter</button>
+                           <button class="py-2 px-4 bg-violet-600 dark:bg-violet-500 text-white text-semibold rounded-xl absolute right-2 bottom-2" onclick="event.preventDefault(); filterCardsByStatus(document.querySelector('#filter-cards-by-status').value)">Filter</button>
                         </form>
+                        <button class="py-2 px-4 bg-gray-500 text-white rounded-md" onclick="resetFilters()">Reset Filters</button>
+                        <hr>
+                        <button class="py-2 px-4 m-1 bg-yellow-500 text-white rounded-md" onclick="filterCards('priority', 'asc')">Sort by Priority (Asc)</button>
+                        <button class="py-2 px-4 m-1 bg-yellow-500 text-white rounded-md" onclick="filterCards('priority', 'desc')">Sort by Priority (Desc)</button>
+                        <hr>
+                        <button class="py-2 px-4 m-1 bg-lime-500 text-white rounded-md" onclick="filterCards('difficulty', 'asc')">Sort by Difficulty (Asc)</button>
+                        <button class="py-2 px-4 m-1 bg-lime-500 text-white rounded-md" onclick="filterCards('difficulty', 'desc')">Sort by Difficulty (Desc)</button>
+                        <hr>
+                        <p>Filtering by due date will remove items without due dates</p>
+                        <button class="py-2 px-4 m-1 bg-pink-500 text-white rounded-md" onclick="filterCards('date', 'asc')">Sort by Due Date (Asc)</button>
+                        <button class="py-2 px-4 m-1 bg-pink-500 text-white rounded-md" onclick="filterCards('date', 'desc')">Sort by Due Date (Desc)</button>
                      </div>
                   </details>
                <% } %>
@@ -112,3 +122,18 @@
    <% } %>
 </body>
 </html>
+<style>
+.cardObject {
+   display: grid;
+   grid-template-columns: auto auto;
+}
+
+@media screen and (max-width: 1300px) {
+   .cardObject {
+      grid-template-columns: auto;
+   }
+   .card {
+      margin: 8px;
+   }
+}
+</style>
