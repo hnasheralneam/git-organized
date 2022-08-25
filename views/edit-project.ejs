@@ -26,24 +26,27 @@
                      <summary class="text-center text-xl uppercase font-bold text-gray-300 dark:text-zinc-600">Filter Cards</summary>
                      <div>
                         <form class="p-2 px-4 m-3 ml-0 border-4 border-violet-700 rounded-md relative">
-                           <p>Filter by status</p>
-                           <select name="filter-status" id="filter-cards-by-status" class="p-1 px-2 rounded-lg dark:bg-violet-700">
+                           <p class="-m-1 mb-3 text-violet-900 font-semibold text-lg text-center">Filter by status</p>
+                           <select name="filter-status" id="filter-cards-by-status" class="p-1 px-2 rounded-lg bg-violet-100 dark:bg-violet-700">
                               <option value="to-do">to-do</option>
                               <option value="archived">archived</option>
                            </select>
                            <button class="py-2 px-4 bg-violet-600 dark:bg-violet-500 text-white text-semibold rounded-xl absolute right-2 bottom-2" onclick="event.preventDefault(); filterCardsByStatus(document.querySelector('#filter-cards-by-status').value)">Filter</button>
                         </form>
-                        <button class="py-2 px-4 bg-gray-500 text-white rounded-md" onclick="resetFilters()">Reset Filters</button>
-                        <hr>
-                        <button class="py-2 px-4 m-1 bg-yellow-500 text-white rounded-md" onclick="filterCards('priority', 'asc')">Sort by Priority (Asc)</button>
-                        <button class="py-2 px-4 m-1 bg-yellow-500 text-white rounded-md" onclick="filterCards('priority', 'desc')">Sort by Priority (Desc)</button>
-                        <hr>
-                        <button class="py-2 px-4 m-1 bg-lime-500 text-white rounded-md" onclick="filterCards('difficulty', 'asc')">Sort by Difficulty (Asc)</button>
-                        <button class="py-2 px-4 m-1 bg-lime-500 text-white rounded-md" onclick="filterCards('difficulty', 'desc')">Sort by Difficulty (Desc)</button>
-                        <hr>
-                        <p>Filtering by due date will remove items without due dates</p>
-                        <button class="py-2 px-4 m-1 bg-pink-500 text-white rounded-md" onclick="filterCards('date', 'asc')">Sort by Due Date (Asc)</button>
-                        <button class="py-2 px-4 m-1 bg-pink-500 text-white rounded-md" onclick="filterCards('date', 'desc')">Sort by Due Date (Desc)</button>
+                        <div class="border-l-4 border-l-yellow-500 rounded-md">
+                           <div class="py-2 px-4 m-1 bg-yellow-100 text-yellow-900 rounded-lg" onclick="filterCards('priority', 'asc')">Sort by Priority (Asc)</div>
+                           <div class="py-2 px-4 m-1 mb-2 bg-yellow-100 text-yellow-900 rounded-lg" onclick="filterCards('priority', 'desc')">Sort by Priority (Desc)</div>   
+                        </div>
+                        <div class="border-l-4 border-l-lime-500 rounded-md">
+                           <div class="py-2 px-4 m-1 bg-lime-100 text-lime-900 rounded-lg" onclick="filterCards('difficulty', 'asc')">Sort by Difficulty (Asc)</div>
+                           <div class="py-2 px-4 m-1 mb-2 bg-lime-100 text-lime-900 rounded-lg" onclick="filterCards('difficulty', 'desc')">Sort by Difficulty (Desc)</div>   
+                        </div>
+                        <div class="border-l-4 border-l-pink-500 rounded-md">
+                           <div class="py-2 px-4 m-1 bg-pink-100 text-pink-900 rounded-lg" onclick="filterCards('date', 'asc')">Sort by Due Date (Asc)</div>
+                           <div class="py-2 px-4 m-1 mb-2 bg-pink-100 text-pink-900 rounded-lg" onclick="filterCards('date', 'desc')">Sort by Due Date (Desc)</div>   
+                           <p class="m-2 ml-4 text-pink-900 dark:text-pink-300 text-md">*Sorting by due date will remove items without due dates</p>
+                        </div>
+                        <div class="py-2 px-4 text-red-600 rounded-md border-4 border-red-600 font-extrabold text-xl uppercase text-center" onclick="resetFilters()">Reset Filters</div>
                      </div>
                   </details>
                <% } %>
