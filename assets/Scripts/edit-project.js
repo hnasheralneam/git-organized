@@ -11,7 +11,6 @@ function filterCardsByStatus(status) {
    filters.status = status;
    filter();
 }
-
 function filterCards(type, val) {
    filters.priority = "none";
    filters.difficulty = "none";
@@ -19,7 +18,6 @@ function filterCards(type, val) {
    filters[type] = val;
    filter();
 }
-
 function filter() {
    filteredData = cardArray;
    if (filters.status != "none") { filteredData = filteredData.filter(card => card.status == filters.status); }
@@ -49,12 +47,6 @@ function filter() {
       filteredData.forEach((item, index, arr)=> { item.dueDate.length == 0 ? arr.splice(index, 1) : null; });
       filteredData.forEach((item, index, arr)=> { item.dueDate.length == 0 ? arr.splice(index, 1) : null; });
 
-      function getDate(enter) {
-         let ourThing = enter.replace("-"," ");
-         ourThing = new Date(ourThing);
-         return ourThing;
-      }
-
       switch (filters.date) {
          case "asc":
             filteredData = filteredData.sort((item1, item2) => getDate(item1.dueDate) - getDate(item2.dueDate));
@@ -67,7 +59,6 @@ function filter() {
    }
    App();
 }
-
 function resetFilters() {
    filters.status = "none";
    filters.priority = "none";
@@ -76,9 +67,14 @@ function resetFilters() {
    filteredData = cardArray;
    App();
 }
+function getDate(enter) {
+   let ourThing = enter.replace("-"," ");
+   ourThing = new Date(ourThing);
+   return ourThing;
+}
 
 const MainInfo = ({ name, about, creator, created }) => (
-   <div className="px-4 pb-6 border-l-4 border-l-emerald-400 rounded-sm">
+   <div className="px-4 pb-6 mb-2 border-l-4 border-l-emerald-400 rounded-sm">
       <p className="text-3xl">{name}</p>
       <p className="text-2xl text-gray-700 dark:text-gray-600">{about}</p>   
       <p className="text-gray-600 dark:text-gray-700 float-right">Created on {created} by {creator}</p>
@@ -114,12 +110,26 @@ const Arch = ({ card }) => (
          if (card.status !== "archived") {
             return(
                <div className="mr-2 top-0 inline-block">
-                  <form className="archive" action="/archive-card" method="POST">
+                  <form className={`archive archive${filteredData.indexOf(card)}`} action="/archive-card" method="POST">
                      <input className="hidden" type="text" name="cardId" id={ `${card.id}` } /><br />
-                     <button className="archive-btn p-2 pb-1 bg-yellow-50 dark:bg-yellow-900 rounded-md absolute bottom-2 right-2" type="text">
-                        <span className="material-symbols-rounded text-3xl">inventory_2</span>
+                     <button className="archive-btn p-2 pb-1 bg-yellow-50 dark:bg-zinc-800 shadow-inner shadow-amber-100 dark:shadow-zinc-900 rounded-md absolute bottom-2 right-2" type="text">
+                        <span className="material-symbols-rounded text-3xl" title="archive">download</span>
                      </button>
                   </form>
+                  {archiveCard(card, 2000)}
+               </div>
+            );
+         }
+         else {
+            return(
+               <div className="mr-2 top-0 inline-block">
+                  <form className={`un-archive un-archive${filteredData.indexOf(card)}`} action="/un-archive-card" method="POST">
+                     <input className="hidden" type="text" name="cardId" id={ `${card.id}` } /><br />
+                     <button className="un-archive-btn p-2 pb-1 bg-stone-50 dark:bg-stone-800 shadow-inner shadow-stone-200 dark:shadow-stone-900 rounded-md absolute bottom-2 right-2" type="text">
+                        <span className="material-symbols-rounded text-3xl" title="un-archive">upload</span>
+                     </button>
+                  </form>
+                  {unarchiveCard(card, 2000)}
                </div>
             );
          }
@@ -144,7 +154,6 @@ const Status = ({ status }) => (
       })()}
    </div>
 );
-
 function Card({ card }) {
    return(
       <div className="card py-2 px-4 m-2 bg-white dark:bg-gray-900 border-l-8 border-l-amber-300 dark:border-l-amber-500 rounded-lg relative">
@@ -172,8 +181,7 @@ function Card({ card }) {
       </div>
    );
 }
-
-const Filter = ({ props }) => (
+const Filter = () => (
    <div>
       <p className="p-2 px-4 mt-2 ml-2 text-indigo-900 dark:text-indigo-100 text-xl bg-indigo-200 dark:bg-indigo-800 inline-block rounded-2xl">{filteredData.length} Cards</p>
       {(() => { if (filters.status !== "none") { return( <p className="p-2 px-4 mt-2 ml-2 text-white text-xl bg-indigo-500 inline-block rounded-2xl">Status: {filters.status}</p> ); } })()}
@@ -192,8 +200,62 @@ function App() {
          </div>
       </div>
    );
-   ReactDOM.render(cardsObj, document.getElementById("cardDiv"))
+   ReactDOM.render(cardsObj, document.getElementById("cardDiv"));
 }
 
 App();
 setInterval(App, 5000);
+
+
+function display(input) {
+   document.querySelector("." + input).style.display = "block";
+}
+function undisplay(input) {
+   document.querySelector("." + input).style.display = "none";
+}
+
+function archiveCard(card, interval) {
+   setTimeout(() => {
+      document.querySelector(`.archive${filteredData.indexOf(card)}`).onsubmit = function(event) {
+         event.preventDefault();
+         $.post("/archive-card", {
+            projectId: projectId,
+            cardId: card.id
+         }).done(() => { filter(); });
+      }
+   }, interval);
+}
+
+function unarchiveCard(card, interval) {
+   setTimeout(() => {
+      document.querySelector(`.un-archive${filteredData.indexOf(card)}`).onsubmit = function(event) {
+         event.preventDefault();
+         $.post("/un-archive-card", {
+            projectId: projectId,
+            cardId: card.id
+         }).done(() => { filter(); });
+      }
+   }, interval);
+}
+
+$("#create-new-card").submit(function(event) {
+   event.preventDefault();
+   let tagsArray = this.tags.value.split(" ");
+   let assigneesArray = this.assignees.value.split(" ");
+   console.log(this.tags.value, tagsArray, typeof tagsArray);
+
+   $.post("/newcard", {
+      name: this.name.value,
+      about: this.about.value,
+      dueDate: this.dueDate.value,
+      estTime: this.estTime.value,
+      tags: tagsArray,
+      assignees: assigneesArray,
+      priority: this.priority.value,
+      difficulty: this.difficulty.value,
+      projectName: this.projectName.value
+   }).done(function(data) {
+      document.querySelector(".create-card-text").textContent = data;
+      if (data == "Successful creation!") { filter(); console.log("Welcome to the project family, new Card!"); location.reload(); }
+   });
+});

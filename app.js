@@ -259,29 +259,31 @@ app.post("/newcard", (req, res) => {
 });
 
 app.post("/archive-card", (req, res) => {
-   console.log(req.projectId);
-
-
    ProjectData.findOne({ id: req.body.projectId }, function (err, docs) {
       if (err) { console.log(err); }
       else {
          let thedata = docs.data.find(x => x.id == req.body.cardId);
-
          ProjectData.findOneAndUpdate( { id: req.body.projectId, "data.id": thedata.id },
-         { $set: { "data.$.status": "archived",  } }, function(err, yay) {
+         { $set: { "data.$.status": "archived",  } }, function(err) {
             if (err) { console.log(err);}
-            else { console.log(yay, "Successfully archived card!"); }
+            else { res.send("Successfully archived card!"); }
          });
       }
    });
+});
 
-   // Chat.deleteOne( { _id: req.body.msgId }, (err) => { if (err) return console.error(err); } );
-   // Chat.findOne({ name: signedInUser.name }, (err, doc) => {
-   //    if (err) return console.error(err);
-   //    else { res.send("Deleted Successfully."); }
-   // });
-
-   // var result = jsObjects.filter(obj => { return obj.b === 6; });
+app.post("/un-archive-card", (req, res) => {
+   ProjectData.findOne({ id: req.body.projectId }, function (err, docs) {
+      if (err) { console.log(err); }
+      else {
+         let thedata = docs.data.find(x => x.id == req.body.cardId);
+         ProjectData.findOneAndUpdate( { id: req.body.projectId, "data.id": thedata.id },
+         { $set: { "data.$.status": "to-do",  } }, function(err) {
+            if (err) { console.log(err);}
+            else { res.send("Successfully un-archived card!"); }
+         });
+      }
+   });
 });
 
 /* =============
