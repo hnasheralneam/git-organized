@@ -7,6 +7,7 @@
     "express": "^4.17.3",
     "mongoose": "^6.2.7",
     "postcss": "^8.4.16",
+    "socket.io": "^4.5.3",
     "uuid": "^8.3.2"
   },
   "name": "git-organized",
@@ -14,7 +15,7 @@
   "description": "A project management tool for developers",
   "main": "app.js",
   "scripts": {
-    "watch-css": "npx tailwindcss -i main.css -o css/main.css --watch"
+    "watch-css": "npx tailwindcss -i main.css -o styles/main.css --watch"
   },
   "repository": {
     "type": "git",

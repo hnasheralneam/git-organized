@@ -16,7 +16,7 @@ let signedInUser = "(not signed in)";
 // app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/assets/"));
-app.use("/css", express.static(__dirname + "/css/"));
+app.use("/styles", express.static(__dirname + "/styles/"));
 app.set("view engine", "ejs");
 
 // Mongoose things

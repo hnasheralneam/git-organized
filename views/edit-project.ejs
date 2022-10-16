@@ -7,7 +7,8 @@
       <div class="page dark:bg-gray-900 dark:text-gray-100 border-l-gray-50 dark:border-l-gray-700 border-transparent" style="border-width: .3vh">
          <% if (thisProject.contributors.includes(user.userCall)) { %>
             <div class="content">
-   
+
+
                <% if (thisProject.contributors.includes(user.userCall)) { %>
                   <script>
                      let cardArray = <%- JSON.stringify(thisProject.data) %>;
@@ -134,3 +135,59 @@
    }
 }
 </style>
+<!-- <style>
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Dynamic hover
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.dynamicHover {
+   background-color: #fff;
+   padding: .6vh 1vw;
+   font-family: "Nunito";
+   border-radius: 2vh;
+   font-size: 3.2vh;
+   color: #2b2b2b;
+   transition: opacity .1s;
+   opacity: 0;
+   box-shadow: 0 0 .2vh #eee;
+}
+</style>
+<script>
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Dynamic hover
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+let mouseX, mouseY;
+
+document.onreadystatechange = function () {
+   if (document.readyState === "complete") {
+      document.addEventListener("mousemove", e => { getCoords(e); });
+   }
+}
+
+function getCoords(e) {
+   mouseX = event.clientX;
+   mouseY = event.clientY;
+   dynamHov.style.top = `${event.clientY}px`;
+   dynamHov.style.left = `${event.clientX + 25}px`;
+}
+
+var dynamHov = document.createElement("SPAN");
+document.body.appendChild(dynamHov);
+dynamHov.style.position = "fixed";
+dynamHov.classList.add("dynamicHover");
+
+setTimeout(init, 2000);
+
+function init() {
+   info = function (thisId) {
+      let ourEl = document.querySelector(thisId);
+      console.log(thisId, ourEl)
+      dynamHov.textContent = ourEl.dataset.info;
+      dynamHov.style.opacity = "1";
+      ourEl.onmouseleave = () => { dynamHov.style.opacity = "0"; }
+   }
+}
+
+let info = function (thisId) { }
+</script> -->
