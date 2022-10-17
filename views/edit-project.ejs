@@ -17,8 +17,8 @@
 
                   <div id="cardDiv"></div>
 
-                  <details class="p-4 bg-white dark:bg-zinc-800 border-2 border-neutral-100 dark:border-zinc-800 w-[20rem] absolute bottom-2 right-2 rounded-lg">
-                     <summary class="text-center text-xl uppercase font-bold text-gray-300 dark:text-zinc-600">Filter Cards</summary>
+                  <details class="p-4 bg-white/[.8] dark:bg-gray-800/[.8] backdrop-blur-xl border-[.15rem] border-neutral-100/[.2] dark:border-zinc-700/[.2] w-[20rem] absolute bottom-2 right-2 rounded-lg">
+                     <summary class="text-center text-xl uppercase font-bold text-gray-400 dark:text-zinc-500">Filter Cards</summary>
                      <div>
                         <form class="p-2 px-4 m-3 ml-0 border-4 border-violet-700 rounded-md relative">
                            <p class="-m-1 mb-3 text-violet-900 font-semibold text-lg text-center">Filter by status</p>
@@ -28,17 +28,17 @@
                            </select>
                            <button class="py-2 px-4 bg-violet-600 dark:bg-violet-500 text-white text-semibold rounded-xl absolute right-2 bottom-2" onclick="event.preventDefault(); filterCardsByStatus(document.querySelector('#filter-cards-by-status').value)">Filter</button>
                         </form>
-                        <div class="border-l-4 border-l-yellow-500 rounded-md">
-                           <div class="py-2 px-4 m-1 bg-yellow-100 text-yellow-900 rounded-lg" onclick="filterCards('priority', 'asc')">Sort by Priority (Asc)</div>
-                           <div class="py-2 px-4 m-1 mb-2 bg-yellow-100 text-yellow-900 rounded-lg" onclick="filterCards('priority', 'desc')">Sort by Priority (Desc)</div>   
+                        <div class="border-l-4 border-l-yellow-500 dark:border-none rounded-md">
+                           <div class="py-2 px-4 m-1 bg-yellow-100 text-yellow-900 dark:text-yellow-300 dark:border-[.05rem] dark:bg-transparent darkshadow-sm dark:shadow-gray-600 dark:border-yellow-300 rounded-lg" onclick="filterCards('priority', 'asc')">Sort by Priority (Asc)</div>
+                           <div class="py-2 px-4 m-1 mb-2 bg-yellow-100 text-yellow-900 dark:text-yellow-300 dark:border-[.05rem] dark:bg-transparent darkshadow-sm dark:shadow-gray-600 dark:border-yellow-300 rounded-lg" onclick="filterCards('priority', 'desc')">Sort by Priority (Desc)</div>   
                         </div>
-                        <div class="border-l-4 border-l-lime-500 rounded-md">
-                           <div class="py-2 px-4 m-1 bg-lime-100 text-lime-900 rounded-lg" onclick="filterCards('difficulty', 'asc')">Sort by Difficulty (Asc)</div>
-                           <div class="py-2 px-4 m-1 mb-2 bg-lime-100 text-lime-900 rounded-lg" onclick="filterCards('difficulty', 'desc')">Sort by Difficulty (Desc)</div>   
+                        <div class="border-l-4 border-l-lime-500 dark:border-none rounded-md">
+                           <div class="py-2 px-4 m-1 bg-lime-100 text-lime-900 dark:text-lime-300 dark:border-[.05rem] dark:bg-transparent darkshadow-sm dark:shadow-gray-600 dark:border-lime-300 rounded-lg" onclick="filterCards('difficulty', 'asc')">Sort by Difficulty (Asc)</div>
+                           <div class="py-2 px-4 m-1 mb-2 bg-lime-100 text-lime-900 dark:text-lime-300 dark:border-[.05rem] dark:bg-transparent darkshadow-sm dark:shadow-gray-600 dark:border-lime-300 rounded-lg" onclick="filterCards('difficulty', 'desc')">Sort by Difficulty (Desc)</div>   
                         </div>
-                        <div class="border-l-4 border-l-pink-500 rounded-md">
-                           <div class="py-2 px-4 m-1 bg-pink-100 text-pink-900 rounded-lg" onclick="filterCards('date', 'asc')">Sort by Due Date (Asc)</div>
-                           <div class="py-2 px-4 m-1 mb-2 bg-pink-100 text-pink-900 rounded-lg" onclick="filterCards('date', 'desc')">Sort by Due Date (Desc)</div>   
+                        <div class="border-l-4 border-l-pink-500 dark:border-none rounded-md">
+                           <div class="py-2 px-4 m-1 bg-pink-100 text-pink-900 dark:text-pink-300 dark:border-[.05rem] dark:bg-transparent darkshadow-sm dark:shadow-gray-600 dark:border-pink-300 rounded-lg" onclick="filterCards('date', 'asc')">Sort by Due Date (Asc)</div>
+                           <div class="py-2 px-4 m-1 mb-2 bg-pink-100 text-pink-900 dark:text-pink-300 dark:border-[.05rem] dark:bg-transparent darkshadow-sm dark:shadow-gray-600 dark:border-pink-300 rounded-lg" onclick="filterCards('date', 'desc')">Sort by Due Date (Desc)</div>   
                            <p class="m-2 ml-4 text-pink-900 dark:text-pink-300 text-md">*Sorting by due date will remove items without due dates</p>
                         </div>
                         <div class="py-2 px-4 text-red-600 rounded-md border-4 border-red-600 font-extrabold text-xl uppercase text-center" onclick="resetFilters()">Reset Filters</div>

@@ -21,7 +21,8 @@ app.set("view engine", "ejs");
 
 // Mongoose things
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb+srv://Squirrel:nCCJ0sQuQQ5qhGsn@test-user-data.daqv1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect("mongodb+srv://EditorSquirrel:SBtBYDnD2rvmsUjz@testcluster.ky80id3.mongodb.net/?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true });
+// New DB | mongodb+srv://EditorSquirrel:SBtBYDnD2rvmsUjz@testcluster.ky80id3.mongodb.net/?retryWrites=true&w=majority
 
 // System things
 connection.on("error", console.error.bind(console, "Connection error: "));
@@ -219,7 +220,7 @@ app.post("/newproject", (req, res) => {
             dateCreated: new Date(),
             actions: [actionId]
          });
-         newProject.save(function (err, newUser) {
+         newProject.save(function (err, newProject) {
             if (err) return console.error(err);
             else { res.send("Successful creation!"); }
          });
@@ -286,6 +287,17 @@ app.post("/un-archive-card", (req, res) => {
    });
 });
 
+app.post("/delete-card", (req, res) => {
+   ProjectData.findOneAndUpdate({ id: req.body.projectId },
+      { "$pull": { "data": { "id": req.body.cardId } }},
+      { safe: true, multi: true },
+      function(err, obj) {
+         if (err) { console.log(err) }
+         else console.log(obj);
+      }
+   );
+});
+
 /* =============
 // Important stuff
 ============= */
@@ -301,4 +313,4 @@ app.listen(port);
 
 
 
-DevData.findOne({ name: "Squirrel", passcode: "0825" }, (err, user) => { signIn(user); });
+DevData.findOne({ name: "Editor Squirrel", passcode: "825" }, (err, user) => { signIn(user); });

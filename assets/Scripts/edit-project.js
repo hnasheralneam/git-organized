@@ -9,7 +9,8 @@ let filters = {
    date: "none"
 }
 
-let filteredData = cardArray;
+let filteredData = [];
+filteredData.splice(0, filteredData.length, ...cardArray);
 
 function filterCardsByStatus(status) {
    filters.status = status;
@@ -23,9 +24,12 @@ function filterCards(type, val) {
    filter();
 }
 function filter() {
-   filteredData = cardArray;
+   filteredData.splice(0, filteredData.length, ...cardArray);
    if (filters.status != "none") { filteredData = filteredData.filter(card => card.status == filters.status); }
    if (filters.priority != "none") {
+      filteredData.forEach((item, index, arr)=> { item.priority == "" ? arr.splice(index, 1) : null; });
+      filteredData.forEach((item, index, arr)=> { item.priority == "" ? arr.splice(index, 1) : null; });
+
       switch (filters.priority) {
          case "asc":
             filteredData = filteredData.sort((a, b) => { return parseInt(b.priority) - parseInt(a.priority); });
@@ -37,6 +41,9 @@ function filter() {
          }
    }
    if (filters.difficulty != "none") {
+      filteredData.forEach((item, index, arr)=> { item.difficulty == "" ? arr.splice(index, 1) : null; });
+      filteredData.forEach((item, index, arr)=> { item.difficulty == "" ? arr.splice(index, 1) : null; });
+
       switch (filters.difficulty) {
          case "asc":
             filteredData = filteredData.sort((a, b) => { return parseInt(b.difficulty) - parseInt(a.difficulty); });
@@ -61,15 +68,17 @@ function filter() {
             break;
          }
    }
-   App();
+   CreateCards();
 }
+
 function resetFilters() {
    filters.status = "none";
    filters.priority = "none";
    filters.difficulty = "none";
    filters.date = "none";
-   filteredData = cardArray;
-   App();
+   filteredData.splice(0, filteredData.length, ...cardArray);
+   console.log(cardArray)
+   CreateCards();
 }
 function getDate(enter) {
    let ourThing = enter.replace("-"," ");
@@ -81,37 +90,42 @@ function getDate(enter) {
 // Cards
 // ======================================
 
-function Arch(card) {
+function MainInfo(name, about, creator, created) {
    return `
-   <div class="px-3 py-1 rounded-full absolute bottom-2 right-2" style="box-shadow: 0 0 .08em #ddd;">
-      ${(() => {
-         if (card.status !== "archived") { return `
-            <div>
-               <form class="archive archive${card.id}" method="POST" action="/archive-card">
-                  <input class="hidden" type="text" name="cardId" id=${card.id} />
-                  <button>
-                     <span class="material-symbols-rounded text-3xl" title="archive">download</span>
-                     ${/* style test purposes only <span className="ml-2 material-symbols-rounded text-3xl" title="archive">download</span> */""}
-                  </button>
-                  ${/* We need this here to set up the onclick */""}
-                  ${(() => { archiveCard(card, 100); return ""; })()}
-               </form>
+      <div class="px-4 pb-12 mb-2 border-l-4 border-l-emerald-400 rounded-sm">
+         <p class="text-3xl">${name}</p>
+         <p class="text-2xl text-gray-700 dark:text-gray-600">${about}</p>
+         <p class="text-gray-600 dark:text-gray-700 float-right">Created by ${creator} ${mdy(created)} at ${thetime(created)} ${dateDiff(created)}</p>
+      </div>
+   `;
+}
+function AssigneesTags(assignees, tags) {
+   if (assignees[0] == "" && tags[0] == "") { return ""; }
+   else {
+      if (tags[0] == "") {
+         return `
+            <div class="p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+               ${assignees.map((assignee, i) => ( `<span key={i} class="py-1 px-2 inline-block">@${assignee}</span>` )).join("")}
             </div>
-         `; }
-         else { return `
-            <div>
-               <form class="un-archive un-archive${card.id}" method="POST" action="/un-archive-card">
-                  <input class="hidden" type="text" name="cardId" id=${card.id} />
-                  <button>
-                     <span class="material-symbols-rounded text-3xl" title="un-archive">upload</span>
-                  </button>
-                  ${(() => { unarchiveCard(card, 100); return ""; })()}
-               </form>
+         `;
+      }
+      else if (assignees[0] == "") {
+         return `
+            <div class="p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+               ${tags.map((tag, i) => ( `<span key={i} class="py-1 px-3 mr-1 mb-1 bg-rose-400 dark:bg-rose-600 rounded-full inline-block">${tag}</span>` )).join("")}
             </div>
-         `; }
-      })()}
-   </div>
-   `
+         `;
+      }
+      else {
+         return `
+            <div class="p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl">
+               ${assignees.map((assignee, i) => ( `<span key={i} class="py-1 px-2 inline-block">@${assignee}</span>` )).join("")}
+               <hr class="m-4 border-none h-[2px] dark:bg-gray-700 rounded-full" />
+               ${tags.map((tag, i) => ( `<span key={i} class="py-1 px-3 mr-1 mb-1 bg-rose-400 dark:bg-rose-600 rounded-full inline-block">${tag}</span>` )).join("")}
+            </div>
+         `;
+      }
+   }
 }
 function Status(status) {
    if (status == "to-do") { return StatusBlock("emerald", status); }
@@ -125,34 +139,66 @@ function Status(status) {
       `;
    }
 }
-function MainInfo(name, about, creator, created) {
-   return `
-      <div class="px-4 pb-6 mb-2 border-l-4 border-l-emerald-400 rounded-sm">
-         <p class="text-3xl">${name}</p>
-         <p class="text-2xl text-gray-700 dark:text-gray-600">${about}</p>
-         <p class="text-gray-600 dark:text-gray-700 float-right">Created by ${creator} ${mdy(created)} at ${thetime(created)} ${dateDiff(created)}</p>
-      </div>
-   `;
-}
-function AssigneesTags(assignees, tags) {
-   if (assignees[0] == "" && tags[0] == "") { return; }
+function PriDif(pri, dif) {
+   if (!pri && !dif) { return ""; }
    else {
       return `
-      <div class="p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl">
-         ${assignees[0] != "" ? assignees.map((assignee, i) => ( `<span key={i} class="py-1 px-2 inline-block">@${assignee}</span>` )).join("") : null}
-         ${(() => {
-            if (tags[0] !== "") {
-               return `
-                  <div>
-                     <hr class="m-4 border-none h-[2px] dark:bg-gray-700 rounded-full" />
-                     ${tags.map((tag, i) => ( `<span key={i} class="py-1 px-3 mr-1 mb-1 bg-rose-400 dark:bg-rose-600 rounded-full inline-block">${tag}</span>` )).join("")}
-                  </div>
-               `;
-            }
-         })()}
+      <div class="mb-1 grid grid-cols-2 rounded-xl overflow-hidden">
+         <p class="px-4 py-3 flex justify-center items-center text-2xl bg-red-500 dark:bg-red-700 text-white font-notosansmono" title="Priority">
+            <span class="material-symbols-rounded mr-1">alarm</span>
+            <span class="pl-2">${pri}</span>
+         </p>
+         <p class="px-4 py-3 flex justify-center items-center text-2xl bg-sky-500 dark:bg-sky-500 text-white font-notosansmono" title="Difficulty">
+            <span class="material-symbols-rounded mr-1">speed</span>
+            <span class="pl-2">${dif}</span>
+         </p>
       </div>
-   `; }
+      `;
+   }
 }
+function Arch(card) {
+   return `
+   <div class="card-options   px-3 py-1 rounded-full absolute bottom-2 right-2">
+      ${(() => {
+         if (card.status !== "archived") { return `
+            <div>
+               <form class="archive archive${card.id}" method="POST" action="/archive-card">
+                  <input class="hidden" type="text" name="cardId" id=${card.id} />
+                  <button>
+                     <span class="material-symbols-rounded text-3xl" title="archive">download</span>
+                  </button>
+                  ${/* We need this here to set up the onclick */""}
+                  ${(() => { archiveCard(card, 100); return ""; })()}
+               </form>
+            </div>
+         `; }
+         else { return `
+            <div>
+               <form class="inline un-archive un-archive${card.id}" method="POST" action="/un-archive-card">
+                  <input class="hidden" type="text" name="cardId" id=${card.id} />
+                  <button>
+                     <span class="material-symbols-rounded text-3xl" title="un-archive">upload</span>
+                  </button>
+                  ${(() => { unarchiveCard(card, 100); return ""; })()}
+               </form>
+               <form class="inline delete delete${card.id}" method="POST" action="/delete-card">
+                  <input class="hidden" type="text" name="cardId" id=${card.id} />
+                  <button>
+                     <span class="ml-2 text-rose-400 material-symbols-rounded text-3xl" title="delete">delete</span>
+                  </button>
+                  ${(() => { deleteCard(card, 100); return ""; })()}
+               </form>
+            </div>
+         `; }
+      })()}
+      <style>
+         @media (prefers-color-scheme: light) { .card-options { box-shadow: 0 0 .08em #ddd; } }
+         @media (prefers-color-scheme: dark) { .card-options { box-shadow: 0 0 .08em #383838; } }
+      </style>
+   </div>
+   `
+}
+
 function Card(card) {
    return `
       <div class="card py-2 px-4 m-2 bg-white dark:bg-gray-900 border-l-8 border-l-amber-200 dark:border-l-amber-500 rounded-lg relative">
@@ -163,18 +209,7 @@ function Card(card) {
             </div>
             <div class="pl-2">
                ${Status(card.status)}
-               <div class="mb-1 grid grid-cols-2 rounded-xl overflow-hidden">
-                  <p class="px-4 py-3 flex justify-center items-center text-2xl bg-red-500 dark:bg-red-700 text-white font-notosansmono" title="Priority">
-                     <span class="material-symbols-rounded mr-1">alarm</span>
-                     &nbsp;
-                     ${card.priority}
-                  </p>
-                  <p class="px-4 py-3 flex justify-center items-center text-2xl bg-sky-500 dark:bg-sky-500 text-white font-notosansmono" title="Difficulty">
-                     <span class="material-symbols-rounded mr-1">speed</span>
-                     &nbsp;
-                     ${card.difficulty}
-                  </p>
-               </div>
+               ${PriDif(card.priority, card.difficulty)}
                ${(() => { if (card.estTime) { return `
                   <div class="py-2 px-4 mb-1 text-center bg-gray-50 dark:bg-gray-800 rounded-xl relative" title="Estimated time">
                      <p><span class="absolute top-2 left-2 material-symbols-rounded mr-1">schedule</span>${card.estTime}</p>
@@ -210,7 +245,7 @@ function CreateCards() {
 }
 
 CreateCards();
-setInterval(CreateCards, 5000);
+setInterval(CreateCards, 15000);
 
 // ======================================
 // Functions
@@ -227,7 +262,6 @@ function archiveCard(card, interval) {
       }
    }, interval);
 }
-
 function unarchiveCard(card, interval) {
    setTimeout(() => {
       document.querySelector(`.un-archive${card.id}`).onsubmit = function(event) {
@@ -238,6 +272,21 @@ function unarchiveCard(card, interval) {
          }).done(() => { filter(); });
       }
    }, interval);
+}
+function deleteCard(card, interval) {
+   setTimeout(() => {
+      document.querySelector(`.delete${card.id}`).onsubmit = function(event) {
+         event.preventDefault();
+         if (window.confirm(`Sure you want to delete ${card.name}?`)) {
+            $.post("/delete-card", {
+               projectId: projectId,
+               cardId: card.id,
+               card: card
+            }).done(() => { filter(); });
+         }
+      }
+   }, interval);
+   
 }
 
 $("#create-new-card").submit(function(event) {
@@ -261,3 +310,6 @@ $("#create-new-card").submit(function(event) {
       if (data == "Successful creation!") { filter(); console.log("Welcome to the project family, new Card!"); location.reload(); }
    });
 });
+
+function display(input) { document.querySelector("." + input).style.display = "block"; }
+function undisplay(input) { document.querySelector("." + input).style.display = "none"; }
