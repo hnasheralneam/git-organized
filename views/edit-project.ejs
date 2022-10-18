@@ -15,6 +15,9 @@
                      let projectId = <%- JSON.stringify(thisProject.id) %>;
                   </script>
 
+               <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
                   <div id="cardDiv"></div>
 
                   <details class="p-4 bg-white/[.8] dark:bg-gray-800/[.8] backdrop-blur-xl border-[.15rem] border-neutral-100/[.2] dark:border-zinc-700/[.2] w-[20rem] absolute bottom-2 right-2 rounded-lg">
@@ -120,6 +123,8 @@
    <% } %>
 </body>
 </html>
+<script src="/Scripts/digit-v.0.1.1-tweaked.js"></script>
+<script type="text/babel" src="/Scripts/edit-project.js"></script>
 <style>
 .cardObject {
    display: grid;

@@ -10,7 +10,7 @@ let filters = {
 }
 
 let filteredData = [];
-filteredData.splice(0, filteredData.length, ...cardArray);
+setFilterData();
 
 function filterCardsByStatus(status) {
    filters.status = status;
@@ -24,7 +24,7 @@ function filterCards(type, val) {
    filter();
 }
 function filter() {
-   filteredData.splice(0, filteredData.length, ...cardArray);
+   setFilterData();
    if (filters.status != "none") { filteredData = filteredData.filter(card => card.status == filters.status); }
    if (filters.priority != "none") {
       filteredData.forEach((item, index, arr)=> { item.priority == "" ? arr.splice(index, 1) : null; });
@@ -76,9 +76,15 @@ function resetFilters() {
    filters.priority = "none";
    filters.difficulty = "none";
    filters.date = "none";
-   filteredData.splice(0, filteredData.length, ...cardArray);
-   console.log(cardArray)
+   setFilterData();
    CreateCards();
+}
+function setFilterData() {
+   filteredData.splice(0, filteredData.length, ...cardArray);
+   filteredData.reverse();
+   let toDo =  filteredData.filter(card => card.status == "to-do");
+   let archived = filteredData.filter(card => card.status == "archived");
+   filteredData = toDo.concat(archived);
 }
 function getDate(enter) {
    let ourThing = enter.replace("-"," ");
@@ -92,7 +98,7 @@ function getDate(enter) {
 
 function MainInfo(name, about, creator, created) {
    return `
-      <div class="px-4 pb-12 mb-2 border-l-4 border-l-emerald-400 rounded-sm">
+      <div class="px-4 pb-12 mb-1 border-l-4 border-l-emerald-400 rounded-sm">
          <p class="text-3xl">${name}</p>
          <p class="text-2xl text-gray-700 dark:text-gray-600">${about}</p>
          <p class="text-gray-600 dark:text-gray-700 float-right">Created by ${creator} ${mdy(created)} at ${thetime(created)} ${dateDiff(created)}</p>
@@ -104,24 +110,24 @@ function AssigneesTags(assignees, tags) {
    else {
       if (tags[0] == "") {
          return `
-            <div class="p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl">
-               ${assignees.map((assignee, i) => ( `<span key={i} class="py-1 px-2 inline-block">@${assignee}</span>` )).join("")}
+            <div class="my-2 rounded-2xl">
+               ${assignees.map((assignee) => ( `<span class="inline-block">@${assignee}</span>` )).join("")}
             </div>
          `;
       }
       else if (assignees[0] == "") {
          return `
-            <div class="p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl">
-               ${tags.map((tag, i) => ( `<span key={i} class="py-1 px-3 mr-1 mb-1 bg-rose-400 dark:bg-rose-600 rounded-full inline-block">${tag}</span>` )).join("")}
+            <div class="my-2 rounded-2xl">
+               ${tags.map((tag) => ( `<span class="py-1 px-3 mx-0.5 bg-rose-400 dark:bg-rose-600 rounded-full inline-block">${tag}</span>` )).join("")}
             </div>
          `;
       }
       else {
          return `
-            <div class="p-3 mb-2 bg-gray-50 dark:bg-gray-800 rounded-2xl">
-               ${assignees.map((assignee, i) => ( `<span key={i} class="py-1 px-2 inline-block">@${assignee}</span>` )).join("")}
-               <hr class="m-4 border-none h-[2px] dark:bg-gray-700 rounded-full" />
-               ${tags.map((tag, i) => ( `<span key={i} class="py-1 px-3 mr-1 mb-1 bg-rose-400 dark:bg-rose-600 rounded-full inline-block">${tag}</span>` )).join("")}
+            <div class="p-3 my-2 rounded-2xl">
+               ${assignees.map((assignee) => ( `<span class="py-1 px-2 inline-block">@${assignee}</span>` )).join("")}
+               <hr class="m-3 border-none h-[2px] bg-gray-50 dark:bg-gray-800 rounded-full">
+               ${tags.map((tag) => ( `<span class="py-1 px-3 mx-0.5 bg-rose-400 dark:bg-rose-600 rounded-full inline-block">${tag}</span>` )).join("")}
             </div>
          `;
       }
@@ -158,7 +164,7 @@ function PriDif(pri, dif) {
 }
 function Arch(card) {
    return `
-   <div class="card-options   px-3 py-1 rounded-full absolute bottom-2 right-2">
+   <div class="card-options   bg-white/[.9] dark:bg-gray-900/[.8] backdrop-blur-sm hover:backdrop-blur-none transition px-3 py-1 rounded-full absolute bottom-2 right-2">
       ${(() => {
          if (card.status !== "archived") { return `
             <div>
@@ -167,7 +173,6 @@ function Arch(card) {
                   <button>
                      <span class="material-symbols-rounded text-3xl" title="archive">download</span>
                   </button>
-                  ${/* We need this here to set up the onclick */""}
                   ${(() => { archiveCard(card, 100); return ""; })()}
                </form>
             </div>
@@ -238,7 +243,7 @@ function CreateCards() {
             ${(() => { if (filters.date !== "none") { return `<p class="p-2 px-4 mt-2 ml-2 text-white text-xl bg-pink-500 inline-block rounded-2xl">Due Date (${filters.date})</p>` } else return ""; })()}
          </div>
          <div class="cardObject">
-            ${filteredData.map((cardData, i) => ( Card(cardData) )).join("")}
+            ${filteredData.map((cardData) => ( Card(cardData) )).join("")}
          </div>
       </div>
    `;
