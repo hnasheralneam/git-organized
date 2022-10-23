@@ -1,77 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("partials/head", { pageTitle: "Home" }); %>
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="styles/main.css">
+   <title>About | Git Organized</title>
+</head>
 <body>
-   <% if (user !== "(not signed in)") { %>
-      <%- include("partials/navbar"); %>
-      <div class="page dark:bg-gray-900 dark:text-gray-100 border-l-gray-50 dark:border-l-gray-700 border-transparent" style="border-width: .3vh">
-         <div class="content">
-
-
-            <p class="text-center text-4xl font-nunito font-medium m-8">Welcome to Git Organized, <span class="bg-gradient-to-br from-yellow-400 to-orange-400 text-white px-4 py-1 rounded-full"><%= user.username %></span>!</p>
-            <p class="margin-24 bg-indigo-500 text-white p-8 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-indigo-600">This is a web application that allows you to keep track of your repositories.</p>
-            <p class="margin-24 bg-emerald-500 text-white p-8 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-emerald-600">Note: should create pages to view old actions, probably should make them undoable too.</p>
-            <div class="py-4 px-2">
-               <p class="bg-lime-300 py-2 px-3 rounded-full inline">hello there</p>
-               <p class="bg-orange-300 py-2 px-3 rounded-full inline">#tailwindcss</p>
-            </div>
-            <br>
-
-            <div class="p-2 my-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
-               <p class="m-4">Continue where you left off:</p>
-               <% for (let i = 0; i < 5; i++) { %>
-                  <% if (projects[i]) { %>
-                     <% if (projects[i].contributors.includes(user.userCall)) { %>
-                        <div class="py-4 px-6 m-2 mb-3 font-nuntio rounded-md bg-white dark:bg-gray-900 border-l-8 border-sky-400">
-                           <a class="text-4xl" href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
-                           <p class="text-gray-600 font-nunito font-medium text-xl"><%= projects[i].description %></p>
-                         </div>
-                      <% } %>
-                  <% } %>
-               <% } %>
-            </div>
-
-            <div class="p-2 my-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
-               <p class="m-4">Check out what others are doing:</p>
-                  <% for (let i = 0; i < 5; i++) { %>
-                     <% if (projects[i]) { %>
-                        <% if (!projects[i].contributors.includes(user.userCall)) { %>
-                           <div class="py-4 px-6 m-2 mb-3 font-nuntio rounded-md bg-white dark:bg-gray-900 border-l-8 border-orange-300">
-                              <a class="text-4xl" href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
-                              <p class="text-gray-600 font-nunito font-medium text-xl"><%= projects[i].description %></p>
-                            </div>
-                           <% } %>
-                     <% } %>
-                  <% } %>
-               <p>
-            </div>
-
-            <div id="appppe"></div>
-
-            <%- include("partials/locbar", { text: "Home" }); %>
+   <div class="landing h-[100vh]">
+      <div class="navigation">
+         <a href="#">Home</a>
+         <a href="/pricing">Pricing</a>
+         <a href="/docs">Docs</a>
+         <a href="https://gitorganized.cyclic.app">Sign in</a>
+      </div>
+      <h1>Git Organized</h1>
+      <h2>Developer organization made simple</h2>
+      <div>
+         <p>tell me more</p>
+         <span>🔻</span>
+      </div>
+   </div>
+   <div class="info1 grid grid-cols-3">
+      <div>
+         <img src="/assets/" alt="complex sorting">
+         <h3>Stay organized</h3>
+         <p>Sort & filter all your cards, with a level of organization that will satisfy even the most intense organization people</p>
+      </div>
+      <div>
+         <h3>Constantly connected</h3>
+         <p>All of your projects & changes instantly saved to the cloud, accessible from anywhere</p>
+         <img src="/assets/" alt="connected to the cloud">
+      </div>
+      <div>
+         <img src="/assets/" alt="confusing code">
+         <h3>Really messy</h3>
+         <p>Code so messy and inefficant it ought to be illegal. Most experts have agreed it violates human rights somehow</p>
+      </div>
+   </div>
+   <div class="visit grid grid-cols-2 bg-[#FFB81E]">
+      <div>
+         <h1>You convinced?</h1>
+         <h4>Go check it out! It's free! Until my 500 free megabytes on MongoDB run out.</h4>   
+      </div>
+      <div>
+         <img src="/assets/" alt="computer open on git organized">
+         <button><a href="https://gitorganized.cyclic.app">Check it out -></a></button>
+      </div>
+      <div>
+         <p>nah, I'm not convinced yet</p>
+         <span>🔻</span>
+      </div>
+   </div>
+   <div class="info2 grid grid-rows-2">
+      <div class="grid grid-cols-2">
+         <div>
+            <h2>Constant Updates</h2>
+            <p>I'm actively working on this project, so keep expecting cool new stuff!</p>
+         </div>
+         <img src="/assets/" alt="version log">
+      </div>
+      <div class="grid grid-cols-2">
+         <img src="/assets/" alt="integrating feedback">
+         <div>
+            <h2>Listening to You</h2>
+            <p>I like your opinions & feedback, so send it over and I'll work it into the code.</p>
          </div>
       </div>
-   <%} else { %>
-      <%- include("partials/signedOut"); %>
-      <%- include("partials/signIn"); %>
-   <% } %>
+   </div>
+   <div class="pricing bg-[#FFDB8F]">
+      <h3>Basic is always free</h3>
+      <h1>But we know you want more ;)</h1>
+      <button><a href="/pricing">Pricing -></a></button>
+   </div>
+   <div class="qoutes">
+      <h2>Testimonial</h2>
+      <div>
+         <div>""-....</div>
+         <div>""-....</div>
+         <div>""-....</div>
+         <div>""-....</div>
+         <div>""-....</div>
+      </div>
+   </div>
+   <div class="newsletter grid-cols-2 bg-[#FFB81E]">
+      <div>
+         <h2>Stay in touch</h2>
+         <p>Sign up to some non-annoying email updates</p>
+         <div>
+            <p>non annoying?</p>
+            <span>I'll only send you big updates, less than an email a week</span>
+         </div>
+      </div>
+      <div>
+         <img src="/assets/" alt="newsletter">
+         <input type="text" placeholder="youremail@gmail.com">
+         <button>Sign up</button>
+      </div>
+   </div>
+   <div class="madeby">
+      <h2>Made with 💖 by Editor Squirrel <br> with help from <a href="https://github.com/tildejustin">tildejustin</a></h2>
+   </div>
+   <div class="footer bg-[#BF9C4F]">
+      <p>Sitemap</p>
+      <div class="grid grid-cols-3">
+         <div>
+            <h2>Pages</h2>
+            <p><a href="#">Home</a></p>
+            <p><a href="/pricing">Pricing</a></p>
+            <p><a href="/docs">Docs</a></p>
+            <p><a href="https://gitorganized.cyclic.app">Sign in</a></p>
+         </div>
+         <div>
+            <h2>Contact</h2>
+            <p>Send me anything! I'll email you back about bugs and feature requests.</p>
+            <a href="mailto:gitorganized@gmail.com">gitorganized@gmail.com</a>
+         </div>
+         <div>
+            <h2>Me (Editor Squirrel)</h2>
+            <p>Always working to make the web better!</p>
+            <p><a href="https://github.com/Squirrel-314" class="underline">GitHub</a></p>
+            <p><a href="mailto:hamza.elabi1@gmail.com">hamza.elabi1@gmail.com</a></p>
+         </div>
+      </div>
+   </div>
 </body>
-
-<script type="text/jsx" src="Scripts/react-test.js"></script>
-<script>
-   function toggleWindow(id) {
-      let thisWindow = document.querySelector(`.window-${id}`);
-      if (thisWindow.style.opacity == "1") {
-         thisWindow.style.opacity = "0";
-         thisWindow.style.pointerEvents = "none";
-         thisWindow.style.zIndex = "-1000";
-      }
-      else {
-         thisWindow.style.opacity = "1";
-         thisWindow.style.pointerEvents = "auto";
-         thisWindow.style.zIndex = "1000";
-      }
-   }
-</script>
-
 </html>
