@@ -8,20 +8,29 @@
          <% if (thisProject.contributors.includes(user.userCall)) { %>
             <div class="content">
 
-
                <% if (thisProject.contributors.includes(user.userCall)) { %>
                   <script>
                      let cardArray = <%- JSON.stringify(thisProject.data) %>;
                      let projectId = <%- JSON.stringify(thisProject.id) %>;
                   </script>
 
-               <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+                  <div class="filter absolute top-[6vh] z-10 p-3 bg-white/[.8] dark:bg-gray-800/[.8] border-b-2 border-gray-50/[.8] dark:border-gray-700/[.8] backdrop-blur-sm" style="width: calc(100% - 3vh - 70px - .3vh)">
+                     <button onclick="display('createCard')" class="float-right p-2 px-4 align-middle bg-gradient-to-br from-amber-400 to-orange-400 text-white text-lg font-nunito font-semibold rounded-xl">Make a new card</button>
+                     <div class="filterUpdatable inline"></div>
+                     <!-- Search cards by name and description -->
+                     <div class="inline-grid align-middle gap-x-2 py-1.5 px-4 ml-2 bg-white dark:bg-gray-700 outline-amber-400 outline-0 hover:outline-2 backdrop-blur-sm rounded-full" style="grid-template-columns: auto auto; box-shadow: 0 0 .2vh #22222222">
+                        <span class="material-symbols-rounded text-2xl">search</span>
+                        <input class="searchCards bg-transparent focus:outline-none focus:border-none" type="text" placeholder="Search..." title="🔍">
+                     </div>
+                  </div>
+                  <div id="cardDiv">;)</div>
 
-
-                  <div id="cardDiv"></div>
-
-                  <details class="p-4 bg-white/[.8] dark:bg-gray-800/[.8] backdrop-blur-xl border-[.15rem] border-neutral-100/[.2] dark:border-zinc-700/[.2] w-[20rem] absolute bottom-2 right-2 rounded-lg">
-                     <summary class="text-center text-xl uppercase font-bold text-gray-400 dark:text-zinc-500">Filter Cards</summary>
+                  <div class="filter-box absolute bottom-0 -right-[20rem] rounded-tl-lg p-4 z-90 bg-white/[.9] dark:bg-gray-800/[.9] backdrop-blur-xl w-[20rem]">
+                     <span onclick="toggleFilters()" class="p-2 absolute bottom-0 bg-white/[.9] dark:bg-gray-800/[.9] backdrop-blur-xl" style="right: 100%; transition: .3s">
+                        <span class="material-symbols-rounded filter-box-toggle text-4xl">menu_open</span>
+                     </span>
+                     <span onclick="toggleFilters()" class="p-2 right-full absolute bottom-[3.7rem] bg-white/[.9] dark:bg-gray-800/[.9] backdrop-blur-xl rounded-tl-lg text-3xl"><p style="writing-mode: vertical-rl; transform: rotateX(180deg) rotateY(180deg)">Filters & Search</p></span>
+                     <div class="text-center text-xl uppercase font-bold text-gray-400 dark:text-zinc-500">Filter Cards</div>
                      <div>
                         <form class="p-2 px-4 m-3 ml-0 border-4 border-violet-700 rounded-md relative">
                            <p class="-m-1 mb-3 text-violet-900 font-semibold text-lg text-center">Filter by status</p>
@@ -46,16 +55,12 @@
                         </div>
                         <div class="py-2 px-4 text-red-600 rounded-md border-4 border-red-600 font-extrabold text-xl uppercase text-center" onclick="resetFilters()">Reset Filters</div>
                      </div>
-                  </details>
+                  </div>
                <% } %>
-
-
-
             </div>
-            <%- include("partials/locbar", { text: "site:editproject" }); %>
 
+            <%- include("partials/locbar", { text: "site:editproject" }); %>
             <!-- Create Card Modal -->
-            <button onclick="display('createCard')" class="absolute top-18 right-3 bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl">Make a new card</button>
             <div class="createCard fixed top-0 left-0 backdrop-blur-sm overflow-auto hidden" style="height: 100vh; width: 100vw;">
                <div class="p-8 m-12 bg-white dark:bg-gray-900 rounded-xl shadow-sm shadow-gray-200 dark:shadow-gray-800">
                   <p class="create-card-text mb-6 text-2xl text-center">Let's make a card, together! 😊</p>
@@ -107,7 +112,6 @@
                   </div>
                </div>
             </div>
-
          <% } else { %>
             <div class="flex justify-center items-center" style="height: 80vh">
                <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg text-center font-nunito">
@@ -123,8 +127,9 @@
    <% } %>
 </body>
 </html>
-<script src="/Scripts/digit-v.0.1.1-tweaked.js"></script>
-<script type="text/babel" src="/Scripts/edit-project.js"></script>
+<script src="/scripts/digit-v.0.1.1-tweaked.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/scripts/edit-project.js"></script>
 <style>
 .cardObject {
    display: grid;
@@ -132,67 +137,7 @@
 }
 
 @media screen and (max-width: 1300px) {
-   .cardObject {
-      grid-template-columns: auto;
-   }
-   .card {
-      margin: 8px;
-   }
+   .cardObject { grid-template-columns: auto; }
+   .card { margin: 8px; }
 }
 </style>
-<!-- <style>
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Dynamic hover
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-.dynamicHover {
-   background-color: #fff;
-   padding: .6vh 1vw;
-   font-family: "Nunito";
-   border-radius: 2vh;
-   font-size: 3.2vh;
-   color: #2b2b2b;
-   transition: opacity .1s;
-   opacity: 0;
-   box-shadow: 0 0 .2vh #eee;
-}
-</style>
-<script>
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Dynamic hover
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-let mouseX, mouseY;
-
-document.onreadystatechange = function () {
-   if (document.readyState === "complete") {
-      document.addEventListener("mousemove", e => { getCoords(e); });
-   }
-}
-
-function getCoords(e) {
-   mouseX = event.clientX;
-   mouseY = event.clientY;
-   dynamHov.style.top = `${event.clientY}px`;
-   dynamHov.style.left = `${event.clientX + 25}px`;
-}
-
-var dynamHov = document.createElement("SPAN");
-document.body.appendChild(dynamHov);
-dynamHov.style.position = "fixed";
-dynamHov.classList.add("dynamicHover");
-
-setTimeout(init, 2000);
-
-function init() {
-   info = function (thisId) {
-      let ourEl = document.querySelector(thisId);
-      console.log(thisId, ourEl)
-      dynamHov.textContent = ourEl.dataset.info;
-      dynamHov.style.opacity = "1";
-      ourEl.onmouseleave = () => { dynamHov.style.opacity = "0"; }
-   }
-}
-
-let info = function (thisId) { }
-</script> -->

@@ -1,8 +1,14 @@
 let filteredData = cardArray.filter(card => card.status != "archived");
+filteredData.forEach((element, i) => {
+   if (!element.name) { filteredData.splice(i, 1); } // Ick because of one accident I did while fixing somthing. Only needed for Git Organized project
+});
 filteredData.reverse();
 
 function filterCards(status) {
    filteredData = cardArray.filter(card => card.status == status);
+   filteredData.forEach((element, i) => {
+      if (!element.name) { filteredData.splice(i, 1); } // Ick because of one accident I did while fixing somthing. Only needed for Git Organized project
+   });
    App();
 }
 
@@ -41,4 +47,3 @@ function CreateCards() {
 }
 
 CreateCards();
-setInterval(CreateCards, 5000);

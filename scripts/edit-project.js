@@ -27,8 +27,8 @@ function filter() {
    setFilterData();
    if (filters.status != "none") { filteredData = filteredData.filter(card => card.status == filters.status); }
    if (filters.priority != "none") {
-      filteredData.forEach((item, index, arr)=> { item.priority == "" ? arr.splice(index, 1) : null; });
-      filteredData.forEach((item, index, arr)=> { item.priority == "" ? arr.splice(index, 1) : null; });
+      filteredData.forEach((item, index, arr) => { item.priority == "" ? arr.splice(index, 1) : null; });
+      filteredData.forEach((item, index, arr) => { item.priority == "" ? arr.splice(index, 1) : null; });
 
       switch (filters.priority) {
          case "asc":
@@ -99,8 +99,8 @@ function getDate(enter) {
 function MainInfo(name, about, creator, created) {
    return `
       <div class="px-4 pb-12 mb-1 border-l-4 border-l-emerald-400 rounded-sm">
-         <p class="text-3xl">${name}</p>
-         <p class="text-2xl text-gray-700 dark:text-gray-600">${about}</p>
+         <p class="cardName text-3xl">${name}</p>
+         <p class="cardDesc text-2xl text-gray-700 dark:text-gray-600">${about}</p>
          <p class="text-gray-600 dark:text-gray-700 float-right">Created by ${creator} ${mdy(created)} at ${thetime(created)} ${dateDiff(created)}</p>
       </div>
    `;
@@ -164,34 +164,33 @@ function PriDif(pri, dif) {
 }
 function Arch(card) {
    return `
-   <div class="card-options   bg-white/[.9] dark:bg-gray-900/[.8] backdrop-blur-sm hover:backdrop-blur-none transition px-3 py-1 rounded-full absolute bottom-2 right-2">
+   <div class="card-options bg-white/[.9] dark:bg-gray-900/[.8] backdrop-blur-sm hover:backdrop-blur-none transition px-3 py-1 rounded-full absolute bottom-2 right-2">
       ${(() => {
-         if (card.status !== "archived") { return `
+         if (card.status !== "archived") {
+            return `
             <div>
                <form class="archive archive${card.id}" method="POST" action="/archive-card">
                   <input class="hidden" type="text" name="cardId" id=${card.id} />
                   <button>
                      <span class="material-symbols-rounded text-3xl" title="archive">download</span>
                   </button>
-                  ${(() => { archiveCard(card, 100); return ""; })()}
                </form>
             </div>
          `; }
-         else { return `
+         else {
+            return `
             <div>
                <form class="inline un-archive un-archive${card.id}" method="POST" action="/un-archive-card">
                   <input class="hidden" type="text" name="cardId" id=${card.id} />
                   <button>
                      <span class="material-symbols-rounded text-3xl" title="un-archive">upload</span>
                   </button>
-                  ${(() => { unarchiveCard(card, 100); return ""; })()}
                </form>
                <form class="inline delete delete${card.id}" method="POST" action="/delete-card">
                   <input class="hidden" type="text" name="cardId" id=${card.id} />
                   <button>
                      <span class="ml-2 text-rose-400 material-symbols-rounded text-3xl" title="delete">delete</span>
                   </button>
-                  ${(() => { deleteCard(card, 100); return ""; })()}
                </form>
             </div>
          `; }
@@ -203,7 +202,6 @@ function Arch(card) {
    </div>
    `
 }
-
 function Card(card) {
    return `
       <div class="card py-2 px-4 m-2 bg-white dark:bg-gray-900 border-l-8 border-l-amber-200 dark:border-l-amber-500 rounded-lg relative">
@@ -232,66 +230,120 @@ function Card(card) {
    `;
 }
 
-function CreateCards() {
-   document.getElementById("cardDiv").outerHTML = `
-      <div id="cardDiv" class="p-1 bg-gray-50 dark:bg-gray-800 rounded-lg">
-         <div class="filter">
-            <p class="p-2 px-4 mt-2 ml-2 text-indigo-900 dark:text-indigo-100 text-xl bg-indigo-200 dark:bg-indigo-800 inline-block rounded-2xl">${filteredData.length} Cards</p>
-            ${(() => { if (filters.status !== "none") { return `<p class="p-2 px-4 mt-2 ml-2 text-white text-xl bg-indigo-500 inline-block rounded-2xl">Status: ${filters.status}</p>` } else return ""; })()}
-            ${(() => { if (filters.priority !== "none") { return `<p class="p-2 px-4 mt-2 ml-2 text-white text-xl bg-yellow-500 inline-block rounded-2xl">Priority (${filters.priority})</p>` } else return ""; })()}
-            ${(() => { if (filters.difficulty !== "none") { return `<p class="p-2 px-4 mt-2 ml-2 text-white text-xl bg-lime-500 inline-block rounded-2xl">Difficulty (${filters.difficulty})</p>` } else return ""; })()}
-            ${(() => { if (filters.date !== "none") { return `<p class="p-2 px-4 mt-2 ml-2 text-white text-xl bg-pink-500 inline-block rounded-2xl">Due Date (${filters.date})</p>` } else return ""; })()}
+const CreateCards = () => {
+   return new Promise((resolve) => {
+      document.getElementById("cardDiv").outerHTML = `
+         <div id="cardDiv" class="bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <div class="cardObject p-1 pt-14 bg-gray-50 dark:bg-gray-800 rounded-lg">
+               ${filteredData.map((cardData) => (Card(cardData))).join("")}
+            </div>
          </div>
-         <div class="cardObject">
-            ${filteredData.map((cardData) => ( Card(cardData) )).join("")}
-         </div>
-      </div>
-   `;
-}
+      `;
+      document.querySelector(".filterUpdatable").innerHTML = `
+         <p class="cardcount p-2 px-4 align-middle text-white bg-rose-400 dark:text-gray-100 text-xl dark:bg-rose-800 inline-block rounded-2xl">${filteredData.length} Cards</p>
+         ${(() => { if (filters.status !== "none") { return `<p class="p-2 px-4 align-middle text-white text-xl bg-indigo-500 inline-block rounded-2xl">Status: ${filters.status}</p>` } else return ""; })()}
+         ${(() => { if (filters.priority !== "none") { return `<p class="p-2 px-4 align-middle text-white text-xl bg-yellow-500 inline-block rounded-2xl">Priority (${filters.priority})</p>` } else return ""; })()}
+         ${(() => { if (filters.difficulty !== "none") { return `<p class="p-2 px-4 align-middle text-white text-xl bg-lime-500 inline-block rounded-2xl">Difficulty (${filters.difficulty})</p>` } else return ""; })()}
+         ${(() => { if (filters.date !== "none") { return `<p class="p-2 px-4 align-middle text-white text-xl bg-pink-500 inline-block rounded-2xl">Due Date (${filters.date})</p>` } else return ""; })()}
+      `;
+      resolve("Cards created!");
+   }).then(()=>{
+      filteredData.forEach((card) => {
+         if (card.status !== "archived") { archiveCard(card); }
+         else {
+            unarchiveCard(card);
+            deleteCard(card);
+         }
+      });
+   });
+};
 
 CreateCards();
-setInterval(CreateCards, 15000);
+
+// ======================================
+// Search
+// ======================================
+
+// Should only run loop while input is focused
+let lastSearchTerm;
+setInterval(() => {
+   if (document.querySelector(".searchCards") === document.activeElement) {
+      let nameIncludes;
+      let searchTerm = document.querySelector(".searchCards").value;
+      if (searchTerm == "") {
+         lastSearchTerm = searchTerm;
+         CreateCards();
+      }
+      if (searchTerm !== "" && lastSearchTerm != searchTerm) {
+         lastSearchTerm = searchTerm;
+         CreateCards().then(() => {
+            document.querySelectorAll(".card").forEach((val) => {
+               let cardName = val.querySelector(".cardName");
+               let cardDesc = val.querySelector(".cardDesc");
+
+               let namePlaceHolder = cardName.textContent;
+               if (namePlaceHolder.toLowerCase().includes(searchTerm.toLowerCase())) {
+                  nameIncludes = true;
+                  highlight(cardName);
+               } else nameIncludes = false;
+            
+               let descPlaceHolder = cardDesc.textContent;
+               if (descPlaceHolder.toLowerCase().includes(searchTerm.toLowerCase())) {
+                  highlight(cardDesc);
+               } else if (!cardDesc.textContent.includes(searchTerm) && nameIncludes == false) {
+                  val.remove();
+               }
+            });
+            let cardAmount = 0;
+            document.querySelectorAll(".card").forEach(() => { cardAmount++ });
+            document.querySelector(".cardcount").textContent = `${cardAmount} Cards`;
+         });
+         function highlight(val) {
+            let location = new RegExp(searchTerm, "i");
+            let newText = val.textContent.replace(location, `<mark>${searchTerm}</mark>`);
+            val.innerHTML = newText;
+         }
+      }
+   }
+}, 750);
+
+window.addEventListener("keydown", function (event) {
+   if (event.ctrlKey && event.code === "Slash") { document.querySelector(".searchCards").focus(); }
+});
 
 // ======================================
 // Functions
 // ======================================
 
-function archiveCard(card, interval) {
-   setTimeout(() => {
-      document.querySelector(`.archive${card.id}`).onsubmit = function(event) {
-         event.preventDefault();
-         $.post("/archive-card", {
+function archiveCard(card) {
+   document.querySelector(`.archive${card.id}`).onsubmit = function(event) {
+      event.preventDefault();
+      $.post("/archive-card", {
+         projectId: projectId,
+         cardId: card.id
+      }).done(() => { filter(); });
+   }
+}
+function unarchiveCard(card) {
+   document.querySelector(`.un-archive${card.id}`).onsubmit = function(event) {
+      event.preventDefault();
+      $.post("/un-archive-card", {
+         projectId: projectId,
+         cardId: card.id
+      }).done(() => { filter(); });
+   }
+}
+function deleteCard(card) {
+   document.querySelector(`.delete${card.id}`).onsubmit = function(event) {
+      event.preventDefault();
+      if (window.confirm(`Sure you want to delete ${card.name}?`)) {
+         $.post("/delete-card", {
             projectId: projectId,
-            cardId: card.id
+            cardId: card.id,
+            card: card
          }).done(() => { filter(); });
       }
-   }, interval);
-}
-function unarchiveCard(card, interval) {
-   setTimeout(() => {
-      document.querySelector(`.un-archive${card.id}`).onsubmit = function(event) {
-         event.preventDefault();
-         $.post("/un-archive-card", {
-            projectId: projectId,
-            cardId: card.id
-         }).done(() => { filter(); });
-      }
-   }, interval);
-}
-function deleteCard(card, interval) {
-   setTimeout(() => {
-      document.querySelector(`.delete${card.id}`).onsubmit = function(event) {
-         event.preventDefault();
-         if (window.confirm(`Sure you want to delete ${card.name}?`)) {
-            $.post("/delete-card", {
-               projectId: projectId,
-               cardId: card.id,
-               card: card
-            }).done(() => { filter(); });
-         }
-      }
-   }, interval);
-   
+   }
 }
 
 $("#create-new-card").submit(function(event) {
@@ -315,6 +367,16 @@ $("#create-new-card").submit(function(event) {
       if (data == "Successful creation!") { filter(); console.log("Welcome to the project family, new Card!"); location.reload(); }
    });
 });
+
+function toggleFilters() {
+   if (document.querySelector('.filter-box').style.right == '0px') {
+      document.querySelector('.filter-box').style.right = '-20rem';
+      document.querySelector('.filter-box-toggle').style.transform = 'scaleX(1)'
+   } else {
+      document.querySelector('.filter-box').style.right = '0px';
+      document.querySelector('.filter-box-toggle').style.transform = 'scaleX(-1)'
+   }
+}
 
 function display(input) { document.querySelector("." + input).style.display = "block"; }
 function undisplay(input) { document.querySelector("." + input).style.display = "none"; }

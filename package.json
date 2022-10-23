@@ -15,7 +15,7 @@
   "description": "A project management tool for developers",
   "main": "app.js",
   "scripts": {
-    "watch-css": "npx tailwindcss -i main.css -o styles/main.css --watch"
+    "watch-css": "npx tailwindcss -i styles/tailwind.config.css -o styles/main.css --watch"
   },
   "repository": {
     "type": "git",

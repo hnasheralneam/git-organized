@@ -17,6 +17,7 @@ let signedInUser = "(not signed in)";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/assets/"));
 app.use("/styles", express.static(__dirname + "/styles/"));
+app.use("/scripts", express.static(__dirname + "/scripts/"));
 app.set("view engine", "ejs");
 
 // Mongoose things
@@ -238,7 +239,6 @@ app.post("/newcard", (req, res) => {
          status: "to-do",
          subcards: [],
          actions: [],
-         contributors: [signedInUser.userCall],
          name: req.body.name,
          about: req.body.about,
          tags: req.body.tags,
@@ -273,27 +273,23 @@ app.post("/archive-card", (req, res) => {
 });
 
 app.post("/un-archive-card", (req, res) => {
-   ProjectData.findOne({ id: req.body.projectId }, function (err, docs) {
-      if (err) { console.log(err); }
-      else {
-         let thedata = docs.data.find(x => x.id == req.body.cardId);
-         ProjectData.findOneAndUpdate( { id: req.body.projectId, "data.id": thedata.id },
-         { $set: { "data.$.status": "to-do",  } }, function(err) {
-            if (err) { console.log(err);}
-            else { res.send("Successfully un-archived card!"); }
-         });
-      }
-   });
+   ProjectData.findOne({ id: req.body.projectId }).then(doc => {
+      card = doc.data.filter(obj => obj.id == req.body.cardId);
+      card[0]["status"] = "to-do";
+      const index = doc.data.findIndex(element => {
+         if (element.id == req.body.cardId) { return true; }
+         return false;
+      });
+      doc.data[index] = card[0];
+      doc.save();
+   }).catch(err => { console.log(err); });
 });
 
 app.post("/delete-card", (req, res) => {
    ProjectData.findOneAndUpdate({ id: req.body.projectId },
       { "$pull": { "data": { "id": req.body.cardId } }},
       { safe: true, multi: true },
-      function(err, obj) {
-         if (err) { console.log(err) }
-         else console.log(obj);
-      }
+      function(err, obj) { if (err) console.log(err); }
    );
 });
 
