@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("partials/head", { pageTitle: "Oh no! Somthing's wrong!" }); %>
+<body>
+   <div class="layout dark:bg-gray-900 dark:text-gray-100">
+      <%- include("partials/navbar"); %>
+      <div class="page place-content-center flex items-center">
+         <div class="bg-gradient-to-br from-yellow-300 to-orange-400 font-nunito text-white p-6 rounded-xl text-xl">
+            <h2 class="text-center text-3xl">Sorry!</h2>
+            <p class="text-center">This page doesn't exist.</p><br>
+            <p>Go to homepage: <a class="text-gray-100 font-bold underline decoration-2" href="/">Let's go!</a></p>
+            <p>Go to GitHub: <a class="text-gray-100 font-bold underline decoration-2" href="https://github.com">Alright then!</a></p>
+            <p>Go to Kansas: <a class="text-gray-100 font-bold underline decoration-2" href="https://www.travelks.com/">Wait what?</a></p>
+         </div>
+      </div>
+   </div>
+   <%- include("partials/locbar", { text: "Home>?" }); %>
+</body>
+</html>

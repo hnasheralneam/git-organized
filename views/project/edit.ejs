@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("partials/head", { pageTitle: "Editing Project" }); %>
+<%- include("../partials/head", { pageTitle: "Editing Project" }); %>
+<style>
+.page { padding: 7.5vh 0 0 0; }
+</style>
 <body>
    <% if (user !== "(not signed in)") { %>
-      <%- include("partials/navbar"); %>
-      <div class="page dark:bg-gray-900 dark:text-gray-100 border-l-gray-50 dark:border-l-gray-700 border-transparent" style="border-width: .3vh">
-         <% if (thisProject.contributors.includes(user.userCall)) { %>
-            <div class="content">
-
-               <% if (thisProject.contributors.includes(user.userCall)) { %>
+      <div class="layout bg-gray-50 dark:bg-gray-800 dark:text-gray-100">
+         <%- include("../partials/navbar"); %>
+         <div class="page">
+            <% if (thisProject.contributors.includes(user.userCall)) { %>
+               <div class="content">
                   <script>
                      let cardArray = <%- JSON.stringify(thisProject.data) %>;
                      let projectId = <%- JSON.stringify(thisProject.id) %>;
                   </script>
-
                   <div class="filter absolute top-[6vh] z-10 p-3 bg-white/[.8] dark:bg-gray-800/[.8] border-b-2 border-gray-50/[.8] dark:border-gray-700/[.8] backdrop-blur-sm" style="width: calc(100% - 3vh - 70px - .3vh)">
-                     <button onclick="display('createCard')" class="float-right p-2 px-4 align-middle bg-gradient-to-br from-amber-400 to-orange-400 text-white text-lg font-nunito font-semibold rounded-xl">Make a new card</button>
+                     <button onclick="display('createCard')" class="float-right p-1 px-3.5 align-middle bg-gradient-to-br from-amber-400 to-orange-400 text-white text-4xl font-nunito font-semibold rounded-xl">+</button>
+                     <button onclick="toggleFilters()" class="float-right p-1 px-3.5 mr-2 align-middle bg-gray-100 dark:bg-gray-700 text-4xl font-nunito font-semibold rounded-xl"><span class="material-symbols-rounded">filter_alt</span></button>
                      <div class="filterUpdatable inline"></div>
                      <!-- Search cards by name and description -->
                      <div class="inline-grid align-middle gap-x-2 py-1.5 px-4 ml-2 bg-white dark:bg-gray-700 outline-amber-400 outline-0 hover:outline-2 backdrop-blur-sm rounded-full" style="grid-template-columns: auto auto; box-shadow: 0 0 .2vh #22222222">
@@ -24,7 +26,6 @@
                      </div>
                   </div>
                   <div id="cardDiv">;)</div>
-
                   <div class="filter-box absolute bottom-0 -right-[20rem] rounded-tl-lg p-4 z-90 bg-white/[.9] dark:bg-gray-800/[.9] backdrop-blur-xl w-[20rem]">
                      <span onclick="toggleFilters()" class="p-2 absolute bottom-0 bg-white/[.9] dark:bg-gray-800/[.9] backdrop-blur-xl" style="right: 100%; transition: .3s">
                         <span class="material-symbols-rounded filter-box-toggle text-4xl">menu_open</span>
@@ -56,16 +57,14 @@
                         <div class="py-2 px-4 text-red-600 rounded-md border-4 border-red-600 font-extrabold text-xl uppercase text-center" onclick="resetFilters()">Reset Filters</div>
                      </div>
                   </div>
-               <% } %>
-            </div>
+               </div>
 
-            <%- include("partials/locbar", { text: "site:editproject" }); %>
-            <!-- Create Card Modal -->
-            <div class="createCard fixed top-0 left-0 backdrop-blur-sm overflow-auto hidden" style="height: 100vh; width: 100vw;">
+
+               <!-- Create Card Modal -->
+               <div class="createCard fixed top-0 left-0 backdrop-blur-sm overflow-auto hidden" style="height: 100vh; width: 100vw;">
                <div class="p-8 m-12 bg-white dark:bg-gray-900 rounded-xl shadow-sm shadow-gray-200 dark:shadow-gray-800">
                   <p class="create-card-text mb-6 text-2xl text-center">Let's make a card, together! 😊</p>
                   <form action="/newcard" method="POST" id="create-new-card" class="relative pb-16">
-
                      <div class="grid grid-cols-2">
                         <div>
                            <div class="pl-4 mb-4 border-l-4 border-l-emerald-400 rounded-md">
@@ -100,9 +99,7 @@
                            </div>
                         </div>
                      </div>
-
                      <input type="hidden" name="projectName" value="<%= thisProject.name %>">
-
                      <input onclick="undisplay('createCard')" class="bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl absolute bottom-4 right-4" type="submit" value="Leeeeeeeet's GO!">
                   </form>
                   <div class="text-slate-800 dark:text-slate-50 bg-slate-50 dark:bg-slate-800 rounded-3xl p-4 my-4 w-full text-xl text-center"">
@@ -111,31 +108,32 @@
                      <p>💖 Squirrel</p>
                   </div>
                </div>
-            </div>
-         <% } else { %>
-            <div class="flex justify-center items-center" style="height: 80vh">
-               <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg text-center font-nunito">
-                  <p class="m-3 text-gray-800 dark:text-gray-100 text-2xl">Oh, no! You aren't in this project 😭</p>
-                  <p class="m-3 text-gray-800 dark:text-gray-100 text-2xl">Maybe ask to join it? I'm crossing my fingers for you!🤞</p>
                </div>
-            </div>
-         <% } %>
+            <% } else { %>
+               <div class="flex justify-center items-center" style="height: 80vh">
+                  <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg text-center font-nunito">
+                     <p class="m-3 text-gray-800 dark:text-gray-100 text-2xl">Oh, no! You aren't in this project 😭</p>
+                     <p class="m-3 text-gray-800 dark:text-gray-100 text-2xl">Maybe ask to join it? I'm crossing my fingers for you!🤞</p>
+                  </div>
+               </div>
+            <% } %>
+         </div>
+         <%- include("../partials/locbar", { text: "site:editproject" }); %>
       </div>
    <%} else { %>
-      <%- include("partials/signedOut"); %>
-      <%- include("partials/signIn"); %>
+      <%- include("../partials/signedOut"); %>
+      <%- include("../partials/signIn"); %>
    <% } %>
 </body>
 </html>
 <script src="/scripts/digit-v.0.1.1-tweaked.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="/scripts/edit-project.js"></script>
+<script src="/scripts/project/edit.js"></script>
 <style>
 .cardObject {
    display: grid;
    grid-template-columns: auto auto;
 }
-
 @media screen and (max-width: 1300px) {
    .cardObject { grid-template-columns: auto; }
    .card { margin: 8px; }

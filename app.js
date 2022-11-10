@@ -5,6 +5,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const favicon = require("serve-favicon");
 const { v4: uuidv4 } = require("uuid");
 
 const app = express();
@@ -13,7 +14,7 @@ const connection = mongoose.connection;
 
 let signedInUser = "(not signed in)";
 
-// app.use(bodyParser.json());
+app.use(favicon(__dirname + "/assets/icon/favicon.ico"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/assets/"));
 app.use("/styles", express.static(__dirname + "/styles/"));
@@ -22,7 +23,7 @@ app.set("view engine", "ejs");
 
 // Mongoose things
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect("mongodb+srv://EditorSquirrel:SBtBYDnD2rvmsUjz@testcluster.ky80id3.mongodb.net/?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true });
 
 // System things
 connection.on("error", console.error.bind(console, "Connection error: "));
@@ -112,21 +113,21 @@ function getNewpageData() {
 // Public user pages
 
 app.get("/", (req, res) => { goSomewhere(res, "home"); });
-app.get("/your-projects", (req, res) => { goSomewhere(res, "projectsPage"); });
+app.get("/your-projects", (req, res) => { goSomewhere(res, "projects"); });
 app.get("/account", (req, res) => { goSomewhere(res, "account"); });
-app.get("/new-project", (req, res) => { goSomewhere(res, "createNewProject"); });
+app.get("/new-project", (req, res) => { goSomewhere(res, "project/create"); });
 app.get("/actions-history", (req, res) => { goSomewhere(res, "globalActions"); });
 
 app.get("/project/:projectname", (req, res) => {
    ProjectData.findOne({ name: req.params.projectname }, (err, project) => {
       if (err) { console.error(err); }
-      else if (project == null) { res.render("page-not-found"); }
+      else if (project == null) { res.render("lost"); }
       else {
          letsGo();
          async function letsGo() {
             let returnedData = await getNewpageData();
             returnedData.thisProject = project;
-            res.render("project-overview", returnedData);
+            res.render("project/overview", returnedData);
          }
       }
    });
@@ -135,18 +136,47 @@ app.get("/project/:projectname", (req, res) => {
 app.get("/edit-project/:projectname", (req, res) => {
    ProjectData.findOne({ name: decodeURI(req.params.projectname) }, (err, project) => {
       if (err) { console.error(err); }
-      else if (project == null) { res.render("page-not-found"); }
+      else if (project == null) { res.render("lost"); }
       else {
          letsGo();
          async function letsGo() {
             let returnedData = await getNewpageData();
             returnedData.thisProject = project;
-            res.render("edit-project", returnedData);
+            res.render("project/edit", returnedData);
          }
       }
    });
 });
 
+app.get("/project/settings/:projectname", (req, res) => {
+   ProjectData.findOne({ name: decodeURI(req.params.projectname) }, (err, project) => {
+      if (err) { console.error(err); }
+      else if (project == null) { res.render("lost"); }
+      else {
+         letsGo();
+         async function letsGo() {
+            let returnedData = await getNewpageData();
+            returnedData.thisProject = project;
+            res.render("project/settings", { user: JSON.stringify(returnedData.user), thisProject: JSON.stringify(project) });
+         }
+      }
+   });
+});
+
+app.get("/project/absolute-control/:projectname", (req, res) => {
+   ProjectData.findOne({ name: decodeURI(req.params.projectname) }, (err, project) => {
+      if (err) { console.error(err); }
+      else if (project == null) { res.render("lost"); }
+      else {
+         letsGo();
+         async function letsGo() {
+            let returnedData = await getNewpageData();
+            returnedData.thisProject = project;
+            res.render("project/control", { user: JSON.stringify(returnedData.user), project: JSON.stringify(project) });
+         }
+      }
+   });
+});
 
 // Temporary landings
 app.get("/sign-out", (req, res) => {
@@ -251,10 +281,7 @@ app.post("/newcard", (req, res) => {
          creator: signedInUser.userCall,
          id: uuidv4()
          } } },
-         function (err, yay) {
-            if (err) { console.log(err); }
-            else { res.send("Successful creation!"); }
-         }
+         function (err) { err ? console.log(err) : res.send("Successful creation!"); }
    );
 });
 
@@ -264,10 +291,8 @@ app.post("/archive-card", (req, res) => {
       else {
          let thedata = docs.data.find(x => x.id == req.body.cardId);
          ProjectData.findOneAndUpdate( { id: req.body.projectId, "data.id": thedata.id },
-         { $set: { "data.$.status": "archived",  } }, function(err) {
-            if (err) { console.log(err);}
-            else { res.send("Successfully archived card!"); }
-         });
+         { $set: { "data.$.status": "archived",  } },
+         function(err) { err ? console.log(err) : res.send("Successfully archived card!"); });
       }
    });
 });
@@ -289,7 +314,7 @@ app.post("/delete-card", (req, res) => {
    ProjectData.findOneAndUpdate({ id: req.body.projectId },
       { "$pull": { "data": { "id": req.body.cardId } }},
       { safe: true, multi: true },
-      function(err, obj) { if (err) console.log(err); }
+      function(err) { if (err) console.log(err); }
    );
 });
 
@@ -299,12 +324,10 @@ app.post("/delete-card", (req, res) => {
 
 // Get all lost requests
 app.get("*", (req, res) => {
-   res.render("page-not-found");
+   res.render("lost");
 });
 
 app.listen(port);
-
-
 
 
 
