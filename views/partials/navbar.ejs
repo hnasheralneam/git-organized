@@ -1,8 +1,8 @@
 <!-- Side navigation bar -->
-<div class="nvbr h-[100vh] w-[4.5rem] bg-white dark:bg-gray-800 border-r-2 border-gray-100 dark:border-gray-700 z-40">
+<div class="nvbr h-[100vh] w-[4.5rem] bg-white dark:bg-gray-800 border-r-2 border-gray-100 dark:border-gray-700 z-40" style="box-sizing: border-box">
    <div class="pt-14 text-center">
-      <button onclick="doo()" class="p-1 px-4 mb-2 bg-transparent shadow dark:shadow-gray-700 rounded-xl" title="overlay">ov</button><br>
-      <button onclick="cho()" class="p-1 px-4 bg-transparent shadow dark:shadow-gray-700 rounded-xl" title="real width">rw</button>
+      <!-- <button onclick="doo()" class="p-1 px-4 mb-2 bg-transparent shadow dark:shadow-gray-700 rounded-xl" title="overlay">ov</button><br>
+      <button onclick="cho()" class="p-1 px-4 bg-transparent shadow dark:shadow-gray-700 rounded-xl" title="real width">rw</button> -->
       <div class="app" style="display: none"></div>
       <% if (locals.dta) { %>
          <script>
@@ -26,11 +26,11 @@
          <p class="tooltip bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50 font-nunito text-center absolute">Account</p>
       </div>
    </div>
-   <div class="bigMenu hidden absolute bottom-0 px-2 w-[17.5rem] text-center">
+   <!-- <div class="bigMenu hidden absolute bottom-0 px-2 w-[17.5rem] text-center">
       <a href="/your-projects" class="float-left" title="Your Projects"><span class="material-symbols-rounded navbar-icon-wide">folder_open</span></a>
       <a href="/account" class="float-right" title="Account"><span class="material-symbols-rounded navbar-icon-wide">account_circle</span></a>
       <a href="/sign-out" class="float-right" title="Log out"><span class="material-symbols-rounded navbar-icon-wide">logout</span></a>
-   </div>
+   </div> -->
 </div>
 <style>
 .nvbr { transition: .2s; }

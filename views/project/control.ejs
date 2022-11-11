@@ -1,32 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include("../partials/head", { pageTitle: "ABSOLUTE CONTROL" }); %>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+<style>
+.page { padding: 6vh 0 0 0; }
+.cardDesc {
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
+}
+</style>
 <body>
    <% if (user !== "(not signed in)") { %>
          <div class="layout dark:bg-gray-900 dark:text-gray-100">
          <%- include("../partials/navbar"); %>
+         <script>
+            let project = <%- project %>;
+            let cards = project.data;
+            let projectId = project.id;
+         </script>
+
 
          <div class="page">
             <div class="content grid" style="grid-template-columns: 30% 70%">
-               <div class="max-h-[90vh] overflow-auto bg-gray-800 rounded-md">
-                  <% JSON.parse(project).data.forEach((card) => { %>
-                     <div onclick="showCard(<%= card %>)" class="p-2 px-4 m-2 bg-gray-700 rounded-lg">
+               <div class="overflow-auto bg-gray-50 dark:bg-gray-800" style="height: 94vh">
+                  <% JSON.parse(project).data.slice().reverse().forEach((card) => { %>
+                     <div onclick="showCard(<%= JSON.stringify(card) %>)" class="p-2 px-4 m-2 bg-white shadow-sm dark:bg-gray-700 rounded-lg">
                         <p class="text-lg"><%= card.name %></p>
                         <p class="cardDesc text-gray-300"><%= card.about %></p>
                      </div>
                   <% }); %>
-                  <p class="mb-3 text-center text-gray-500">And that's the end!</p>
-                  <style>
-                     .cardDesc {
-                        text-overflow: ellipsis;
-                        overflow: hidden;
-                        white-space: nowrap;
-                     }
-                  </style>
+                  <p class="mb-3 text-center text-gray-400 dark:text-gray-500">And that's the end!</p>
                </div>
-               <div class="activeCard">
-                  <p>💖💖💖 Place holder content! 💖💖💖</p>
+               <div class="activeCard p-4">
+                  <div class="acName text-2xl">💖💖💖 Place holder content! 💖💖💖</div>
+                  <p class="acAbout text-gray-800 dark:text-gray-300"></p>
+                  <p class="acStatus"></p>
+                  <p class="acTeam"></p>
+                  <p class="acTags"></p>
+                  <p class="acPri"></p>
+                  <p class="acDif"></p>
+                  <p class="acMadeOn"></p>
+                  <p class="acDue"></p>
+                  <p class="acEstTime"></p>
+                  <p class="acId"></p>
+                  <button class="py-2 px-6 font-semibold rounded-md bg-gray-800 text-white">Save</button>
                </div>
             </div>
          </div>
@@ -45,11 +63,5 @@
    background-clip: text;
 }
 </style>
-<script>let cardArray = <%= JSON.stringify(project).data %></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-function showCard(card) {
-   console.log(card);
-}
-</script>
+<script src="/scripts/project/control.js"></script>
 </html>

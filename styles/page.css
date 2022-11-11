@@ -1,6 +1,6 @@
 .layout {
    display: grid;
-   grid-template-columns: 5rem auto;
+   grid-template-columns: 4.5rem auto;
 }
 
 .navbartip-parent .tooltip {

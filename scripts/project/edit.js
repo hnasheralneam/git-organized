@@ -369,13 +369,9 @@ $("#create-new-card").submit(function(event) {
 });
 
 function toggleFilters() {
-   if (document.querySelector('.filter-box').style.right == '0px') {
-      document.querySelector('.filter-box').style.right = '-20rem';
-      document.querySelector('.filter-box-toggle').style.transform = 'scaleX(1)'
-   } else {
-      document.querySelector('.filter-box').style.right = '0px';
-      document.querySelector('.filter-box-toggle').style.transform = 'scaleX(-1)'
-   }
+   if (document.querySelector(".filter-box").style.right == "0px") {
+      document.querySelector(".filter-box").style.right = "-20rem";
+   } else document.querySelector(".filter-box").style.right = "0px";
 }
 
 function display(input) { document.querySelector("." + input).style.display = "block"; }
