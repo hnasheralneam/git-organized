@@ -373,6 +373,3 @@ function toggleFilters() {
       document.querySelector(".filter-box").style.right = "-20rem";
    } else document.querySelector(".filter-box").style.right = "0px";
 }
-
-function display(input) { document.querySelector("." + input).style.display = "block"; }
-function undisplay(input) { document.querySelector("." + input).style.display = "none"; }

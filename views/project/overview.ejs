@@ -38,6 +38,17 @@
                            <button class="py-2 px-4 bg-violet-600 dark:bg-violet-500 text-white text-semibold rounded-xl absolute right-2 bottom-2" onclick="event.preventDefault(); filterCards(document.querySelector('#filter-cards-by-status').value)">Filter</button>
                         </form>
                      </div>
+                     <p class="py-2 mb-2 text-xl bg-emerald-100 dark:bg-emerald-700 rounded-md text-center font-nunito">You are in this project!</p>
+                     <div class="text-gray-800 dark:text-gray-200 rounded-xl">
+                        <div class="p-2 mb-2 bg-gray-100 dark:bg-gray-800 rounded-xl">
+                           <p class="flex items-center mb-1 text-2xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">badge</span><%= thisProject.name %></p>
+                           <p class="m-1 text-1xl"><%= thisProject.description %></p>
+                        </div>
+                        <p class="margin-auto text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">person_filled</span></p>
+                        <p>Made by <%= thisProject.creater %></p>
+                        <p class="margin-auto mt-4 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">calendar_today</span></p>
+                        <p>Created on <%= thisProject.dateCreated.toLocaleString() %></p>
+                     </div>
                   </div>
                </div>
             <% } else { %>

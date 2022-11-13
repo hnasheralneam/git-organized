@@ -20,13 +20,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Squirrel-314/git-organized.git"
+    "url": "git+https://github.com/editorrust/git-organized.git"
   },
-  "author": "Squirrel",
+  "author": "Editor Rust",
   "bugs": {
-    "url": "https://github.com/Squirrel-314/git-organized/issues"
+    "url": "https://github.com/editorrust/git-organized/issues"
   },
-  "homepage": "https://github.com/Squirrel-314/git-organized#readme",
+  "homepage": "https://github.com/editorrust/git-organized#readme",
   "devDependencies": {
     "kill-port": "^2.0.1",
     "nodemon": "^2.0.19",
