@@ -163,7 +163,7 @@ app.get("/project/settings/:projectname", (req, res) => {
    });
 });
 
-app.get("/project/absolute-control/:projectname", (req, res) => {
+app.get("/project/finetune/:projectname", (req, res) => {
    ProjectData.findOne({ name: decodeURI(req.params.projectname) }, (err, project) => {
       if (err) { console.error(err); }
       else if (project == null) { res.render("lost"); }

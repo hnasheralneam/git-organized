@@ -23,18 +23,16 @@
          <div class="page">
             <div class="content grid" style="grid-template-columns: 30% 70%">
                <div class="overflow-auto bg-gray-50 dark:bg-gray-800" style="height: 94vh">
+                  <div class="grid sticky top-1.5 z-10 align-middle gap-x-2 py-1.5 px-4 mt-1.5 mx-2 bg-white dark:bg-gray-700 outline-amber-400 outline-0 hover:outline-2 backdrop-blur-sm rounded-full" style="grid-template-columns: 7% auto; box-shadow: 0 0 .2vh #22222222">
+                     <span class="material-symbols-rounded text-2xl">search</span>
+                     <input class="searchCards bg-transparent focus:outline-none focus:border-none" type="text" placeholder="Search..." title="Ahhhhhhhhhhhhhhhhhhhhhhhh!">
+                  </div>
                   <div id="cardBox"></div>
-                  <% JSON.parse(project).data.slice().reverse().forEach((card) => { %>
-                     <div onclick="showCard(<%= JSON.stringify(card) %>)" class="p-2 px-4 m-2 bg-white dark:bg-gray-700 shadow-sm rounded-lg">
-                        <p class="text-lg"><%= card.name %></p>
-                        <p class="cardDesc text-gray-300"><%= card.about %></p>
-                     </div>
-                  <% }); %>
                   <p class="mb-3 text-center text-gray-400 dark:text-gray-500">And that's the end!</p>
                </div>
                <div class="activeCard p-4">
-                  <div class="acName text-2xl">💖💖💖 Place holder content! 💖💖💖</div>
-                  <p class="acAbout text-gray-800 dark:text-gray-300"></p>
+                  <div class="acName text-3xl font-nunito">💖💖💖 Place holder content! 💖💖💖</div>
+                  <p class="acAbout text-xl text-gray-800 dark:text-gray-300"></p>
                   <p class="acStatus"></p>
                   <p class="acTeam"></p>
                   <p class="acTags"></p>
@@ -44,7 +42,7 @@
                   <p class="acDue"></p>
                   <p class="acEstTime"></p>
                   <p class="acId"></p>
-                  <button class="py-2 px-6 font-semibold rounded-md bg-gray-800 text-white">Save</button>
+                  <!-- <button class="py-2 px-6 font-semibold rounded-md bg-gray-800 text-white">Save</button> -->
                </div>
             </div>
          </div>
