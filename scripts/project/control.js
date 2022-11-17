@@ -312,4 +312,4 @@ function findActiveCard() {
 
 // Problems
 // Regular fetch clears search
-// Search ruins active card effect, throws error
+// Search messes with active card effect (throws error)
