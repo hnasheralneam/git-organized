@@ -172,7 +172,7 @@ app.get("/project/finetune/:projectname", (req, res) => {
          async function letsGo() {
             let returnedData = await getNewpageData();
             returnedData.thisProject = project;
-            res.render("project/control", { user: JSON.stringify(returnedData.user), project: JSON.stringify(project) });
+            res.render("project/control", { user: JSON.stringify(returnedData.user), project: JSON.stringify(project), thisProject: returnedData.thisProject });
          }
       }
    });
@@ -259,6 +259,16 @@ app.post("/newproject", (req, res) => {
 });
 
 /* =============
+// Control
+============= */
+
+app.post("/fetch-project", (req, res) => {
+   ProjectData.findById(req.body.project, (err, project) => {
+      err ? console.log(err) : res.send(project.data);
+   });
+});
+
+/* =============
 // Cards
 ============= */
 
@@ -307,6 +317,7 @@ app.post("/un-archive-card", (req, res) => {
       });
       doc.data[index] = card[0];
       doc.save();
+      res.send("Successfully un-archived card!");
    }).catch(err => { console.log(err); });
 });
 

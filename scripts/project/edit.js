@@ -346,28 +346,6 @@ function deleteCard(card) {
    }
 }
 
-$("#create-new-card").submit(function(event) {
-   event.preventDefault();
-   let tagsArray = this.tags.value.split(" ");
-   let assigneesArray = this.assignees.value.split(" ");
-   console.log(this.tags.value, tagsArray, typeof tagsArray);
-
-   $.post("/newcard", {
-      name: this.name.value,
-      about: this.about.value,
-      dueDate: this.dueDate.value,
-      estTime: this.estTime.value,
-      tags: tagsArray,
-      assignees: assigneesArray,
-      priority: this.priority.value,
-      difficulty: this.difficulty.value,
-      projectName: this.projectName.value
-   }).done(function(data) {
-      document.querySelector(".create-card-text").textContent = data;
-      if (data == "Successful creation!") { filter(); console.log("Welcome to the project family, new Card!"); location.reload(); }
-   });
-});
-
 function toggleFilters() {
    if (document.querySelector(".filter-box").style.right == "0px") {
       document.querySelector(".filter-box").style.right = "-20rem";
