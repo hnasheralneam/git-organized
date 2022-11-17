@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("partials/head", { pageTitle: "New Project" }); %>
+<%- include("../partials/head", { pageTitle: "New Project" }); %>
 <body>
    <% if (user !== "(not signed in)") { %>
-      <%- include("partials/navbar"); %>
+      <!-- Import JQuery for Ajax -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-      <div class="page dark:bg-gray-900 dark:text-gray-100 border-l-gray-50 dark:border-l-gray-700 border-transparent" style="border-width: .3vh">
-         <div class="content">
 
+      <div class="layout dark:bg-gray-900 dark:text-gray-100">
+         <%- include("../partials/navbar"); %>
 
-
+         <div class="page">
             <p class="create-project-text text-gray-800 dark:text-gray-50 mt-4 mb-8 text-2xl font-nunito text-center">Let's make a project, together! 😊</p>
             <form action="/newproject" method="POST" id="create-new-project" class="bg-gray-50 dark:bg-gray-800 p-8 rounded-3xl relative pb-16">
                <textarea class="bg-gray-100 dark:bg-gray-700 px-4 py-2 mb-2 text-xl rounded-2xl block" style="width: 100%; max-width: 100%; resize: none;" type="text" name="name" placeholder="Your new project's name" required></textarea>
@@ -17,21 +17,19 @@
                <input class="bg-gradient-to-br from-amber-400 to-orange-400 px-5 py-3 text-white text-lg font-nunito font-semibold rounded-xl absolute bottom-4 right-4" type="submit" value="Leeeeeeeet's GO!">
             </form>
             <div class="text-slate-800 dark:text-slate-50 bg-slate-50 dark:bg-slate-800 rounded-3xl p-4 my-4 w-full text-xl text-center">
-               <h2>Sorry! This place is still under construction.</h2>
+               <h2>Sorry! This area is still under construction.</h2>
                <p>🏗️ Remember, I'm not done making Git-Organized! ⚒️</p>
-               <p>💖 Squirrel</p>
+               <p>💖 Editor Rust</p>
             </div>
             <form id="letsGo" class="hidden"></form>
-
-
-
-         <%- include("partials/locbar", { text: "Home>New Project" }); %>
          </div>
       </div>
+
+      <%- include("../partials/locbar", { text: "Home>New Project" }); %>
    <%} else { %>
-      <%- include("partials/signedOut"); %>
-      <%- include("partials/signIn"); %>
+      <%- include("../partials/signedOut"); %>
+      <%- include("../partials/signIn"); %>
    <% } %>
 </body>
 </html>
-<script src="scripts/newproject.js"></script>
+<script src="scripts/create.js"></script>

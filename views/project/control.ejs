@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head", { pageTitle: "Fine Tune" }); %>
+<!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+<style>
+.page { padding: 6vh 0 0 0; }
+.cardDesc {
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
+}
+</style>
+<body>
+   <% if (user !== "(not signed in)") { %>
+         <div class="layout dark:bg-gray-900 dark:text-gray-100">
+         <%- include("../partials/navbar"); %>
+         <script>
+            let project = <%- project %>;
+            let cards = project.data;
+            let projectId = project.id;
+            let projectID = project._id;
+         </script>
+
+         <div class="page">
+            <div class="content grid" style="grid-template-columns: 30% 70%">
+               <div class="overflow-auto relative bg-gray-50 dark:bg-gray-800" style="height: 94vh">
+                  <div class="grid sticky top-1.5 z-10 align-middle gap-x-2 py-1.5 px-4 mt-1.5 mx-2 bg-white dark:bg-gray-600 outline-amber-400 outline-0 hover:outline-2 backdrop-blur-sm rounded-full" style="grid-template-columns: 7% auto; box-shadow: 0 0 .2vh #22222222">
+                     <span class="material-symbols-rounded text-2xl">search</span>
+                     <input class="searchCards bg-transparent focus:outline-none focus:border-none" type="text" placeholder="Search..." title="Ahhhhhhhhhhhhhhhhhhhhhhhh!">
+                  </div>
+                  <div id="cardBox"></div>
+                  <p class="mb-3 text-center text-gray-400 dark:text-gray-500">And that's the end!</p>
+               </div>
+               <div class="activeCard relative p-4 border-l-[.3rem]">
+                  <div class="acName text-3xl font-nunito">💖💖💖 Place holder content! 💖💖💖</div>
+                  <p class="acAbout text-xl text-gray-800 dark:text-gray-300"></p>
+                  <p class="acStatus"></p>
+                  <p class="acTeam"></p>
+                  <p class="acTags"></p>
+                  <p class="acPri"></p>
+                  <p class="acDif"></p>
+                  <p class="acMadeOn"></p>
+                  <p class="acDue"></p>
+                  <p class="acEstTime"></p>
+                  <p class="acId"></p>
+                  <div class="mt-48 absolute bottom-0 w-[100%] -ml-[16px] flex justify-center">
+                     <div class="p-2 pb-1 my-2 bg-gray-50 dark:bg-gray-800 shadow-sm shadow-gray-300 dark:shadow-gray-700 rounded-xl">
+                        <div class="toolbar-tip relative inline">
+                           <button class="material-symbols-rounded btn-arch text-3xl text-gray-500 mr-1 enabled:hover:scale-110 disabled:opacity-40" disabled>archive</button>
+                           <span class="toolbar-tiptext py-1.5 bg-gray-700 text-white text-center rounded-full">Archive</span>
+                        </div>
+                        <div class="toolbar-tip group relative inline">
+                           <button class="material-symbols-rounded btn-unar text-3xl text-emerald-500 mr-1 enabled:hover:scale-110 disabled:opacity-40" disabled>unarchive</button>
+                           <span class="toolbar-tiptext py-1.5 bg-gray-700 text-white text-center rounded-full">Unarchive</span>
+                       </div>
+                        <div class="toolbar-tip relative inline">
+                           <button class="material-symbols-rounded btn-delt text-3xl text-red-500 enabled:hover:scale-110 disabled:opacity-40" disabled>delete</button>
+                           <span class="toolbar-tiptext py-1.5 bg-gray-700 text-white text-center rounded-full">Delete</span>
+                       </div>
+                     </div>
+                  </div>
+                  <style>
+                     .toolbar-tip .toolbar-tiptext {
+                        pointer-events: none;
+                        width: 6rem;
+                        overflow: hidden;
+                        position: absolute;
+                        bottom: 0%;
+                        left: 0%;
+                        margin-left: -2.1rem;
+                        box-sizing: border-box;
+                        opacity: 0;
+                        transition: .25s;
+                        transition-delay: .2s;
+                     }
+                     .toolbar-tip:hover .toolbar-tiptext {
+                        bottom: 160%;
+                        pointer-events: auto;
+                        opacity: 1;
+                     }
+                  </style>
+               </div>
+               <button onclick="show('createCard')" class="fixed bottom-2 right-2 p-1 px-3.5 bg-gradient-to-br from-amber-400 to-orange-400 text-white text-4xl font-nunito font-semibold rounded-xl" title="New Card">+</button>
+            </div>
+         </div>
+         <%- include("../partials/createCard"); %>
+      </div>
+      <%- include("../partials/locbar", { text: "Home>finetune" }); %>
+   <%} else { %>
+      <%- include("../partials/signedOut"); %>
+      <%- include("../partials/signIn"); %>
+   <% } %>
+</body>
+<style>
+.gradient-project-overview {
+   background: linear-gradient(to bottom right, #82b1ff, #2962ff);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color:transparent;
+   background-clip: text;
+}
+</style>
+<script src="/scripts/digit-v.0.1.1-tweaked.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/scripts/project/control.js"></script>
+</html>

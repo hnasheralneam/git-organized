@@ -39,7 +39,7 @@ function Card(card) {
 
 function CreateCards() {
    const cardsObj = `
-     <div class="p-1 mr-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+     <div class="m-1 mr-3">
          ${filteredData.map((cardData) => ( Card(cardData) )).join("")}
       </div>
    `;

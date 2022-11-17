@@ -3,76 +3,56 @@
 <%- include("partials/head", { pageTitle: "Home" }); %>
 <body>
    <% if (user !== "(not signed in)") { %>
-      <%- include("partials/navbar"); %>
-      <div class="page dark:bg-gray-900 dark:text-gray-100 border-l-gray-50 dark:border-l-gray-700 border-transparent" style="border-width: .3vh">
-         <div class="content">
+      <div class="layout dark:bg-gray-900 dark:text-gray-100">
+         <%- include("partials/navbar"); %>
 
-
+         <div class="page">
             <p class="text-center text-4xl font-nunito font-medium m-8">Welcome to Git Organized, <span class="bg-gradient-to-br from-yellow-400 to-orange-400 text-white px-4 py-1 rounded-full"><%= user.username %></span>!</p>
-            <div class="margin-24 bg-indigo-500 text-white p-6 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-indigo-600">A PWA that allows you to keep track of your projects.</div>
-            <div class="margin-24 bg-amber-400 text-white p-6 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-amber-500">
-               <h3 class="text-2xl">Now on version 0.1.0!</h3>
-               This update includes basic functionality, like creating projects & cards. The cards can be archived, unarchived, & deleted. Additionally, you can filter cards by due date, status (to-do, archived), priority, & difficulty.
-               <br>
-               And this commit finally adds search, so you can search through card titles & content!
-               <p class="font-thin">Made with 💖 by Editor Squirrel with help from his BFF <a class="underline" href="https://github.com/tildejustin">tildejustin</a></p>
-            </div>
-            <div class="margin-24 bg-rose-500 text-white p-6 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-rose-600">
-               BTW you're automatically being signed into my account, 'cause we're still in pre-release. Just do whatever you like here, for now it's just an experiment! 🧪
-            </div>
-            <div class="p-2 my-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
-               <p class="m-4">Continue where you left off:</p>
-               <% for (let i = 0; i < 5; i++) { %>
-                  <% if (projects[i]) { %>
-                     <% if (projects[i].contributors.includes(user.userCall)) { %>
-                        <div class="py-4 px-6 m-2 mb-3 font-nuntio rounded-md bg-white dark:bg-gray-900 border-l-8 border-sky-400">
-                           <a class="text-4xl" href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
-                           <p class="text-gray-600 font-nunito font-medium text-xl"><%= projects[i].description %></p>
-                         </div>
-                      <% } %>
-                  <% } %>
-               <% } %>
-            </div>
-
-            <div class="p-2 my-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
-               <p class="m-4">Check out what others are doing:</p>
+               <div class="margin-24 bg-indigo-500 text-white p-6 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-indigo-600">A PWA that allows you to keep track of your projects.</div>
+               <div class="margin-24 bg-amber-400 text-white p-6 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-amber-500">
+                  <h3 class="text-2xl">Now on version 0.1.0!</h3>
+                  This update includes basic functionality, like creating projects & cards. The cards can be archived, unarchived, & deleted. Additionally, you can filter cards by due date, status (to-do, archived), priority, & difficulty.
+                  <br>
+                  And this commit finally adds search, so you can search through card titles & content!
+                  <p class="font-thin">Made with 💖 by Editor Rust with help from his BFF <a class="underline" href="https://github.com/tildejustin">tildejustin</a></p>
+               </div>
+               <div class="margin-24 bg-rose-500 text-white p-6 rounded-lg m-3 text-lg duration-200 delay-50 border-l-4 hover:border-l-8 border-rose-600">
+                  BTW you're automatically being signed into my account, 'cause we're still in pre-release. Just do whatever you like here, for now it's just an experiment! 🧪
+               </div>
+               <div class="p-2 my-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                  <p class="m-4">Continue where you left off:</p>
                   <% for (let i = 0; i < 5; i++) { %>
                      <% if (projects[i]) { %>
-                        <% if (!projects[i].contributors.includes(user.userCall)) { %>
-                           <div class="py-4 px-6 m-2 mb-3 font-nuntio rounded-md bg-white dark:bg-gray-900 border-l-8 border-orange-300">
+                        <% if (projects[i].contributors.includes(user.userCall)) { %>
+                           <div class="py-4 px-6 m-2 mb-3 font-nuntio rounded-md bg-white dark:bg-gray-900 border-l-8 border-sky-400">
                               <a class="text-4xl" href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
                               <p class="text-gray-600 font-nunito font-medium text-xl"><%= projects[i].description %></p>
                             </div>
-                           <% } %>
+                         <% } %>
                      <% } %>
                   <% } %>
-               <p>
-            </div>
-            <br>
+               </div>
 
-
-            <%- include("partials/locbar", { text: "Home" }); %>
+               <div class="p-2 my-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                  <p class="m-4">Check out what others are doing:</p>
+                     <% for (let i = 0; i < 5; i++) { %>
+                        <% if (projects[i]) { %>
+                           <% if (!projects[i].contributors.includes(user.userCall)) { %>
+                              <div class="py-4 px-6 m-2 mb-3 font-nuntio rounded-md bg-white dark:bg-gray-900 border-l-8 border-orange-300">
+                                 <a class="text-4xl" href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
+                                 <p class="text-gray-600 font-nunito font-medium text-xl"><%= projects[i].description %></p>
+                               </div>
+                              <% } %>
+                        <% } %>
+                     <% } %>
+                  <p>
+               </div>
          </div>
       </div>
+      <%- include("partials/locbar", { text: "Home" }); %>
    <%} else { %>
       <%- include("partials/signedOut"); %>
       <%- include("partials/signIn"); %>
    <% } %>
 </body>
-
-<script>
-   function toggleWindow(id) {
-      let thisWindow = document.querySelector(`.window-${id}`);
-      if (thisWindow.style.opacity == "1") {
-         thisWindow.style.opacity = "0";
-         thisWindow.style.pointerEvents = "none";
-         thisWindow.style.zIndex = "-1000";
-      }
-      else {
-         thisWindow.style.opacity = "1";
-         thisWindow.style.pointerEvents = "auto";
-         thisWindow.style.zIndex = "1000";
-      }
-   }
-</script>
 </html>
