@@ -12,7 +12,7 @@
     "uuid": "^8.3.2"
   },
   "name": "git-organized",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "A project management tool for developers",
   "main": "app.js",
   "scripts": {

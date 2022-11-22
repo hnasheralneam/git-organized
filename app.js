@@ -23,7 +23,7 @@ app.set("view engine", "ejs");
 
 // Mongoose things
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect("mongodb+srv://EditorSquirrel:SBtBYDnD2rvmsUjz@testcluster.ky80id3.mongodb.net/?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true });
 
 // System things
 connection.on("error", console.error.bind(console, "Connection error: "));
@@ -118,7 +118,7 @@ app.get("/account", (req, res) => { goSomewhere(res, "account"); });
 app.get("/new-project", (req, res) => { goSomewhere(res, "project/create"); });
 app.get("/actions-history", (req, res) => { goSomewhere(res, "globalActions"); });
 
-app.get("/project/:projectname", (req, res) => {
+app.get("/:projectname/dashboard", (req, res) => {
    ProjectData.findOne({ name: req.params.projectname }, (err, project) => {
       if (err) { console.error(err); }
       else if (project == null) { res.render("lost"); }
@@ -127,13 +127,13 @@ app.get("/project/:projectname", (req, res) => {
          async function letsGo() {
             let returnedData = await getNewpageData();
             returnedData.thisProject = project;
-            res.render("project/overview", returnedData);
+            res.render("project/dashboard", returnedData);
          }
       }
    });
 });
 
-app.get("/edit-project/:projectname", (req, res) => {
+app.get("/:projectname/edit", (req, res) => {
    ProjectData.findOne({ name: decodeURI(req.params.projectname) }, (err, project) => {
       if (err) { console.error(err); }
       else if (project == null) { res.render("lost"); }
@@ -148,7 +148,7 @@ app.get("/edit-project/:projectname", (req, res) => {
    });
 });
 
-app.get("/project/settings/:projectname", (req, res) => {
+app.get(":projectname/settings", (req, res) => {
    ProjectData.findOne({ name: decodeURI(req.params.projectname) }, (err, project) => {
       if (err) { console.error(err); }
       else if (project == null) { res.render("lost"); }
@@ -163,7 +163,7 @@ app.get("/project/settings/:projectname", (req, res) => {
    });
 });
 
-app.get("/project/finetune/:projectname", (req, res) => {
+app.get("/:projectname/finetune", (req, res) => {
    ProjectData.findOne({ name: decodeURI(req.params.projectname) }, (err, project) => {
       if (err) { console.error(err); }
       else if (project == null) { res.render("lost"); }

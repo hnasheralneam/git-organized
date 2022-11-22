@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include("../partials/head", { pageTitle: "Project Overview" }); %>
+<%- include("../partials/head", { pageTitle: "Project Settings" }); %>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <body>
    <% if (user !== "(not signed in)") { %>
@@ -24,25 +24,25 @@
                <div>
                   <div class="p-6 text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 rounded-xl">
                      <div class="p-4 mb-2 bg-gray-100 dark:bg-gray-700 rounded-xl">
-                        <p class="flex items-center mb-3 text-2xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">badge</span><%= thisProject.name %></p>
+                        <p class="flex items-center mb-3 text-2xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-dashboard">badge</span><%= thisProject.name %></p>
                         <p class="m-1 mb-3 text-1xl"><%= thisProject.description %></p>
                      </div>
-                     <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">person_filled</span> Made by <%= thisProject.creater %></p>
-                     <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">group</span> Contributors: <%= thisProject.contributors %></p>
-                     <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-project-overview">calendar_today</span> Created: <%= JSON.parse(thisProject).dateCreated.toLocaleString() %></p>
+                     <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-dashboard">person_filled</span> Made by <%= thisProject.creater %></p>
+                     <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-dashboard">group</span> Contributors: <%= thisProject.contributors %></p>
+                     <p class="flex items-center mb-3 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-dashboard">calendar_today</span> Created: <%= JSON.parse(thisProject).dateCreated.toLocaleString() %></p>
                   </div>
                </div>
             </div>
          </div>
       </div>
-      <%- include("../partials/locbar", { text: "site:projectoverview" }); %>
+      <%- include("../partials/locbar", { text: "site:settings" }); %>
    <%} else { %>
       <%- include("../partials/signedOut"); %>
       <%- include("../partials/signIn"); %>
    <% } %>
 </body>
 <style>
-.gradient-project-overview {
+.gradient-dashboard {
    background: linear-gradient(to bottom right, #82b1ff, #2962ff);
    -webkit-background-clip: text;
    -webkit-text-fill-color:transparent;
