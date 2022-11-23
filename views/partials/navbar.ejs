@@ -1,3 +1,5 @@
+<!-- Home icon -->
+<a class="fixed top-0 left-0 z-[1000]" href="/"><span class="material-symbols-rounded navbar-icon text-gray-800 dark:text-gray-50">data_object</span></a>
 <!-- Side navigation bar -->
 <div class="nvbr h-[100vh] w-[4.5rem] bg-white dark:bg-gray-800 border-r-2 border-gray-100 dark:border-gray-700 z-40" style="box-sizing: border-box">
    <div class="pt-14 text-center">
@@ -26,7 +28,7 @@
          <p class="tooltip bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-50 font-nunito text-center absolute">Account</p>
       </div>
    </div>
-   <!-- <div class="bigMenu hidden absolute bottom-0 px-2 w-[17.5rem] text-center">
+   <!-- <div class="bigMenu hidden absolute bottom-0 px-2 w-[23rem] text-center">
       <a href="/your-projects" class="float-left" title="Your Projects"><span class="material-symbols-rounded navbar-icon-wide">folder_open</span></a>
       <a href="/account" class="float-right" title="Account"><span class="material-symbols-rounded navbar-icon-wide">account_circle</span></a>
       <a href="/sign-out" class="float-right" title="Log out"><span class="material-symbols-rounded navbar-icon-wide">logout</span></a>
@@ -39,27 +41,27 @@
 let nvbr = document.querySelector(".nvbr");
 function doo() {
    document.querySelector(".layout").style.gridTemplateColumns = "5rem auto";
-   if (nvbr.style.width == "17.5rem") {
+   if (nvbr.style.width == "23rem") {
       nvbr.style.width = "4.5rem";
       document.querySelector(".app").style.display = "none";
       toggleMenuStyle("hide");
    }
    else {
-      nvbr.style.width = "17.5rem";
+      nvbr.style.width = "23rem";
       document.querySelector(".app").style.display = "block";
       toggleMenuStyle("show");
    }
 }
 function cho() {
-   if (nvbr.style.width == "17.5rem") {
+   if (nvbr.style.width == "23rem") {
       nvbr.style.width = "4.5rem";
       document.querySelector(".app").style.display = "none";
       document.querySelector(".layout").style.gridTemplateColumns = "5rem auto";
       toggleMenuStyle("hide");
    } else {
-      nvbr.style.width = "17.5rem";
+      nvbr.style.width = "23rem";
       document.querySelector(".app").style.display = "block";
-      document.querySelector(".layout").style.gridTemplateColumns = "18rem auto";
+      document.querySelector(".layout").style.gridTemplateColumns = "23.5rem auto";
       toggleMenuStyle("show");
    }
 }

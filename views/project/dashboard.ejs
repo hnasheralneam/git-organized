@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../partials/head", { pageTitle: "Dashboard" }); %>
+<!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+<body>
+   <% if (user !== "(not signed in)") { %>
+      <!-- Cards have white bgs, so set body bg to gray -->
+      <div class="layout bg-gray-50 dark:bg-gray-800 dark:text-gray-100">
+         <%- include("../partials/navbar", { dta: JSON.stringify(`
+            <p class="py-2 m-3 text-xl bg-emerald-100 dark:bg-emerald-700 rounded-md text-center font-nunito">You are in this project!</p>
+            <div class="px-4 text-gray-800 dark:text-gray-200 rounded-xl">
+               <div class="p-2 mb-2 bg-gray-100 dark:bg-gray-800 rounded-xl">
+                  <p class="flex items-center mb-1 text-2xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-dashboard">badge</span>${thisProject.name}</p>
+                  <p class="m-1 text-1xl">${thisProject.description}</p>
+               </div>
+               <p class="margin-auto text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-dashboard">person_filled</span></p>
+               <p>Made by ${thisProject.creater}</p>
+               <p class="margin-auto mt-4 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-dashboard">group</span></p>
+               <p>Contributors: ${thisProject.contributors}</p>
+               <p class="margin-auto mt-4 text-1xl"><span class="material-symbols-rounded mr-2 text-3xl gradient-dashboard">calendar_today</span></p>
+               <p>Created on ${thisProject.dateCreated.toLocaleString()}</p>
+            </div>
+         `) }); %>
+
+         <div class="page" style="padding-bottom: 0">
+            <% if (thisProject.contributors.includes(user.userCall)) { %>
+               <div class="p-4 h-[96vh] relative bg-white dark:bg-gray-900 rounded-xl">
+                  <div class="grid grid-cols-2 gap-1">
+                     <p class="py-2 mb-2 text-xl bg-emerald-100 dark:bg-emerald-700 rounded-xl text-center font-nunito">You are in this project!</p>
+                     <p class="py-2 mb-2 text-xl bg-cyan-100 dark:bg-cyan-700 rounded-xl text-center font-nunito"><%= thisProject.data.length %> Cards</p>   
+                  </div>
+                  <div class="text-gray-800 dark:text-gray-200 rounded-xl">
+                     <div class="mt-6 mb-12 text-center rounded-xl">
+                        <p class="mb-3 text-5xl font-serif"><%= thisProject.name %></p>
+                        <p class="m-1 text-3xl dark:text-gray-400"><%= thisProject.description %></p>
+                     </div>
+                     <div class="pt-4 pb-10 px-[15vw] absolute bottom-0 left-0 right-0 grid grid-cols-3 bg-gray-50/50 dark:bg-gray-800/50 rounded-xl">
+                        <a href="/<%= thisProject.name %>/edit">
+                           <div class="relative text-center">
+                              <span class="material-symbols-rounded gradient-dashboard text-5xl">edit_note</span>
+                              <p class="absolute top-[115%] left-1/2 font-mono" style="transform: translate(-50%, -50%)">Edit project</p>
+                           </div>
+                        </a>
+                        <a href="/<%= thisProject.name %>/finetune">
+                           <div class="relative text-center">
+                              <span class="material-symbols-rounded gradient-dashboard text-5xl">tune</span>
+                              <p class="absolute top-[115%] left-1/2 font-mono" style="transform: translate(-50%, -50%)">Finetune project</p>
+                           </div>
+                        </a>
+                        <a href="/<%= thisProject.name %>/settings">
+                           <div class="relative text-center">
+                              <span class="material-symbols-rounded gradient-dashboard text-5xl">settings</span>
+                              <p class="absolute top-[115%] left-1/2 font-mono" style="transform: translate(-50%, -50%)">Project settings</p>
+                           </div>
+                        </a>
+                     </div>
+                     <p class="m-3 text-center dark:text-gray-400 text-lg">Made by <%= thisProject.creater %> on <%= thisProject.dateCreated.toLocaleString() %></p>
+                  </div>
+               </div>
+            <% } else { %>
+               <div class="flex justify-center items-center" style="height: 80vh">
+                  <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg text-center font-nunito">
+                     <p class="m-3 text-gray-800 dark:text-gray-100 text-2xl">Oh, no! You aren't in this project 😭</p>
+                     <p class="m-3 text-gray-800 dark:text-gray-100 text-2xl">Maybe ask to join it? I'm crossing my fingers for you!🤞</p>
+                  </div>
+               </div>
+            <% } %>
+         </div>
+      </div>
+   <%} else { %>
+      <%- include("../partials/signedOut"); %>
+      <%- include("../partials/signIn"); %>
+   <% } %>
+</body>
+<style>
+.gradient-dashboard {
+   background: linear-gradient(to bottom right, #ffac82, #e3682a);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color:transparent;
+   background-clip: text;
+}
+</style>
+<script>
+   let project = <%- JSON.stringify(thisProject) %>
+   let cardArray = <%- JSON.stringify(thisProject.data) %>
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/scripts/project/dashboard.js"></script>
+</html>

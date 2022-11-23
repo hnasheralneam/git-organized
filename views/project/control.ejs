@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include("../partials/head", { pageTitle: "Fine Tune" }); %>
-<!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
 <style>
-.page { padding: 6vh 0 0 0; }
+.page { padding: 0; }
 .cardDesc {
    text-overflow: ellipsis;
    overflow: hidden;
@@ -22,8 +21,11 @@
          </script>
 
          <div class="page">
+            <div class="fixed right-2 top-2 rounded-xl text-gray-900 dark:text-gray-50 bg-white/[.8] dark:bg-gray-800/[.8] backdrop-blur-sm z-50">
+               <a class="p-2 px-3 float-right text-stone-700 dark:text-slate-200 bg-stone-50 dark:bg-slate-800 text-bold font-nunito rounded-lg" href="/<%= thisProject.name %>/dashboard">&#8592; Back to dashboard</a></p>
+            </div>
             <div class="content grid" style="grid-template-columns: 30% 70%">
-               <div class="overflow-auto relative bg-gray-50 dark:bg-gray-800" style="height: 94vh">
+               <div class="overflow-auto relative bg-gray-50 dark:bg-gray-800" style="height: 100vh">
                   <div class="grid sticky top-1.5 z-10 align-middle gap-x-2 py-1.5 px-4 mt-1.5 mx-2 bg-white dark:bg-gray-600 outline-amber-400 outline-0 hover:outline-2 backdrop-blur-sm rounded-full" style="grid-template-columns: 7% auto; box-shadow: 0 0 .2vh #22222222">
                      <span class="material-symbols-rounded text-2xl">search</span>
                      <input class="searchCards bg-transparent focus:outline-none focus:border-none" type="text" placeholder="Search..." title="Ahhhhhhhhhhhhhhhhhhhhhhhh!">
@@ -31,7 +33,7 @@
                   <div id="cardBox"></div>
                   <p class="mb-3 text-center text-gray-400 dark:text-gray-500">And that's the end!</p>
                </div>
-               <div class="activeCard relative p-4 border-l-[.3rem]">
+               <div class="activeCard relative p-4 border-l-[.3rem] border-white dark:border-gray-900">
                   <div class="acName text-3xl font-nunito">💖💖💖 Place holder content! 💖💖💖</div>
                   <p class="acAbout text-xl text-gray-800 dark:text-gray-300"></p>
                   <p class="acStatus"></p>
@@ -85,20 +87,11 @@
          </div>
          <%- include("../partials/createCard"); %>
       </div>
-      <%- include("../partials/locbar", { text: "Home>finetune" }); %>
    <%} else { %>
       <%- include("../partials/signedOut"); %>
       <%- include("../partials/signIn"); %>
    <% } %>
 </body>
-<style>
-.gradient-project-overview {
-   background: linear-gradient(to bottom right, #82b1ff, #2962ff);
-   -webkit-background-clip: text;
-   -webkit-text-fill-color:transparent;
-   background-clip: text;
-}
-</style>
 <script src="/scripts/digit-v.0.1.1-tweaked.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/scripts/project/control.js"></script>

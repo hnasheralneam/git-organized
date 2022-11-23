@@ -64,15 +64,8 @@
    font-size: 50px !important;
 }
 
-.homeicon {
-   font-size: 30px;
-   margin-right: 10px;
-   align-self: center;
-   vertical-align: middle;
-}
-
 .page {
-   padding: 7.5vh 1.5vh;
+   padding: 2vh 1.5vh;
    max-height: 100vh;
    overflow: scroll;
 }

@@ -2,13 +2,17 @@
 <html lang="en">
 <%- include("../partials/head", { pageTitle: "Editing Project" }); %>
 <style>
-.page { padding: 8vh 0 0 0; }
+.page { padding: 3vh 0 0 0; }
 </style>
 <body class="overflow-hidden">
    <% if (user !== "(not signed in)") { %>
       <div class="layout bg-gray-50 dark:bg-gray-800 dark:text-gray-100">
          <%- include("../partials/navbar"); %>
          <div class="page">
+            <!-- Locbar improved (TM) -->
+            <div class="fixed right-2 bottom-2 rounded-xl text-gray-900 dark:text-gray-50 bg-white/[.8] dark:bg-gray-800/[.8] backdrop-blur-sm z-50">
+               <a class="p-2 px-3 float-right text-stone-700 dark:text-slate-200 bg-stone-50 dark:bg-slate-900 text-bold font-nunito rounded-lg" href="/<%= thisProject.name %>/dashboard">&#8592; Back to dashboard</a></p>
+            </div>
             <% if (thisProject.contributors.includes(user.userCall)) { %>
                <div class="content">
                   <script>
@@ -16,7 +20,7 @@
                      let projectId = <%- JSON.stringify(thisProject.id) %>;
                   </script>
                   <!-- Search -->
-                  <div class="filter absolute top-[6vh] z-10 p-3 bg-white/[.8] dark:bg-gray-800/[.8] border-b-2 border-gray-50/[.8] dark:border-gray-700/[.8] backdrop-blur-sm" style="width: calc(100% - 4.5rem); display: grid; grid-template-columns: auto 1fr auto;">
+                  <div class="filter absolute top-0 z-10 p-3 bg-white/[.8] dark:bg-gray-800/[.8] border-b-2 border-gray-50/[.8] dark:border-gray-700/[.8] backdrop-blur-sm" style="width: calc(100% - 4.5rem); display: grid; grid-template-columns: auto 1fr auto;">
                      <div class="filterUpdatable inline"></div>
                      <div class="inline-grid align-middle gap-x-2 py-1.5 px-4 ml-2 bg-white dark:bg-gray-700 outline-amber-400 outline-0 hover:outline-2 backdrop-blur-sm rounded-full" style="grid-template-columns: 5% auto; box-shadow: 0 0 .2vh #22222222">
                         <span class="material-symbols-rounded text-2xl">search</span>
@@ -68,7 +72,6 @@
                </div>
             <% } %>
          </div>
-         <%- include("../partials/locbar", { text: "site:editproject" }); %>
       </div>
    <%} else { %>
       <%- include("../partials/signedOut"); %>

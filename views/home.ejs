@@ -25,7 +25,7 @@
                      <% if (projects[i]) { %>
                         <% if (projects[i].contributors.includes(user.userCall)) { %>
                            <div class="py-4 px-6 m-2 mb-3 font-nuntio rounded-md bg-white dark:bg-gray-900 border-l-8 border-sky-400">
-                              <a class="text-4xl" href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
+                              <a class="text-4xl" href="/<%= projects[i].name %>/dashboard"><%= projects[i].name %></a><br>
                               <p class="text-gray-600 font-nunito font-medium text-xl"><%= projects[i].description %></p>
                             </div>
                          <% } %>
@@ -39,7 +39,7 @@
                         <% if (projects[i]) { %>
                            <% if (!projects[i].contributors.includes(user.userCall)) { %>
                               <div class="py-4 px-6 m-2 mb-3 font-nuntio rounded-md bg-white dark:bg-gray-900 border-l-8 border-orange-300">
-                                 <a class="text-4xl" href="/project/<%= projects[i].name %>"><%= projects[i].name %></a><br>
+                                 <a class="text-4xl" href="/<%= projects[i].name %>/dashboard"><%= projects[i].name %></a><br>
                                  <p class="text-gray-600 font-nunito font-medium text-xl"><%= projects[i].description %></p>
                                </div>
                               <% } %>
@@ -49,7 +49,6 @@
                </div>
          </div>
       </div>
-      <%- include("partials/locbar", { text: "Home" }); %>
    <%} else { %>
       <%- include("partials/signedOut"); %>
       <%- include("partials/signIn"); %>
