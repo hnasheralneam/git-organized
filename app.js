@@ -23,7 +23,7 @@ app.set("view engine", "ejs");
 
 // Mongoose things
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb+srv://EditorSquirrel:SBtBYDnD2rvmsUjz@testcluster.ky80id3.mongodb.net/?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
 
 // System things
 connection.on("error", console.error.bind(console, "Connection error: "));
@@ -148,7 +148,7 @@ app.get("/:projectname/edit", (req, res) => {
    });
 });
 
-app.get(":projectname/settings", (req, res) => {
+app.get("/:projectname/settings", (req, res) => {
    ProjectData.findOne({ name: decodeURI(req.params.projectname) }, (err, project) => {
       if (err) { console.error(err); }
       else if (project == null) { res.render("lost"); }
