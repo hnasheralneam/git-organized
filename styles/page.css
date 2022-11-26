@@ -20,10 +20,12 @@
 
 @media (prefers-color-scheme: light) {
    .navbartip-parent .tooltip { box-shadow: 0 0 .25vh #eee; }
+   ::selection { background: #FFCF65; } 
 }
 
 @media (prefers-color-scheme: dark) {
    .navbartip-parent .tooltip { box-shadow: 0 0 .25vh #111; }
+   ::selection { background: #C48700; } 
 }
 
 .tooltip span {
@@ -73,7 +75,3 @@
 ::-webkit-scrollbar { display: none; }
 
 details > summary { list-style: none; }
-
-@media (prefers-color-scheme: dark) {
-   ::selection { background: #1f212cdd; }
-}

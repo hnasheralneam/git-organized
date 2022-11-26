@@ -1,3 +1,26 @@
-<div style="height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center;">
+<style>
+   .signin-modal-inner, .signup-modal-inner {
+      padding: 4vh 6vh;
+   }
+   
+   .input-text {
+      padding: 2vh;
+      outline: none;
+      border: none;
+      box-sizing: border-box;
+      font-size: 3vh;
+      border-radius: 2vh;
+   }
+   
+   input:-webkit-autofill,
+   input:-webkit-autofill:hover, 
+   input:-webkit-autofill:focus  {
+     box-shadow: 0 0 0px 1000px #e8e8e8 inset;
+     transition: background-color 5000s ease-in-out 0s;
+   }
+</style>
+<div class="dark:bg-gray-900" style="height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center;">
    <p class="text-4xl font-nunito" style="background: linear-gradient(to bottom right, #FFF45A, #FF9C5A); -webkit-background-clip: text; -webkit-text-fill-color:transparent; background-clip: text;" onclick="document.querySelector('.signin-modal').style.display = 'flex'">Sign in!</p>
 </div>
+<%- include("../partials/signIn"); %>
+<%- include("../partials/signUp"); %>

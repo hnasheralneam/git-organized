@@ -12,7 +12,7 @@
                <div class="p-2 bg-gray-50 dark:bg-gray-800 rounded-xl">
                   <% projects.forEach(function(project) { %>
                      <% if (project.contributors.includes(user.userCall)) { %>
-                        <div class="py-4 px-6 m-2 mb-3 font-nuntio rounded-md bg-white dark:bg-gray-900 border-l-8 border-sky-400">
+                        <div class="py-4 px-6 m-2 mb-3 font-serif rounded-md bg-white dark:bg-gray-900 border-l-8 border-sky-400">
                           <a class="text-4xl" href="/<%= project.name %>/dashboard"><%= project.name %></a><br>
                           <p class="text-gray-600 font-nunito font-medium text-xl"><%= project.description %></p>
                         </div>
@@ -27,7 +27,6 @@
       </div>
    <%} else { %>
       <%- include("partials/signedOut"); %>
-      <%- include("partials/signIn"); %>
    <% } %>
 </body>
 </html>

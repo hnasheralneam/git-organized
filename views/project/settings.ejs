@@ -1,26 +1,43 @@
-
 <!DOCTYPE html>
 <html lang="en">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 <%- include("../partials/head", { pageTitle: "Project Settings" }); %>
 <body>
    <% if (user !== "(not signed in)") { %>
       <div class="layout dark:bg-gray-900 dark:text-gray-100">
          <%- include("../partials/navbar"); %>
-
          <div class="page">
-            <div class="flex justify-center items-center" style="height: 80vh">
-               <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg text-center font-nunito">
-                  <p class="m-3 text-gray-800 dark:text-gray-100 text-2xl">🏗️ This feature hasn't been built yet!</p>
-                  <p class="m-3 text-gray-800 dark:text-gray-100 text-2xl">Want to help make it happen? <a class="underline" target="blank" href="https://github.com/editorrust/git-organized">Contribute!</a></p>
-                  <!-- Link won't work -->
-                  <!-- <p class="m-3 text-gray-800 dark:text-gray-100 text-2xl"><a class="underline" href="/<%= thisProject.name %>/dashboard"><- Back to dashboard</a></p> -->
-               </div>
-            </div>
+            <h1 class="mt-4 mb-2 mx-8 pb-3 text-4xl text-gray-400 dark:text-gray-500 font-light font-roboto border-b-[.15rem] border-gray-200 dark:border-gray-700"><%= project.name %></h1>
+            <h1 class="mt-6 mx-8 text-3xl text-gray-300 dark:text-gray-600 font-sans-serif">Name & About</h1>
+            <form class="pl-8 pt-4" action="project/edit" method="POST" id="edit-project">
+               <input class="projectName px-3 py-2 focus:ring-2 ring-orange-300 dark:focus:ring-orange-500 focus:border-none focus:outline-none rounded-md w-[25rem] shadow-sm shadow-gray-300 dark:shadow-gray-700 focus:bg-white dark:focus:bg-gray-800 dark:bg-gray-800 transition mb-1" type="text" name="name" placeholder="Name" value="<%= project.name %>"><br>
+               <textarea class="px-3 py-2 focus:ring-2 ring-orange-300 dark:focus:ring-orange-500 focus:border-none focus:outline-none rounded-md w-[25rem] shadow-sm shadow-gray-300 dark:shadow-gray-700 focus:bg-white dark:focus:bg-gray-800 dark:bg-gray-800 transition" type="text" name="about" placeholder="A little about the project"><%= project.description %></textarea><br>
+               <input class="px-4 py-2 my-2.5 bg-orange-400 dark:bg-orange-500 shadow-sm shadow-orange-600 active:shadow-inner active:shadow-orange-800 text-white text-md font-roboto font-light rounded-xl" type="submit" value="Update Info">
+               <input class="hidden" type="text" name="id" value="<%= project._id %>"><br>
+            </form>
+
+            <a id="redirect" class="hidden" href=""></a>
+            <a class="p-2 px-3 fixed right-2 bottom-2 bg-white dark:bg-gray-800 shadow hover:shadow-md dark:shadow-black dark:hover:shadow-black hover:bottom-3 transition-[.2s] text-gray-900 dark:text-gray-50 text-bold font-nunito rounded-lg z-50" href="dashboard">&#8592; Back to dashboard</a></p>
          </div>
       </div>
    <%} else { %>
       <%- include("../partials/signedOut"); %>
-      <%- include("../partials/signIn"); %>
    <% } %>
 </body>
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$("#edit-project").submit(function(event) {
+   event.preventDefault();
+   $.post("/project/edit", {
+      name: this.name.value,
+      about: this.about.value,
+      id: this.id.value
+   }).done(function(data) {
+      if (data == "Success!") {
+         document.querySelector("#redirect").href = `/${document.querySelector(".projectName").value}/settings`;
+         document.querySelector("#redirect").click();
+      }
+   });
+});
+</script>

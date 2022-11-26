@@ -4,6 +4,7 @@ module.exports = {
       './views/*.{html,ejs,js}',
       './views/project/*.{html,ejs,js}',
       './views/partials/*.{html,ejs,js}',
+      './views/github-oauth/*.{html,ejs,js}',
       './scripts/*.{html,ejs,js}',
       './scripts/project/*.{html,ejs,js}'
    ],
@@ -12,6 +13,7 @@ module.exports = {
          fontFamily: {
             'nunito': ['Nunito', 'sans-serif'],
             'notosansmono': ['Noto Sans Mono', 'monospace'],
+            'roboto': ['Roboto', 'sans-serif'],
          }
       }
    },

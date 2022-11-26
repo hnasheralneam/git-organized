@@ -21,9 +21,7 @@
          </script>
 
          <div class="page">
-            <div class="fixed right-2 top-2 rounded-xl text-gray-900 dark:text-gray-50 bg-white/[.8] dark:bg-gray-800/[.8] backdrop-blur-sm z-50">
-               <a class="p-2 px-3 float-right text-stone-700 dark:text-slate-200 bg-stone-50 dark:bg-slate-800 text-bold font-nunito rounded-lg" href="/<%= thisProject.name %>/dashboard">&#8592; Back to dashboard</a></p>
-            </div>
+            <a class="p-2 px-3 fixed right-2 top-2 bg-white dark:bg-gray-800 shadow hover:shadow-md dark:shadow-black dark:hover:shadow-black hover:top-1 transition-[.2s] text-gray-900 dark:text-gray-50 text-bold font-nunito rounded-lg z-50" href="dashboard">&#8592; Back to dashboard</a></p>
             <div class="content grid" style="grid-template-columns: 30% 70%">
                <div class="overflow-auto relative bg-gray-50 dark:bg-gray-800" style="height: 100vh">
                   <div class="grid sticky top-1.5 z-10 align-middle gap-x-2 py-1.5 px-4 mt-1.5 mx-2 bg-white dark:bg-gray-600 outline-amber-400 outline-0 hover:outline-2 backdrop-blur-sm rounded-full" style="grid-template-columns: 7% auto; box-shadow: 0 0 .2vh #22222222">
@@ -34,29 +32,35 @@
                   <p class="mb-3 text-center text-gray-400 dark:text-gray-500">And that's the end!</p>
                </div>
                <div class="activeCard relative p-4 border-l-[.3rem] border-white dark:border-gray-900">
-                  <div class="acName text-3xl font-nunito">💖💖💖 Place holder content! 💖💖💖</div>
-                  <p class="acAbout text-xl text-gray-800 dark:text-gray-300"></p>
+                  <p class="acMadeOn text-md text-gray-600 dark:text-gray-400"></p>
+                  <input class="acName w-full text-3xl focus:z-[2000] bg-transparent font-nunito h-[3rem] focus:px-2 focus:ring-4 ring-orange-300 dark:focus:ring-orange-500 focus:border-none focus:outline-none rounded-md transition-[.2s]" value="💖💖💖 Place holder content! 💖💖💖">
+                  <textarea class="acAbout w-full text-xl focus:z-20 bg-transparent font-nunito h-[3rem] focus:px-2 focus:ring-4 ring-orange-300 dark:focus:ring-orange-500 focus:border-none focus:outline-none rounded-md transition-[.2s]"></textarea>
                   <p class="acStatus"></p>
                   <p class="acTeam"></p>
                   <p class="acTags"></p>
-                  <p class="acPri"></p>
-                  <p class="acDif"></p>
-                  <p class="acMadeOn"></p>
+                  <div class="group inline-flex border-[.15rem] border-blue-600 hover:bg-blue-600 rounded-full transition-[.2s]">
+                     <span class="material-symbols-rounded m-1 ml-2 text-blue-600 group-hover:text-white transition-[.2s]">speed</span>
+                     <p class="acDif m-1 ml-2 mr-4 inline-block text-blue-600 group-hover:text-white font-extrabold transition-[.2s]"></p>
+                  </div>
+                  <div class="group inline-flex border-[.15rem] border-red-600 hover:bg-red-600 rounded-full transition-[.2s]">
+                     <span class="material-symbols-rounded m-1 ml-2 text-red-600 group-hover:text-white transition-[.2s]">alarm</span>
+                     <p class="acPri m-1 ml-2 mr-4 inline-block text-red-600 group-hover:text-white font-extrabold transition-[.2s]"></p>
+                  </div>
                   <p class="acDue"></p>
                   <p class="acEstTime"></p>
-                  <p class="acId"></p>
+                  <p class="acId text-gray-400 dark:text-gray-600 font-light"></p>
                   <div class="mt-48 absolute bottom-0 w-[100%] -ml-[16px] flex justify-center">
                      <div class="p-2 pb-1 my-2 bg-gray-50 dark:bg-gray-800 shadow-sm shadow-gray-300 dark:shadow-gray-700 rounded-xl">
                         <div class="toolbar-tip relative inline">
-                           <button class="material-symbols-rounded btn-arch text-3xl text-gray-500 mr-1 enabled:hover:scale-110 disabled:opacity-40" disabled>archive</button>
+                           <button class="material-symbols-rounded btn-arch text-3xl text-gray-500 mr-1 enabled:hover:scale-110 transition disabled:opacity-40" disabled>archive</button>
                            <span class="toolbar-tiptext py-1.5 bg-gray-700 text-white text-center rounded-full">Archive</span>
                         </div>
                         <div class="toolbar-tip group relative inline">
-                           <button class="material-symbols-rounded btn-unar text-3xl text-emerald-500 mr-1 enabled:hover:scale-110 disabled:opacity-40" disabled>unarchive</button>
+                           <button class="material-symbols-rounded btn-unar text-3xl text-emerald-500 mr-1 enabled:hover:scale-110 transition disabled:opacity-40" disabled>unarchive</button>
                            <span class="toolbar-tiptext py-1.5 bg-gray-700 text-white text-center rounded-full">Unarchive</span>
                        </div>
                         <div class="toolbar-tip relative inline">
-                           <button class="material-symbols-rounded btn-delt text-3xl text-red-500 enabled:hover:scale-110 disabled:opacity-40" disabled>delete</button>
+                           <button class="material-symbols-rounded btn-delt text-3xl text-red-500 enabled:hover:scale-110 transition disabled:opacity-40" disabled>delete</button>
                            <span class="toolbar-tiptext py-1.5 bg-gray-700 text-white text-center rounded-full">Delete</span>
                        </div>
                      </div>
@@ -89,7 +93,6 @@
       </div>
    <%} else { %>
       <%- include("../partials/signedOut"); %>
-      <%- include("../partials/signIn"); %>
    <% } %>
 </body>
 <script src="/scripts/digit-v.0.1.1-tweaked.js"></script>
