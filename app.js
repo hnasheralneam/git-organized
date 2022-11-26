@@ -390,8 +390,31 @@ app.post("/delete-card", (req, res) => {
    ProjectData.findOneAndUpdate({ id: req.body.projectId },
       { "$pull": { "data": { "id": req.body.cardId } }},
       { safe: true, multi: true },
-      function(err) { if (err) console.log(err); }
+      (err) => {
+         if (err) console.log(err);
+         else res.send("Done!");
+      }
    );
+});
+
+app.post("/card/edit", (req, res) => {
+   if (req.body.cardId) {
+      ProjectData.findById(req.body.projectId).then(doc => {
+         card = doc.data.filter(obj => obj.id == req.body.cardId);
+   
+         card[0]["name"] = req.body.name;
+         card[0]["about"] = req.body.about;
+   
+         const index = doc.data.findIndex(element => {
+            if (element.id == req.body.cardId) { return true; }
+            return false;
+         });
+         doc.data[index] = card[0];
+   
+         doc.save();
+         res.send(["Success!", card[0]]);
+      }).catch(err => { console.log(err); });
+   }
 });
 
 /* =============
@@ -434,4 +457,4 @@ app.get("*", (req, res) => {
 app.listen(port);
 
 // Auto sign in me
-// DevData.findOne({ name: "Editor Squirrel" }, (err, user) => { signIn(user); }); // DEVCODE
+// DevData.findOne({ name: "Editor Squirrel" }, (err, user) => { signIn(user); });

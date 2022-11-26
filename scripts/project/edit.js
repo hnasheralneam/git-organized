@@ -98,10 +98,10 @@ function getDate(enter) {
 
 function MainInfo(name, about, creator, created) {
    return `
-      <div class="px-4 pb-12 mb-1 border-l-4 border-l-emerald-400 rounded-sm">
+      <div class="px-2 pb-12 mb-1 rounded-sm">
          <p class="cardName text-3xl">${name}</p>
          <p class="cardDesc text-2xl text-gray-700 dark:text-gray-600">${about}</p>
-         <p class="text-gray-600 dark:text-gray-700 float-right">Created by ${creator} ${mdy(created)} at ${thetime(created)} ${dateDiff(created)}</p>
+         <p class="text-gray-600 dark:text-gray-700 float-right">${creator} created ${mdy(created)} at ${thetime(created)} ${dateDiff(created)}</p>
       </div>
    `;
 }
@@ -204,6 +204,8 @@ function Arch(card) {
 }
 function Card(card) {
    return `
+      <!-- <div class="card py-4 px-4 bg-white dark:bg-gray-900 border-b-2 border-r-2 border-gray-100 dark:border-gray-800 relative"> -->
+      <!-- <div class="card py-2 px-4 m-2 bg-gray-50 dark:bg-gray-900 border-l-8 border-l-amber-200 dark:border-l-amber-500 rounded-lg relative" style="box-shadow: .3rem .3rem .3rem #eee, -.3rem -.3rem .3rem #fff"> -->
       <div class="card py-2 px-4 m-2 bg-white dark:bg-gray-900 border-l-8 border-l-amber-200 dark:border-l-amber-500 rounded-lg relative">
          <div class="grid grid-cols-3">
             <div class="col-span-2">
@@ -234,7 +236,7 @@ const CreateCards = () => {
    return new Promise((resolve) => {
       document.getElementById("cardDiv").outerHTML = `
          <div id="cardDiv" class="bg-gray-50 dark:bg-gray-800 rounded-lg">
-            <div class="cardObject p-1 pt-14 bg-gray-50 dark:bg-gray-800 rounded-lg">
+            <div class="cardObject p-1 pt-14">
                ${filteredData.map((cardData) => (Card(cardData))).join("")}
             </div>
          </div>
