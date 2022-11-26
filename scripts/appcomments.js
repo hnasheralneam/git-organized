@@ -84,3 +84,93 @@
 //       else { console.log(success + "yayproject"); }
 //    }
 // );
+
+
+
+// GitHub OAuth (for later)
+// const clientID = "f928b3838608c37c45b3";
+// const clientSecret = "fa6d270ad9590e4ee8b1aa21a68498d19475a1c4"; // I really don't care. Just take it, and enjoy
+
+// app.get("/github-oauth/get", (req, res) => {
+//    res.redirect(`https://github.com/login/oauth/authorize?client_id=f928b3838608c37c45b3`);
+// });
+
+// app.get("/callback", (req, res) => {
+//    axios.post("https://github.com/login/oauth/access_token", {
+//       client_id: "f928b3838608c37c45b3",
+//       client_secret: "fa6d270ad9590e4ee8b1aa21a68498d19475a1c4",
+//       code: req.query.code
+//    }, {
+//       headers: {
+//           Accept: "application/json"
+//       }
+//    }).then((result) => {
+//       console.log(result.data.access_token)
+//       res.send("you are authorized " + result.data.access_token)
+//    }).catch((err) => {
+//       console.log(err);
+//    })
+
+//    // Sign into or create an account with GitHub
+//    // const requestToken = req.query.code;
+//    // axios({
+//    //    method: "post",
+//    //    url: `https://github.com/login/oauth/access_token?client_id=fa6d270ad9590e4ee8b1aa21a68498d19475a1c4&client_secret=f928b3838608c37c45b3&code=${requestToken}`,
+//    //    headers: { accept: "application/json" }
+//    // }).then((response) => {
+//    //    console.log(response.data[0], response.data.user, response.data.login)
+//    //    checkGithub(response.data);
+//    //    res.redirect("github-oauth/success");
+//    // });
+// });
+
+// app.get("/github-oauth/success", function(req, res) {
+//    axios({
+//       method: "get",
+//       url: "https://api.github.com/user",
+//       headers: {
+//          Authorization: "token " + access_token
+//       }
+//    }).then((response) => {
+//       res.render("github-oauth/success", { userData: response.data });
+//    }).catch(function (error) {
+//       console.log('Error ' + error.message)
+//    });
+// });
+
+// async function checkGithub(githubData) {
+//    const ID = githubData.id;
+//    DevData.findOne({ githubClientId: ID }, (err, data) => {
+//       if (err) console.error(err);
+//       // console.log(data, githubData, githubData.login);
+//    });
+//    // if (accountExists) { console.log("no"); signinGithub(ID); }
+//    // else { console.log("ys"); createAccountGithub(githubData); }
+// }
+// function signinGithub(githubId) {
+//    DevData.findOne({ githubClientId: githubId }, (err, user) => {
+//       if (err) return console.error(err);
+//       else { signIn(user); }
+//    });
+// }
+// function createAccountGithub(githubData) {
+//    const newUser = new DevData({
+//       // username: String,
+//       // email: githubData.email,
+//       // password: String,
+//       // bio: String,
+//       // links: [],
+//       // dateAccountStarted: Date,
+//       // userCall: String,
+//       // githubClientId: String,
+   
+//       userCode: uuidv4(),
+//       name: githubData.login,
+//       passcode: false,
+//       dateAccountStarted: Date.now(),
+//       githubClientId: githubData.id
+//    });
+//    newUser.save(function (err, newUser) { if (err) return console.error(err); });
+//    // Send 'em an email
+//    sendEmail("🎉 Congratulations! 🎉 You have successfully created your Git Organized account!", "<h2>🎉 Congratulations! 🎉</h2><h4>You have successfully created your Git Organized account!</h4><p>I just wanted to let you know that you created your Git Organized account, and there were no errors in doing so. I will respect the power that I hold with your email and will not send promotional emails unless you want me to. The only other emails I will send shall be triggered by your actions on my site. Good Luck!</p><i>-Editor Rust</i><p>vegetabledash@gmail.com</p>", githubData.email);
+// }

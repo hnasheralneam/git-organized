@@ -5,12 +5,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const nodemailer = require("nodemailer");
+const bcrypt = require("bcrypt");
 const favicon = require("serve-favicon");
 const { v4: uuidv4 } = require("uuid");
 
 const app = express();
 const port = process.env.PORT || 3000;
 const connection = mongoose.connection;
+
+const saltRounds = 12;
 
 let signedInUser = "(not signed in)";
 
@@ -23,7 +27,7 @@ app.set("view engine", "ejs");
 
 // Mongoose things
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true }); // DEVCODE
 
 // System things
 connection.on("error", console.error.bind(console, "Connection error: "));
@@ -37,6 +41,7 @@ const userSchema = new mongoose.Schema({
    links: [],
    dateAccountStarted: Date,
    userCall: String,
+   githubClientId: String,
    projects: [], // list of project ids
    actions: [] // a list of action ids
 });
@@ -199,22 +204,70 @@ function goSomewhere(res, where) {
 ============= */
 
 // Sign in
-app.post("/enter-account", (req, res) => {
+app.post("/user/login", (req, res) => {
    DevData.findOne({ username: req.body.name }, (err, user) => {
       if (err) return console.error(err);
       if (!user) { res.send("There is no account with this name!"); }
       else if (user) {
-         DevData.findOne({ username: req.body.name, password: req.body.pscd }, (err, user) => {
-            if (err) return console.error(err);
-            if (!user) { res.send("Wrong password!"); }
-            else if (user) {
-               signIn(user);
-               res.send("Successful signin!");
-            }
+         bcrypt.compare(req.body.pscd, user.password)
+            .catch(err => console.error(err.message))
+            .then(match => {
+               if (match) { signIn(user); res.send("Success!"); }
+               else res.send("Wrong password!");
          });
       }
    });
 });
+
+// Signup
+app.post("/user/create", (req, res) => {
+   asyncCreate();
+   async function asyncCreate() {
+      let isAlreadyUsedName = await DevData.findOne({ username: req.body.name });
+      if (isAlreadyUsedName) { res.send("Choose a different name! (This one is taken!)"); }
+      else {
+         let isAlreadyUsedEmil = await DevData.findOne({ email: req.body.emil });
+         if (isAlreadyUsedEmil) { res.send("This email is already used!"); }
+         else {
+            bcryptForMe(req.body.pscd).then((passhash) => {
+               const newDev = new DevData({
+                  username: req.body.name,
+                  userCall: req.body.name,
+                  email: req.body.emil,
+                  password: passhash,
+                  bio: "an empty page, filled with endless possibilities",
+                  githubClientId: "false"
+               });
+               newDev.save(function (err) { if (err) return console.error(err); });
+               sendEmail(
+                  "Hurray! Your Git Organized account has been created!",
+                  `<h2>Hurray!</h2>
+                  <h4>Your Git Organized account has been created!</h4>
+                  <p>I just wanted to let you know that your account (${req.body.name}) has been created. I will not send promotional emails unless you want me to. The only other emails I will send shall be triggered by your actions on my site.</p>
+                  <i>Editor Rust :)</i>
+                  <p>vegetabledash@gmail.com</p>`,
+                  req.body.emil
+               );
+               // Sign in and go home
+               DevData.findOne({ name: req.body.name, email: req.body.emil, passcode: req.body.pscd }, (err, user) => {
+                  if (err) return console.error(err);
+                  else {
+                     console.log(user);
+                     signIn(user); res.send("Success!"); }
+               });
+            })
+         }
+      }
+   }
+});
+
+let bcryptForMe = (pass) => {
+   return new Promise((resolve) => {
+      bcrypt.hash(pass, saltRounds)
+      .catch(err => console.error(err.message))
+      .then(hash => { resolve(hash); });
+   });
+}
 
 /* =============
 // New Project
@@ -330,6 +383,34 @@ app.post("/delete-card", (req, res) => {
 });
 
 /* =============
+// Mail
+============= */
+
+// You've got mail. Wait a second, ok now you do.
+const transporter = nodemailer.createTransport({
+   service: "gmail",
+   auth: {
+      user: "vegetabledash@gmail.com",
+      pass: "rgagablxdefsiymr"
+  }
+});
+
+function sendEmail(title, text, recipient) {
+   var mailOptions = {
+      from: "vegetabledash@gmail.com",
+      to: recipient,
+      subject: title,
+      html: text
+   };
+   
+   transporter.sendMail(mailOptions, function(err, info){
+      if (err) { console.log(err); }
+   });
+}
+
+// sendEmail("hey there", "hi", "editorrust@gmail.com"); // Ack private email alert! Whatever. Let me get back to listening to my 10 hour fan sounds (https://www.youtube.com/watch?v=C5Gm8UvxKlU)
+
+/* =============
 // Important stuff
 ============= */
 
@@ -340,6 +421,5 @@ app.get("*", (req, res) => {
 
 app.listen(port);
 
-
-
-DevData.findOne({ name: "Editor Squirrel", passcode: "825" }, (err, user) => { signIn(user); });
+// Auto sign in me
+// DevData.findOne({ name: "Editor Squirrel" }, (err, user) => { signIn(user); }); // DEVCODE
