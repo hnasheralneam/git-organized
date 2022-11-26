@@ -21,9 +21,7 @@
          </script>
 
          <div class="page">
-            <div class="fixed right-2 top-2 rounded-xl text-gray-900 dark:text-gray-50 bg-white/[.8] dark:bg-gray-800/[.8] backdrop-blur-sm z-50">
-               <a class="p-2 px-3 float-right text-stone-700 dark:text-slate-200 bg-stone-50 dark:bg-slate-800 text-bold font-nunito rounded-lg" href="/<%= thisProject.name %>/dashboard">&#8592; Back to dashboard</a></p>
-            </div>
+            <a class="p-2 px-3 fixed right-2 top-2 bg-white dark:bg-gray-800 shadow hover:shadow-md dark:shadow-black dark:hover:shadow-black hover:top-1 transition-[.2s] text-gray-900 dark:text-gray-50 text-bold font-nunito rounded-lg z-50" href="dashboard">&#8592; Back to dashboard</a></p>
             <div class="content grid" style="grid-template-columns: 30% 70%">
                <div class="overflow-auto relative bg-gray-50 dark:bg-gray-800" style="height: 100vh">
                   <div class="grid sticky top-1.5 z-10 align-middle gap-x-2 py-1.5 px-4 mt-1.5 mx-2 bg-white dark:bg-gray-600 outline-amber-400 outline-0 hover:outline-2 backdrop-blur-sm rounded-full" style="grid-template-columns: 7% auto; box-shadow: 0 0 .2vh #22222222">
@@ -89,7 +87,6 @@
       </div>
    <%} else { %>
       <%- include("../partials/signedOut"); %>
-      <%- include("../partials/signIn"); %>
    <% } %>
 </body>
 <script src="/scripts/digit-v.0.1.1-tweaked.js"></script>

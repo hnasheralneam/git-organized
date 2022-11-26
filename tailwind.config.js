@@ -13,6 +13,7 @@ module.exports = {
          fontFamily: {
             'nunito': ['Nunito', 'sans-serif'],
             'notosansmono': ['Noto Sans Mono', 'monospace'],
+            'roboto': ['Roboto', 'sans-serif'],
          }
       }
    },

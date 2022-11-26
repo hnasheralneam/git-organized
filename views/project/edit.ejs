@@ -10,9 +10,7 @@
          <%- include("../partials/navbar"); %>
          <div class="page">
             <!-- Locbar improved (TM) -->
-            <div class="fixed right-2 bottom-2 rounded-xl text-gray-900 dark:text-gray-50 bg-white/[.8] dark:bg-gray-800/[.8] backdrop-blur-sm z-50">
-               <a class="p-2 px-3 float-right text-stone-700 dark:text-slate-200 bg-stone-50 dark:bg-slate-900 text-bold font-nunito rounded-lg" href="/<%= thisProject.name %>/dashboard">&#8592; Back to dashboard</a></p>
-            </div>
+            <a class="p-2 px-3 fixed right-2 bottom-2 bg-white dark:bg-gray-800 shadow hover:shadow-md dark:shadow-gray-900 dark:hover:shadow-gray-900 hover:bottom-3 transition-[.2s] text-gray-900 dark:text-gray-50 text-bold font-nunito rounded-lg z-50" href="dashboard">&#8592; Back to dashboard</a></p>
             <% if (thisProject.contributors.includes(user.userCall)) { %>
                <div class="content">
                   <script>
@@ -75,7 +73,6 @@
       </div>
    <%} else { %>
       <%- include("../partials/signedOut"); %>
-      <%- include("../partials/signIn"); %>
    <% } %>
 </body>
 </html>

@@ -27,7 +27,7 @@ app.set("view engine", "ejs");
 
 // Mongoose things
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true }); // DEVCODE
+mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
 
 // System things
 connection.on("error", console.error.bind(console, "Connection error: "));
@@ -86,6 +86,7 @@ function signIn(userInfo) {
 function getNewpageData() {
    return new Promise(resolve => {
       DevData.find((err, users) => {
+         // users.forEach((user) => { console.log(user); });
          if (err) { console.error(err); }
          else { 
             ActionData.find((err, actions) => {
@@ -162,7 +163,7 @@ app.get("/:projectname/settings", (req, res) => {
          async function letsGo() {
             let returnedData = await getNewpageData();
             returnedData.thisProject = project;
-            res.render("project/settings", { user: JSON.stringify(returnedData.user), thisProject: JSON.stringify(project) });
+            res.render("project/settings", { user: JSON.stringify(returnedData.user), project: project });
          }
       }
    });
@@ -226,8 +227,9 @@ app.post("/user/create", (req, res) => {
       let isAlreadyUsedName = await DevData.findOne({ username: req.body.name });
       if (isAlreadyUsedName) { res.send("Choose a different name! (This one is taken!)"); }
       else {
+         // Problem with this
          let isAlreadyUsedEmil = await DevData.findOne({ email: req.body.emil });
-         if (isAlreadyUsedEmil) { res.send("This email is already used!"); }
+         if (isAlreadyUsedEmil.email) { res.send("This email is already used!"); }
          else {
             bcryptForMe(req.body.pscd).then((passhash) => {
                const newDev = new DevData({
@@ -285,7 +287,7 @@ function newAction(user, loc, type, text, time, id) {
    newAction.save();
 }
 
-app.post("/newproject", (req, res) => {
+app.post("/newproject", (req, res) => { // Change to /project/new
    asyncCreation();
    async function asyncCreation() {
       let isAlreadyUsedName = await ProjectData.findOne({ name: req.body.name });
@@ -309,6 +311,16 @@ app.post("/newproject", (req, res) => {
          });
       }
    }
+});
+
+app.post("/project/edit", (req, res) => {
+   ProjectData.findByIdAndUpdate(req.body.id, {
+      name: req.body.name,
+      description: req.body.about
+   }, (err) => {
+      if (err) console.log(err);
+      else res.send("Success!");
+   });
 });
 
 /* =============
