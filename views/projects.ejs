@@ -12,7 +12,13 @@
                <div class="p-2 bg-gray-50 dark:bg-gray-800 rounded-xl">
                   <% projects.forEach(function(project) { %>
                      <% if (project.contributors.includes(user.userCall)) { %>
-                        <div class="py-4 px-6 m-2 mb-3 font-serif rounded-md bg-white dark:bg-gray-900 border-l-8 border-sky-400">
+                        <div class="relative py-6 px-6 m-2 mb-3 font-serif rounded-md bg-white dark:bg-gray-900 border-l-8 border-sky-400">
+                           <div class="absolute top-2 right-2 pt-2 p-1 px-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                              <a href="/<%= project.name %>/dashboard"><span class="material-symbols-rounded hover:scale-105 mr-0.5 transition hover:text-emerald-500 text-green-500 gradient-dashboard text-3xl">dashboard</span></a>
+                              <a href="/<%= project.name %>/edit"><span class="material-symbols-rounded hover:scale-105 mr-0.5 transition hover:text-orange-500 text-amber-500 gradient-dashboard text-3xl">edit_note</span></a>
+                              <a href="/<%= project.name %>/finetune"><span class="material-symbols-rounded hover:scale-105 mr-0.5 transition hover:text-orange-500 text-amber-500 gradient-dashboard text-3xl">tune</span></a>
+                              <a href="/<%= project.name %>/settings"><span class="material-symbols-rounded hover:scale-105 mr-0.5 transition hover:bg-blue-500 hover:text-white rounded-xl hover:px-[.2rem] text-blue-500 gradient-dashboard text-3xl" style="transition: all .2s">settings</span></a>
+                           </div>
                           <a class="text-4xl" href="/<%= project.name %>/dashboard"><%= project.name %></a><br>
                           <p class="text-gray-600 font-nunito font-medium text-xl"><%= project.description %></p>
                         </div>
