@@ -10,6 +10,8 @@ const bcrypt = require("bcrypt");
 const favicon = require("serve-favicon");
 const { v4: uuidv4 } = require("uuid");
 
+require("dotenv").config();
+
 const app = express();
 const port = process.env.PORT || 3000;
 const connection = mongoose.connection;
@@ -27,6 +29,7 @@ app.set("view engine", "ejs");
 
 // Mongoose things
 mongoose.Promise = global.Promise;
+mongoose.set("strictQuery", false);
 mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
 
 // System things
