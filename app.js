@@ -27,10 +27,10 @@ app.set("view engine", "ejs");
 
 // Mongoose things
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
+// mongoose.connect(process.env.MONGODB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
 
 // System things
-connection.on("error", console.error.bind(console, "Connection error: "));
+// connection.on("error", console.error.bind(console, "Connection error: "));
 
 // Schemas
 const userSchema = new mongoose.Schema({
@@ -457,4 +457,4 @@ app.get("*", (req, res) => {
 app.listen(port);
 
 // Auto sign in me
-// DevData.findOne({ name: "Editor Squirrel" }, (err, user) => { signIn(user); });
+// // DevData.findOne({ name: "Editor Squirrel" }, (err, user) => { signIn(user); });
